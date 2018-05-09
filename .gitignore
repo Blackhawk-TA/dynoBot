@@ -1,0 +1,5 @@
+.idea
+node_modules
+cfg/security.json
+resources/logs
+package-lock.json
