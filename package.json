@@ -7,12 +7,6 @@
 		"url": "https://github.com/Blackhawk-TA/ProjectTschernobyl"
 	},
 	"dependencies": {
-		"bufferutil": "^3.0.3",
-		"erlpack": "discordapp/erlpack",
-		"node-opus": "^0.2.7",
-		"opusscript": "^0.0.6",
-		"libsodium-wrappers": "^0.7.3",
-		"uws": "^9.148.0",
 		"discord.js": "~11.3.2"
 	}
 }
