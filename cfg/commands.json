@@ -1,12 +1,12 @@
 [
 	{
 		"type": "js",
-		"regex": "js|javascript test",
+		"regex": "js-test|javascript test",
 		"path": "src/js-modules/test-js.js"
 	},
 	{
 		"type": "python",
-		"regex": "py|python test",
+		"regex": "py-test|python test",
 		"path": "src/py-modules/test-python.py"
 	}
 ]
