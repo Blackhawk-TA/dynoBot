@@ -42,34 +42,7 @@ client.on("message", msg => {
 		}
 
 		if (!bAnswered) {
-			if (msg.content.includes("hook")) {
-				if (msg.content.includes("config")) {
-					msg.channel.send("```json\n" + JSON.stringify(hookJson, null, 4) + "```");
-				} else if (msg.content.includes("channel")) {
-					var name = msg.contentArray[msg.contentArray.length - 3];
-					var channelId = msg.contentArray[msg.contentArray.length - 1];
-					hooks.changeEntry(name, msg.channel, "channel", channelId);
-				} else if (msg.content.includes("interval")) {
-					var name = msg.contentArray[msg.contentArray.length - 3];
-					var interval = msg.contentArray[msg.contentArray.length - 1];
-
-					if (isFinite(interval * 60000) && interval > 0) {
-						hooks.changeEntry(name, msg.channel, "interval", interval * 60000);
-					} else {
-						msg.channel.send(interval + " is not allowed as interval.")
-					}
-				} else if (msg.content.includes("enable") || msg.content.includes("on")) {
-					var name = msg.contentArray[msg.contentArray.length - 1];
-					hooks.changeEntry(name, msg.channel, "running", true);
-				} else if (msg.content.includes("disable") || msg.content.includes("off")) {
-					var name = msg.contentArray[msg.contentArray.length - 1];
-					hooks.changeEntry(name, msg.channel, "running", false);
-				} else {
-					msg.channel.send("Sorry, I can't help you with that.");
-				}
-			} else {
-				msg.channel.send("Sorry, I can't help you with that.");
-			}
+			msg.channel.send("Sorry, I can't help you with that.");
 		}
 	}
 });

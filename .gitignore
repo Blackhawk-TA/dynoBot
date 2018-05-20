@@ -3,4 +3,3 @@ node_modules
 venv
 cfg/security.json
 resources/logs
-package-lock.json

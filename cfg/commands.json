@@ -1,6 +1,36 @@
 [
 	{
 		"type": "js",
+		"regex": "(show|list)\\s(command|commands)\\s(config)",
+		"path": "src/core/showCommands.js"
+	},
+	{
+		"type": "js",
+		"regex": "(channel)(\\sof)?\\s(\\w+)\\s(to)\\s(\\d+)$",
+		"path": "src/core/hook-modules/hookChannel.js"
+	},
+	{
+		"type": "js",
+		"regex": "(hook|hooks)\\s(config|show)",
+		"path": "src/core/hook-modules/hookConfig.js"
+	},
+	{
+		"type": "js",
+		"regex": "(off|disable)\\s(\\w+)$",
+		"path": "src/core/hook-modules/hookDisable.js"
+	},
+	{
+		"type": "js",
+		"regex": "(on|enable)\\s(\\w+)$",
+		"path": "src/core/hook-modules/hookEnable.js"
+	},
+	{
+		"type": "js",
+		"regex": "(interval)(\\sof)?\\s(\\w+)\\s(to)\\s(\\d|.+)$",
+		"path": "src/core/hook-modules/hookInterval.js"
+	},
+	{
+		"type": "js",
 		"regex": "js-test|javascript test",
 		"path": "src/js-modules/test-js.js"
 	},
