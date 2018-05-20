@@ -3,8 +3,8 @@
 		"type": "js",
 		"name": "test",
 		"path": "src/js-modules/test-js.js",
-		"channel": "324682059044093965",
-		"interval": 15000,
+		"channel": "443759738916831232",
+		"interval": 30000,
 		"running": false
 	},
 	{
