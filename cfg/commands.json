@@ -6,6 +6,11 @@
 	},
 	{
 		"type": "js",
+		"regex": "(cleanup|clean-up|purge)",
+		"path": "src/core/messageCleaner.js"
+	},
+	{
+		"type": "js",
 		"regex": "(channel)(\\sof)?\\s(\\w+)\\s(to)\\s(\\d+)$",
 		"path": "src/core/hook-modules/hookChannel.js"
 	},

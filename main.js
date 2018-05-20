@@ -1,9 +1,7 @@
 const Discord = require("discord.js");
 
-const config = require("./cfg/config.json");
 const security = require("./cfg/security.json");
 const commands = require("./cfg/commands.json");
-const hookJson = require("./cfg/hooks.json");
 
 const pyHandler = require("./src/core/pythonHandler");
 const hooks = require("./src/core/hooks");
@@ -30,7 +28,7 @@ client.on("message", msg => {
 			var pattern = new RegExp(command.regex);
 			if (pattern.test(msg.content)) {
 				if (command.type === "js") {
-					require("./" + command.path).run(msg);
+					require("./" + command.path).run(msg, client);
 					bAnswered = true;
 					break;
 				} else if (command.type === "python") {
