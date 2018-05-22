@@ -22,21 +22,21 @@ client.on("message", msg => {
 		msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
 
 		var bAnswered = false;
+		var i = 0;
 
-		for (var i in commands) {
+		while(!bAnswered) {
 			var command = commands[i];
 			var pattern = new RegExp(command.regex);
 			if (pattern.test(msg.content)) {
 				if (command.type === "js") {
 					require("./" + command.path).run(msg, client);
 					bAnswered = true;
-					break;
 				} else if (command.type === "python") {
 					pyHandler.run(command.path, msg.contentArray, msg.channel);
 					bAnswered = true;
-					break;
 				}
 			}
+			i++;
 		}
 
 		if (!bAnswered) {
