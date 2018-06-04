@@ -1,5 +1,8 @@
 {
-	"messageCleaner": {
-		"amount": 100
+	"messageCleanAmount": 100,
+	"welcomeMessage": {
+		"channel": "general",
+		"messagePart1": "Hello,",
+		"messagePart2": "welcome to our discord server."
 	}
 }
