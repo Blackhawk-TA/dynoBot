@@ -15,6 +15,16 @@ client.on("ready", () => {
 	hooks.init(client.channels);
 });
 
+client.on('guildMemberAdd', member => {
+	//TODO allow enable and disable using config.json
+	var welcomeMessage = configHandler.readJSON("config", msg.guild.id, "welcomeMessage");
+	var channel = member.guild.channels.find("name", welcomeMessage.channel);
+
+	if (!channel) return;
+
+	channel.send(`${welcomeMessage.messagePart1} ${member} ${welcomeMessage.messagePart1}`);
+});
+
 client.on("message", msg => {
 	if (msg.isMentioned(client.user)) {
 		//Pre-edit message
@@ -24,7 +34,7 @@ client.on("message", msg => {
 		var bAnswered = false;
 		var i = 0;
 
-		while(!bAnswered) {
+		while(!bAnswered && i < commands.length) {
 			var command = commands[i];
 			var pattern = new RegExp(command.regex);
 			if (pattern.test(msg.content)) {
