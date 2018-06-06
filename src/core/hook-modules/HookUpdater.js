@@ -1,22 +1,18 @@
-'use strict';
-
 const pyHandler = require("./../pythonHandler");
+const hooks = require("./../../../cfg/hooks.json");
 
 class HookUpdater {
-	constructor(hooks, item, interval, channels) {
-		this.hooks = hooks;
-		this.item = item;
+	constructor(id, interval, channels) {
+		this.id = id;
 		this.interval = interval;
 		this.channels = channels;
 	}
-
 	update() {
-		var i = this.item;
-		var type = this.hooks[i].type;
-		var path = this.hooks[i].path;
-		var interval = this.hooks[i].interval;
-		var channel = this.channels.get(this.hooks[i].channel);
-		var running = this.hooks[i].running;
+		var type = hooks[this.id].type;
+		var path = hooks[this.id].path;
+		this.interval = hooks[this.id].interval;
+		var channel = this.channels.get(hooks[this.id].channel);
+		var running = hooks[this.id].running;
 
 		//Run script
 		if (running) {
@@ -25,7 +21,9 @@ class HookUpdater {
 			} else if (type === "python") {
 				pyHandler.run(path, "", channel);
 			}
-			setTimeout(this.update(), interval);
+			setTimeout(() => {
+				this.update();
+			}, this.interval)
 		}
 	}
 }

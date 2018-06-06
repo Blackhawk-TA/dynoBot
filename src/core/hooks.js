@@ -1,6 +1,5 @@
 const configHandler = require("./configHandler");
 const HookUpdater = require("./hook-modules/HookUpdater");
-
 const hooks = require("./../../cfg/hooks.json");
 
 module.exports = {
@@ -8,10 +7,10 @@ module.exports = {
 		for (var i in hooks) {
 			var interval = hooks[i].interval;
 
-			//TODO maybe as module instead of class
-			//Error because hooks is too big for class stack
-			const hookUpdater = new HookUpdater(hooks, i, interval, channels);
-			setTimeout(hookUpdater.update(), interval);
+			const hookUpdater = new HookUpdater(i, interval, channels);
+			setTimeout(() => {
+				hookUpdater.update()
+			}, interval);
 		}
 	},
 	changeEntry: function(name, channel, entry, value) {
@@ -27,7 +26,7 @@ module.exports = {
 		if (index === -1) {
 			channel.send("Sorry, but " + name + " or " + entry + " is an invalid parameter.");
 		} else {
-			configHandler.editHooks(channel.guild.id, index, entry, value)
+			configHandler.editJSON(channel.guild.id, index, entry, value)
 		}
 	}
 };

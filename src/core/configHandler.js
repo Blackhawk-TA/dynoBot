@@ -23,25 +23,7 @@ module.exports = {
 			return entry ? defaultFile[entry] : defaultFile;
 		}
 	},
-	editConfig: function(name, guildId, entry, value) {
-		var pathServer = path + guildId;
-		var pathJSON = pathServer + "/config.json";
-
-		if (!fs.exists(pathServer)) {
-			mkdirp(path, function (err) {
-				if (err) console.error(err);
-			});
-		}
-
-		var serverJSON = require(pathJSON);
-		serverJSON[entry] = value;
-
-		fs.writeFile(serverJSON, JSON.stringify(serverJSON, null, 4), "utf-8", function (err) {
-			if (err) throw err;
-			channel.send("Successfully changed " + entry + " to " + value + ".");
-		})
-	},
-	editHooks: function(guildId, index, entry, value) {
+	editJSON: function(guildId, index, entry, value) {
 		var pathServer = path + guildId;
 		var pathJSON = pathServer + "/hooks.json";
 
