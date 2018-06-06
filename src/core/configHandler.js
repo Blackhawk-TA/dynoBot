@@ -23,9 +23,9 @@ module.exports = {
 			return entry ? defaultFile[entry] : defaultFile;
 		}
 	},
-	editJSON: function(guildId, index, entry, value) {
+	editJSON: function(guildId, name, index, entry, value) {
 		var pathServer = path + guildId;
-		var pathJSON = pathServer + "/hooks.json";
+		var pathJSON = pathServer + "/" + name + ".json";
 
 		if (!fs.exists(pathServer)) {
 			mkdirp(pathServer, function (err) {
@@ -34,7 +34,7 @@ module.exports = {
 		}
 
 		if (!fs.exists(pathJSON)) {
-			var templateJSON = [];
+			var templateJSON = {};
 
 			fs.writeFile(pathJSON, JSON.stringify(templateJSON, null, 4), "utf-8", function (err) {
 				if (err) throw err;
@@ -44,9 +44,7 @@ module.exports = {
 		var serverJSON = require(pathJSON);
 		serverJSON[index][entry] = value;
 
-		var jsonString = JSON.stringify(serverJSON, null, 4);
-
-		fs.writeFile(serverJSON, jsonString, "utf-8", function (err) {
+		fs.writeFile(serverJSON, JSON.stringify(serverJSON, null, 4), "utf-8", function (err) {
 			if (err) throw err;
 			channel.send("Successfully changed " + entry + " to " + value + ".\n```json\n" + jsonString + "```");
 		})
