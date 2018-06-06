@@ -1,5 +1,5 @@
 const configHandler = require("./configHandler");
-const twoWeeks = 72576000000; //in ms
+const twoWeeks = 1209600000; //in ms
 
 module.exports = {
 	run: function (msg, client) {

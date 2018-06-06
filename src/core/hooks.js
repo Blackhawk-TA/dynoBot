@@ -26,7 +26,7 @@ module.exports = {
 		if (index === -1) {
 			channel.send("Sorry, but " + name + " or " + entry + " is an invalid parameter.");
 		} else {
-			configHandler.editJSON(channel.guild.id, "hooks", index, entry, value)
+			configHandler.editJSON(channel, "hooks", index, entry, value)
 		}
 	}
 };

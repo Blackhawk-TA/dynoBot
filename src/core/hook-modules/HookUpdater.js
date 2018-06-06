@@ -1,5 +1,5 @@
 const pyHandler = require("./../pythonHandler");
-const hooks = require("./../../../cfg/hooks.json");
+const hooks = require("./../../../cfg/hooks.json"); //TODO check server hook file first
 
 class HookUpdater {
 	constructor(id, interval, channels) {

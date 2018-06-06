@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"discord.js": "~11.3.2",
-		"mkdirp": "~0.5.1"
+		"mkdirp": "~0.5.1",
+		"path": "~0.12.7"
 	}
 }
