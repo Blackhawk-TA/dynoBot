@@ -1,6 +1,7 @@
 {
 	"messageCleanAmount": 100,
 	"welcomeMessage": {
+		"enable": true,
 		"channel": "general",
 		"messagePart1": "Hello,",
 		"messagePart2": "welcome to our discord server."

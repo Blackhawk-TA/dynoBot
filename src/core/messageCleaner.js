@@ -1,5 +1,5 @@
 const configHandler = require("./configHandler");
-const twoWeeks = 1209600000; //in ms
+const twoWeeks = 1209600000; //in ms TODO fix, 0msg are deleted
 
 module.exports = {
 	run: function (msg, client) {

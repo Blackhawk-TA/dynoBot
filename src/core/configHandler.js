@@ -33,7 +33,7 @@ module.exports = {
 		var jsonString = "";
 
 		if (!fs.existsSync(pathServer)) {
-			mkdirp(pathServer, function (err) {
+			mkdirp(pathServer, function (err) { //TODO can't create 2 folders at once
 				if (err) console.error(err);
 			});
 		}
