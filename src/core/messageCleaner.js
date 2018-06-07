@@ -3,7 +3,7 @@ const twoWeeks = 1209600000; //in ms TODO fix, 0msg are deleted
 
 module.exports = {
 	run: function (msg, client) {
-		var amount = configHandler.readJSON("config", msg.guild.id, "messageCleanAmount");
+		var amount = configHandler.readJSON("config", msg.guild.id, "settings", "messageCleanAmount");
 
 		msg.channel.fetchMessages({limit: amount})
 			.then(messages => {

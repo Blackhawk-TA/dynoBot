@@ -1,18 +1,33 @@
-const pyHandler = require("./../pythonHandler");
-const hooks = require("./../../../cfg/hooks.json"); //TODO check server hook file first
+const path = require("path");
+
+const base = path.resolve(".");
+
+const pyHandler = require(base + "/src/core/pythonHandler");
+const hooks = require(base + "/cfg/hooks.json");
+const configHandler = require(base + "/src/core/configHandler");
 
 class HookUpdater {
-	constructor(id, interval, channels) {
+	constructor(id, interval, server) {
 		this.id = id;
 		this.interval = interval;
-		this.channels = channels;
+		this.server = server;
 	}
-	update() {
+
+	/**
+	 * Calls the hook and and schedules the next call
+	 */
+	nextCall() {
+		var cfgName = "hooks";
+
+		//Non-editable
 		var type = hooks[this.id].type;
 		var path = hooks[this.id].path;
-		this.interval = hooks[this.id].interval;
-		var channel = this.channels.get(hooks[this.id].channel);
-		var running = hooks[this.id].running;
+
+		//Editable
+		var channelId = configHandler.readJSON(cfgName, this.server.id, this.id, "channel");
+		this.interval = configHandler.readJSON(cfgName, this.server.id, this.id, "interval");
+		var running = configHandler.readJSON(cfgName, this.server.id, this.id,"running");
+		var channel = this.server.channels.get(channelId);
 
 		//Run script
 		if (running) {
@@ -22,7 +37,7 @@ class HookUpdater {
 				pyHandler.run(path, "", channel);
 			}
 			setTimeout(() => {
-				this.update();
+				this.nextCall();
 			}, this.interval)
 		}
 	}

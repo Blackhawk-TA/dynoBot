@@ -3,13 +3,13 @@ const HookUpdater = require("./hook-modules/HookUpdater");
 const hooks = require("./../../cfg/hooks.json");
 
 module.exports = {
-	init: function(channels) {
+	init: function(server) {
 		for (var i in hooks) {
 			var interval = hooks[i].interval;
 
-			const hookUpdater = new HookUpdater(i, interval, channels);
+			const hookUpdater = new HookUpdater(i, interval, server);
 			setTimeout(() => {
-				hookUpdater.update()
+				hookUpdater.nextCall()
 			}, interval);
 		}
 	},

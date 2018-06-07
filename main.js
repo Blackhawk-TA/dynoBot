@@ -12,12 +12,15 @@ client.on("ready", () => {
 	console.log("Bot successfully started.");
 
 	//Init hooks
-	hooks.init(client.channels);
+	client.guilds.every((server) => {
+		hooks.init(server);
+	});
+
 });
 
 client.on('guildMemberAdd', member => {
 	//TODO allow enable and disable using config.json
-	var welcomeMessage = configHandler.readJSON("config", msg.guild.id, "welcomeMessage");
+	var welcomeMessage = configHandler.readJSON("config", msg.guild.id, "settings", "welcomeMessage");
 	var channel = member.guild.channels.find("name", welcomeMessage.channel);
 
 	if (!channel) return;

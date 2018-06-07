@@ -10,8 +10,8 @@ const hooks = require(base + "/cfg/hooks.json");
 const pathCfg = base + "/cfg/servers/";
 
 module.exports = {
-	readJSON: function (name, guildId, entry = null) {
-		var configPath = pathCfg + guildId + "/" + name + ".json";
+	readJSON: function (name, serverId, id = null, entry = null) {
+		var configPath = pathCfg + serverId + "/" + name + ".json";
 		var defaultFile;
 
 		if (name === "hooks")
@@ -21,9 +21,13 @@ module.exports = {
 
 		if (fs.existsSync(configPath)) {
 			var serverConfig = require(configPath);
-			return entry ? serverConfig[entry] : serverConfig;
+			if(entry) {
+				return serverConfig[id][entry] ? serverConfig[id][entry] : defaultFile[id][entry]
+			} else {
+				return entry ? defaultFile[id][entry] : defaultFile;
+			}
 		} else {
-			return entry ? defaultFile[entry] : defaultFile;
+			return entry ? defaultFile[id][entry] : defaultFile;
 		}
 	},
 	editJSON: function (channel, configType, id, entry, value) {
