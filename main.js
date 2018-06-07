@@ -19,13 +19,14 @@ client.on("ready", () => {
 });
 
 client.on('guildMemberAdd', member => {
-	//TODO allow enable and disable using config.json
 	var welcomeMessage = configHandler.readJSON("config", msg.guild.id, "settings", "welcomeMessage");
-	var channel = member.guild.channels.find("name", welcomeMessage.channel);
+	if (welcomeMessage.enabled) {
+		var channel = member.guild.channels.find("name", welcomeMessage.channel);
 
-	if (!channel) return;
+		if (!channel) return;
 
-	channel.send(`${welcomeMessage.messagePart1} ${member} ${welcomeMessage.messagePart1}`);
+		channel.send(`${welcomeMessage.messagePart1} ${member} ${welcomeMessage.messagePart1}`);
+	}
 });
 
 client.on("message", msg => {

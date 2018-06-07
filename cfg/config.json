@@ -2,7 +2,7 @@
 	"settings": {
 		"messageCleanAmount": 100,
 		"welcomeMessage": {
-			"enable": true,
+			"enabled": true,
 			"channel": "general",
 			"messagePart1": "Hello,",
 			"messagePart2": "welcome to our discord server."
