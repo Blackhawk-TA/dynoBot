@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const base = require("path").resolve(".");
 
 const security = require("./cfg/security.json");
 const commands = require("./cfg/commands.json");
@@ -19,7 +20,8 @@ client.on("ready", () => {
 });
 
 client.on('guildMemberAdd', member => {
-	var welcomeMessage = configHandler.readJSON("config", msg.guild.id, "settings", "welcomeMessage");
+	var pathConfig = base + "/cfg/config.json";
+	var welcomeMessage = configHandler.readJSON(pathConfig, msg.guild.id, "settings", "welcomeMessage");
 	if (welcomeMessage.enabled) {
 		var channel = member.guild.channels.find("name", welcomeMessage.channel);
 

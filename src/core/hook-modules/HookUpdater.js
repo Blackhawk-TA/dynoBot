@@ -15,16 +15,16 @@ class HookUpdater {
 	 */
 	nextCall() {
 		var configHandler = require(base + "/src/utils/configHandler");
-		var cfgName = "hooks";
+		var pathConfig = base + "/cfg/hooks.json";
 
 		//Non-editable
 		var type = hooks[this.id].type;
 		var path = hooks[this.id].path;
 
 		//Editable
-		var channelId = configHandler.readJSON(cfgName, this.server.id, this.id, "channel");
-		this.interval = configHandler.readJSON(cfgName, this.server.id, this.id, "interval");
-		var running = configHandler.readJSON(cfgName, this.server.id, this.id,"running");
+		var channelId = configHandler.readJSON(pathConfig, this.server.id, this.id, "channel");
+		this.interval = configHandler.readJSON(pathConfig, this.server.id, this.id, "interval");
+		var running = configHandler.readJSON(pathConfig, this.server.id, this.id,"running");
 		var channel = this.server.channels.get(channelId);
 
 		//Run script

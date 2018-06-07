@@ -1,23 +1,16 @@
 const fs = require("fs");
 const base = require("path").resolve(".");
 
-
-const configFile = require(base + "/cfg/config.json");
-const hooksFile = require(base + "/cfg/hooks.json");
-
 const HookUpdater = require(base + "/src/core/hook-modules/HookUpdater");
 
 const pathCfg = base + "/cfg/servers/";
 
 var self = module.exports = {
-	readJSON: function (name, serverId, id = null, entry = null) {
-		var configPath = pathCfg + serverId + "/" + name + ".json";
-		var defaultFile;
-
-		if (name === "hooks")
-			defaultFile = hooksFile;
-		else
-			defaultFile = configFile;
+	readJSON: function (defaultPath, serverId, id = null, entry = null) {
+		var nameHelper = defaultPath.split("/");
+		var name = nameHelper[nameHelper.length - 1];
+		var configPath = pathCfg + serverId + "/" + name;
+		var defaultFile = require(defaultPath);
 
 		if (fs.existsSync(configPath)) {
 			var serverConfig = require(configPath);
@@ -71,8 +64,8 @@ var self = module.exports = {
 		});
 
 		//Trigger hook when enabling
-		if (entry === "running") {
-			var interval = self.readJSON("hooks", channel.guild.id, id, "interval");
+		if (entry === "running" && configType === "hooks") {
+			var interval = self.readJSON(base + "/cfg/hooks.json", channel.guild.id, id, "interval");
 			const hookUpdater = new HookUpdater(id, interval, channel.guild);
 			setTimeout(() => {
 				hookUpdater.nextCall()

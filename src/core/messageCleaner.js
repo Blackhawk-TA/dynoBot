@@ -6,7 +6,8 @@ const oneDay = 86400000; //in ms
 
 module.exports = {
 	run: function (msg, client) {
-		var amount = configHandler.readJSON("config", msg.guild.id, "settings", "messageCleanAmount");
+		var pathConfig = base + "/cfg/config.json";
+		var amount = configHandler.readJSON(pathConfig, msg.guild.id, "settings", "messageCleanAmount");
 
 		msg.channel.fetchMessages({limit: amount})
 			.then(messages => {
