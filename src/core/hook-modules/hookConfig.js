@@ -1,4 +1,6 @@
-const configHandler = require("./../configHandler");
+const base = require("path").resolve(".");
+
+const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
 	run: function(msg) {

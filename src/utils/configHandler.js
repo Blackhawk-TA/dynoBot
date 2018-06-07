@@ -1,7 +1,6 @@
 const fs = require("fs");
-const path = require("path");
+const base = require("path").resolve(".");
 
-const base = path.resolve(".");
 
 const configFile = require(base + "/cfg/config.json");
 const hooksFile = require(base + "/cfg/hooks.json");

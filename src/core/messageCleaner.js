@@ -1,4 +1,6 @@
-const configHandler = require("./configHandler");
+const base = require("path").resolve(".");
+
+const configHandler = require(base + "/src/utils/configHandler");
 const twoWeeks = 14; //in days
 const oneDay = 86400000; //in ms
 

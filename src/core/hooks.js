@@ -1,6 +1,8 @@
-const configHandler = require("./configHandler");
-const HookUpdater = require("./hook-modules/HookUpdater");
-const hooks = require("./../../cfg/hooks.json");
+const base = require("path").resolve(".");
+
+const configHandler = require(base + "/src/utils/configHandler");
+const HookUpdater = require(base + "/src/core/hook-modules/HookUpdater");
+const hooks = require(base + "/cfg/hooks.json");
 
 module.exports = {
 	init: function(server) {

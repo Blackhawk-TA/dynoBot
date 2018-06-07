@@ -1,4 +1,6 @@
-const hooks = require("./../hooks");
+const base = require("path").resolve(".");
+
+const hooks = require(base + "/src/core/hooks");
 
 module.exports = {
 	run: function(msg) {

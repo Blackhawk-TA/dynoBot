@@ -1,4 +1,6 @@
-const commands = require("./../../cfg/commands.json");
+const base = require("path").resolve(".");
+
+const commands = require(base + "/cfg/commands.json");
 
 module.exports = {
 	run: function(msg) {
