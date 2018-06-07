@@ -28,8 +28,8 @@ module.exports = {
 	},
 	editJSON: function (channel, configType, id, entry, value) {
 		var guildId = channel.guild.id;
-		var pathServer = pathCfg + guildId;
-		var pathJSON = pathServer + "/" + configType + ".json";
+		var pathServer = pathCfg + guildId + "/";
+		var pathJSON = pathServer + configType + ".json";
 		var jsonString = "";
 
 		if (!fs.existsSync(pathServer)) {
@@ -49,7 +49,7 @@ module.exports = {
 		} else { //config exists, edit old one
 			var serverJSON = require(pathJSON);
 
-			if (serverJSON[id] === undefined) {
+			if (!serverJSON[id]) {
 				serverJSON[id] = {
 					[entry]: value
 				};

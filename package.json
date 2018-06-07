@@ -7,8 +7,8 @@
 		"url": "https://github.com/Blackhawk-TA/ProjectTschernobyl.git"
 	},
 	"dependencies": {
-		"discord.js": "~11.3.2",
-		"mkdirp": "~0.5.1",
-		"path": "~0.12.7"
+		"discord.js": "^11.3.2",
+		"mkdirp": "^0.5.1",
+		"path": "^0.12.7"
 	}
 }
