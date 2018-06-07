@@ -1,5 +1,6 @@
 const configHandler = require("./configHandler");
-const twoWeeks = 1209600000; //in ms TODO fix, 0msg are deleted
+const twoWeeks = 14; //in days
+const oneDay = 86400000; //in ms
 
 module.exports = {
 	run: function (msg, client) {
@@ -10,9 +11,11 @@ module.exports = {
 				var msgArray = messages.array();
 				var msgToDelete = [];
 				var index = 0;
+				var date = new Date();
 
-				for (var i in msgArray) {
-					if ((msgArray[i].isMentioned(client.user) || msgArray[i].author.id === client.user.id) && msgArray[i].createdTimestamp < twoWeeks) {
+				for (var i in msgArray) { //TODO optimize
+					var diffDays = Math.round(Math.abs((msgArray[i].createdAt.getTime() - date.getTime()) / (oneDay)));
+					if ((msgArray[i].isMentioned(client.user) || msgArray[i].author.id === client.user.id) && diffDays < twoWeeks) {
 						msgToDelete[index] = msgArray[i];
 						index++;
 					}
