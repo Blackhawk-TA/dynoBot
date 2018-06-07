@@ -4,10 +4,10 @@ const hooks = require("./../../cfg/hooks.json");
 
 module.exports = {
 	init: function(server) {
-		for (var i in hooks) {
-			var interval = hooks[i].interval;
+		for (var id in hooks) {
+			var interval = hooks[id].interval;
 
-			const hookUpdater = new HookUpdater(i, interval, server);
+			const hookUpdater = new HookUpdater(id, interval, server);
 			setTimeout(() => {
 				hookUpdater.nextCall()
 			}, interval);
@@ -17,9 +17,9 @@ module.exports = {
 		var index = -1;
 
 		//Get index
-		for (var i in hooks) {
-			if (hooks[i].name === name && hooks[i][entry] !== undefined) {
-				index = i;
+		for (var id in hooks) {
+			if (hooks[id].name === name && hooks[id][entry] !== undefined) {
+				index = id;
 			}
 		}
 

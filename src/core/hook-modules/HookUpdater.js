@@ -4,7 +4,6 @@ const base = path.resolve(".");
 
 const pyHandler = require(base + "/src/core/pythonHandler");
 const hooks = require(base + "/cfg/hooks.json");
-const configHandler = require(base + "/src/core/configHandler");
 
 class HookUpdater {
 	constructor(id, interval, server) {
@@ -17,6 +16,7 @@ class HookUpdater {
 	 * Calls the hook and and schedules the next call
 	 */
 	nextCall() {
+		var configHandler = require(base + "/src/core/configHandler");
 		var cfgName = "hooks";
 
 		//Non-editable

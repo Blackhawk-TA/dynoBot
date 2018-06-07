@@ -1,30 +1,31 @@
 const fs = require("fs");
 const path = require("path");
-const mkdirp = require("mkdirp");
 
 const base = path.resolve(".");
 
-const config = require(base + "/cfg/config.json");
-const hooks = require(base + "/cfg/hooks.json");
+const configFile = require(base + "/cfg/config.json");
+const hooksFile = require(base + "/cfg/hooks.json");
+
+const HookUpdater = require(base + "/src/core/hook-modules/HookUpdater");
 
 const pathCfg = base + "/cfg/servers/";
 
-module.exports = {
+var self = module.exports = {
 	readJSON: function (name, serverId, id = null, entry = null) {
 		var configPath = pathCfg + serverId + "/" + name + ".json";
 		var defaultFile;
 
 		if (name === "hooks")
-			defaultFile = hooks;
+			defaultFile = hooksFile;
 		else
-			defaultFile = config;
+			defaultFile = configFile;
 
 		if (fs.existsSync(configPath)) {
 			var serverConfig = require(configPath);
-			if(entry) {
+			if(serverConfig[id] && entry) {
 				return serverConfig[id][entry] ? serverConfig[id][entry] : defaultFile[id][entry]
 			} else {
-				return entry ? defaultFile[id][entry] : defaultFile;
+				return defaultFile[id][entry];
 			}
 		} else {
 			return entry ? defaultFile[id][entry] : defaultFile;
@@ -36,11 +37,12 @@ module.exports = {
 		var pathJSON = pathServer + configType + ".json";
 		var jsonString = "";
 
-		if (!fs.existsSync(pathServer)) {
-			mkdirp(pathServer, function (err) { //TODO can't create 2 folders at once
-				if (err) console.error(err);
-			});
-		}
+		//Create directory
+		if (!fs.existsSync(pathCfg))
+			fs.mkdirSync(pathCfg);
+
+		if (!fs.existsSync(pathServer))
+			fs.mkdirSync(pathServer);
 
 		if (!fs.existsSync(pathJSON)) { //config does not exist, create new
 			var newJSON = {
@@ -67,6 +69,15 @@ module.exports = {
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
 			channel.send("Successfully changed " + entry + " to " + value + ".\n```json\n" + jsonString + "```");
-		})
+		});
+
+		//Trigger hook when enabling
+		if (entry === "running") {
+			var interval = self.readJSON("hooks", channel.guild.id, id, "interval");
+			const hookUpdater = new HookUpdater(id, interval, channel.guild);
+			setTimeout(() => {
+				hookUpdater.nextCall()
+			}, interval);
+		}
 	}
 };
