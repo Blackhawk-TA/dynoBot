@@ -6,10 +6,18 @@ const HookUpdater = require(base + "/src/core/hook-modules/HookUpdater");
 const pathCfg = base + "/cfg/servers/";
 
 var self = module.exports = {
+	/**
+	 * Reads from a json file. Looks for server-specific file first and falls back to default file on the pre-defined path
+	 * @param defaultPath The non-server-specific base config file path, used if no server-specific file found
+	 * @param serverId The id of the server the bot is currently running on
+	 * @param id (optional) The ID of the JSON array where the entry is located
+	 * @param entry (optional) The entry of the JSON array within the id
+	 * @return {*} The value of the json entry when id and entry are set, else the entire json file.
+	 */
 	readJSON: function (defaultPath, serverId, id = null, entry = null) {
-		var nameHelper = defaultPath.split("/");
-		var name = nameHelper[nameHelper.length - 1];
-		var configPath = pathCfg + serverId + "/" + name;
+		var pathArray = defaultPath.split("/");
+		var configName = pathArray[pathArray.length - 1];
+		var configPath = pathCfg + serverId + "/" + configName;
 		var defaultFile = require(defaultPath);
 
 		if (fs.existsSync(configPath)) {
@@ -23,10 +31,21 @@ var self = module.exports = {
 			return entry ? defaultFile[id][entry] : defaultFile;
 		}
 	},
-	editJSON: function (channel, configType, id, entry, value) {
+
+	/**
+	 * Edits a server-specific JSON file (creates one from the base config if it doesn't exist)
+	 * @param channel The channel where the message for the edit command was sent in
+	 * @param configPath The non-server-specific base config file path
+	 * @param id The id of the JSON array where editing takes place in
+	 * @param entry The name of the entry which shall be edited
+	 * @param value The value that is assigned to the entry
+	 */
+	editJSON: function (channel, configPath, id, entry, value) {
+		var pathArray = configPath.split("/");
+		var configName = pathArray[pathArray.length - 1];
 		var guildId = channel.guild.id;
 		var pathServer = pathCfg + guildId + "/";
-		var pathJSON = pathServer + configType + ".json";
+		var pathJSON = pathServer + configName;
 		var jsonString = "";
 
 		//Create directory
@@ -64,8 +83,8 @@ var self = module.exports = {
 		});
 
 		//Trigger hook when enabling
-		if (entry === "running" && configType === "hooks") {
-			var interval = self.readJSON(base + "/cfg/hooks.json", channel.guild.id, id, "interval");
+		if (entry === "running" && configName === "hooks.json") {
+			var interval = self.readJSON(configPath, channel.guild.id, id, "interval");
 			const hookUpdater = new HookUpdater(id, interval, channel.guild);
 			setTimeout(() => {
 				hookUpdater.nextCall()

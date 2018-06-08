@@ -27,7 +27,7 @@ client.on('guildMemberAdd', member => {
 
 		if (!channel) return;
 
-		channel.send(`${welcomeMessage.messagePart1} ${member} ${welcomeMessage.messagePart1}`);
+		channel.send(`${welcomeMessage["messagePart1"]} ${member} ${welcomeMessage["messagePart2"]}`);
 	}
 });
 
