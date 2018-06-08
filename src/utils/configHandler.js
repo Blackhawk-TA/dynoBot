@@ -5,6 +5,10 @@ const HookUpdater = require(base + "/src/core/hook-modules/HookUpdater");
 
 const pathCfg = base + "/cfg/servers/";
 
+/**
+ * Utils module optimized for re-use in custom js modules to allow json config handling
+ * @type {{readJSON: module.exports.readJSON, editJSON: module.exports.editJSON}}
+ */
 var self = module.exports = {
 	/**
 	 * Reads from a json file. Looks for server-specific file first and falls back to default file on the pre-defined path
