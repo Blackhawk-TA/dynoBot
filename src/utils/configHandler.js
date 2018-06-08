@@ -26,13 +26,22 @@ var self = module.exports = {
 
 		if (fs.existsSync(configPath)) {
 			var serverConfig = require(configPath);
-			if(serverConfig[id] && entry) {
-				return serverConfig[id][entry] ? serverConfig[id][entry] : defaultFile[id][entry]
-			} else {
-				return defaultFile[id][entry];
+
+			if (id && entry && defaultFile[id] && defaultFile[id][entry]) {
+				if(serverConfig[id] && entry) {
+					return serverConfig[id][entry] ? serverConfig[id][entry] : defaultFile[id][entry];
+				} else {
+					return defaultFile[id][entry];
+				}
+			} else if (id && !entry && defaultFile[id]) {
+				if(serverConfig[id] && entry) {
+					return serverConfig[id] ? serverConfig[id] : defaultFile[id];
+				} else {
+					return defaultFile[id];
+				}
 			}
 		} else {
-			return entry ? defaultFile[id][entry] : defaultFile;
+			return entry && defaultFile[id] ? defaultFile[id][entry] : defaultFile;
 		}
 	},
 

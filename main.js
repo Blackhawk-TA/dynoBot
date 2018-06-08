@@ -4,6 +4,7 @@ const base = require("path").resolve(".");
 const security = require("./cfg/security.json");
 const commands = require("./cfg/commands.json");
 
+const configHandler = require(base + "/src/utils/configHandler");
 const pyHandler = require("./src/core/pythonHandler");
 const hooks = require("./src/core/hooks");
 
@@ -21,13 +22,13 @@ client.on("ready", () => {
 
 client.on('guildMemberAdd', member => {
 	var pathConfig = base + "/cfg/config.json";
-	var welcomeMessage = configHandler.readJSON(pathConfig, msg.guild.id, "settings", "welcomeMessage");
+	var welcomeMessage = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message");
 	if (welcomeMessage.enabled) {
 		var channel = member.guild.channels.find("name", welcomeMessage.channel);
 
 		if (!channel) return;
 
-		channel.send(`${welcomeMessage["messagePart1"]} ${member} ${welcomeMessage["messagePart2"]}`);
+		channel.send(`${welcomeMessage["part1"]} ${member} ${welcomeMessage["part2"]}`);
 	}
 });
 

@@ -1,11 +1,11 @@
 {
-	"settings": {
-		"messageCleanAmount": 100,
-		"welcomeMessage": {
-			"enabled": true,
-			"channel": "general",
-			"messagePart1": "Hello,",
-			"messagePart2": "welcome to our discord server."
-		}
+	"message_cleaner": {
+		"amount": 100
+	},
+	"welcome_message": {
+		"enabled": true,
+		"channel": "general",
+		"part1": "Hello,",
+		"part2": "welcome to our discord server."
 	}
 }

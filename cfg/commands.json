@@ -7,7 +7,7 @@
 	{
 		"type": "js",
 		"regex": "(cleanup|clean-up|purge)",
-		"path": "src/core/messageCleaner.js"
+		"path": "src/core/core-modules/messageCleaner.js"
 	},
 	{
 		"type": "js",
@@ -33,6 +33,11 @@
 		"type": "js",
 		"regex": "(interval)(\\sof)?\\s(\\w+)\\s(to)\\s(\\d|.+)$",
 		"path": "src/core/hook-modules/hookInterval.js"
+	},
+	{
+		"type": "js",
+		"regex": "(config change)\\s(\\w+)\\s(\\w+)\\s(to)\\s(\\w+)$",
+		"path": "src/core/core-modules/configEditor.js"
 	},
 	{
 		"type": "js",

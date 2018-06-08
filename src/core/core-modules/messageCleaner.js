@@ -1,13 +1,14 @@
 const base = require("path").resolve(".");
 
 const configHandler = require(base + "/src/utils/configHandler");
+
 const twoWeeks = 14; //in days
 const oneDay = 86400000; //in ms
 
 module.exports = {
 	run: function (msg, client) {
 		var pathConfig = base + "/cfg/config.json";
-		var amount = configHandler.readJSON(pathConfig, msg.guild.id, "settings", "messageCleanAmount");
+		var amount = configHandler.readJSON(pathConfig, msg.guild.id, "message_cleaner", "amount");
 
 		msg.channel.fetchMessages({limit: amount})
 			.then(messages => {
