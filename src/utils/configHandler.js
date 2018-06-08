@@ -14,7 +14,7 @@ var self = module.exports = {
 	 * Reads from a json file. Looks for server-specific file first and falls back to default file on the pre-defined path
 	 * @param defaultPath The non-server-specific base config file path, used if no server-specific file found
 	 * @param serverId The id of the server the bot is currently running on
-	 * @param id (optional) The ID of the JSON array where the entry is located
+	 * @param id (optional) The outer JSON entry, can be used without entry
 	 * @param entry (optional) The entry of the JSON array within the id
 	 * @return {*} The value of the json entry when id and entry are set, else the entire json file.
 	 */
