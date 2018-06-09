@@ -12,7 +12,6 @@ module.exports = {
 
 		if (config[id] && config[id][entry]) {
 			configHandler.editJSON(msg.channel, pathCfg, id, entry, value);
-			msg.channel.send("Changed config entry " + entry + " to " + value + ".");
 		} else {
 			msg.channel.send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
 		}
