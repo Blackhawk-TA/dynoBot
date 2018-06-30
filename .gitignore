@@ -1,5 +1,11 @@
+#IDE
 .idea
+
+#Dependencies
 node_modules
 venv
+
+#Instance-specific files
+cfg/servers
 cfg/security.json
 resources/logs
