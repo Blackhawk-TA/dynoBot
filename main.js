@@ -33,32 +33,36 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on("message", msg => {
-	if (msg.isMentioned(client.user)) {
-		//Pre-edit message
-		msg.content = msg.content.toLowerCase();
-		msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
+	try {
+		if (msg.isMentioned(client.user)) {
+			//Pre-edit message
+			msg.content = msg.content.toLowerCase();
+			msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
 
-		var bAnswered = false;
-		var i = 0;
+			var bAnswered = false;
+			var i = 0;
 
-		while(!bAnswered && i < commands.length) {
-			var command = commands[i];
-			var pattern = new RegExp(command.regex);
-			if (pattern.test(msg.content)) {
-				if (command.type === "js") {
-					require("./" + command.path).run(msg, client);
-					bAnswered = true;
-				} else if (command.type === "python") {
-					pyHandler.run(command.path, msg.contentArray, msg.channel);
-					bAnswered = true;
+			while (!bAnswered && i < commands.length) {
+				var command = commands[i];
+				var pattern = new RegExp(command.regex);
+				if (pattern.test(msg.content)) {
+					if (command.type === "js") {
+						require("./" + command.path).run(msg, client);
+						bAnswered = true;
+					} else if (command.type === "python") {
+						pyHandler.run(command.path, msg.contentArray, msg.channel);
+						bAnswered = true;
+					}
 				}
+				i++;
 			}
-			i++;
-		}
 
-		if (!bAnswered) {
-			msg.channel.send("Sorry, I can't help you with that.");
+			if (!bAnswered) {
+				msg.channel.send("Sorry, I can't help you with that.");
+			}
 		}
+	} catch(e) {
+		console.log(e);
 	}
 });
 

@@ -12,10 +12,10 @@ const pathCfg = base + "/cfg/servers/";
 var self = module.exports = {
 	/**
 	 * Reads from a json file. Looks for server-specific file first and falls back to default file on the pre-defined path
-	 * @param defaultPath The non-server-specific base config file path, used if no server-specific file found
-	 * @param serverId The id of the server the bot is currently running on
-	 * @param id (optional) The outer JSON entry, can be used without entry
-	 * @param entry (optional) The entry of the JSON array within the id
+	 * @param {string} defaultPath The non-server-specific base config file path, used if no server-specific file found
+	 * @param {int} serverId The id of the server the bot is currently running on
+	 * @param {string} id (optional) The outer JSON entry, can be used without entry
+	 * @param {string} entry (optional) The entry of the JSON array within the id
 	 * @return {*} The value of the json entry when id and entry are set, else the entire json file.
 	 */
 	readJSON: function (defaultPath, serverId, id = null, entry = null) {
@@ -27,9 +27,9 @@ var self = module.exports = {
 		if (fs.existsSync(configPath)) {
 			var serverConfig = require(configPath);
 
-			if (id && entry && defaultFile[id] && defaultFile[id][entry]) {
+			if (id && entry && defaultFile[id] && defaultFile[id][entry] != null) {
 				if(serverConfig[id] && entry) {
-					return serverConfig[id][entry] ? serverConfig[id][entry] : defaultFile[id][entry];
+					return serverConfig[id][entry] != null ? serverConfig[id][entry] : defaultFile[id][entry];
 				} else {
 					return defaultFile[id][entry];
 				}
@@ -47,11 +47,11 @@ var self = module.exports = {
 
 	/**
 	 * Edits a server-specific JSON file (creates one from the base config if it doesn't exist)
-	 * @param channel The channel where the message for the edit command was sent in
-	 * @param configPath The non-server-specific base config file path
-	 * @param id The id of the JSON array where editing takes place in
-	 * @param entry The name of the entry which shall be edited
-	 * @param value The value that is assigned to the entry
+	 * @param {Object} channel The channel where the message for the edit command was sent in
+	 * @param {string} configPath The non-server-specific base config file path
+	 * @param {string} id The id of the JSON array where editing takes place in
+	 * @param {string} entry The name of the entry which shall be edited
+	 * @param {*} value The value that is assigned to the entry
 	 */
 	editJSON: function (channel, configPath, id, entry, value) {
 		var pathArray = configPath.split("/");

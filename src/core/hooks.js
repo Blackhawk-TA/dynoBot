@@ -7,12 +7,16 @@ const hooks = require(base + "/cfg/hooks.json");
 module.exports = {
 	init: function(server) {
 		for (var id in hooks) {
-			var interval = hooks[id].interval;
+			var hookConfig = configHandler.readJSON(base + "/cfg/hooks.json", server.id, id);
 
-			const hookUpdater = new HookUpdater(id, interval, server);
-			setTimeout(() => {
-				hookUpdater.nextCall()
-			}, interval);
+			if (hookConfig.running) {
+				var interval = hookConfig.interval;
+
+				const hookUpdater = new HookUpdater(id, interval, server);
+				setTimeout(() => {
+					hookUpdater.nextCall()
+				}, interval);
+			}
 		}
 	},
 	changeEntry: function(name, channel, entry, value) {

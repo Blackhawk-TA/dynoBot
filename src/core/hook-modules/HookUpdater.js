@@ -14,29 +14,33 @@ class HookUpdater {
 	 * Calls the hook and and schedules the next call
 	 */
 	nextCall() {
-		var configHandler = require(base + "/src/utils/configHandler");
-		var pathConfig = base + "/cfg/hooks.json";
+		try {
+			var configHandler = require(base + "/src/utils/configHandler");
+			var pathConfig = base + "/cfg/hooks.json";
 
-		//Non-editable
-		var type = hooks[this.id].type;
-		var path = hooks[this.id].path;
+			//Non-editable
+			var type = hooks[this.id].type;
+			var path = hooks[this.id].path;
 
-		//Editable
-		var channelId = configHandler.readJSON(pathConfig, this.server.id, this.id, "channel");
-		this.interval = configHandler.readJSON(pathConfig, this.server.id, this.id, "interval");
-		var running = configHandler.readJSON(pathConfig, this.server.id, this.id,"running");
-		var channel = this.server.channels.get(channelId);
+			//Editable
+			var channelId = configHandler.readJSON(pathConfig, this.server.id, this.id, "channel");
+			this.interval = configHandler.readJSON(pathConfig, this.server.id, this.id, "interval");
+			var running = configHandler.readJSON(pathConfig, this.server.id, this.id, "running");
+			var channel = this.server.channels.get(channelId);
 
-		//Run script
-		if (running) {
-			if (type === "js") {
-				require("./../../../" + path).hook(channel);
-			} else if (type === "python") {
-				pyHandler.run(path, "", channel);
+			//Run script
+			if (running) {
+				if (type === "js") {
+					require("./../../../" + path).hook(channel);
+				} else if (type === "python") {
+					pyHandler.run(path, "", channel);
+				}
+				setTimeout(() => {
+					this.nextCall();
+				}, this.interval)
 			}
-			setTimeout(() => {
-				this.nextCall();
-			}, this.interval)
+		} catch(e) {
+			console.log(e);
 		}
 	}
 }
