@@ -39,6 +39,8 @@ var self = module.exports = {
 				} else {
 					return defaultFile[id];
 				}
+			} else {
+				return serverConfig;
 			}
 		} else {
 			return entry && defaultFile[id] && defaultFile[id][entry] ? defaultFile[id][entry] : defaultFile;
