@@ -48,5 +48,10 @@
 		"type": "python",
 		"regex": "py-test|python test",
 		"path": "src/py-modules/test-python.py"
+	},
+	{
+		"type": "js",
+		"regex": "(convert)\\s(\\d+\\s)?(\\w{3})\\s(to)\\s(\\w{3})$",
+		"path": "src/js-modules/currencyConverter.js"
 	}
 ]

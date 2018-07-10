@@ -9,6 +9,7 @@
 	"dependencies": {
 		"discord.js": "^11.3.2",
 		"mkdirp": "^0.5.1",
-		"path": "^0.12.7"
+		"path": "^0.12.7",
+		"request": "^2.87.0"
 	}
 }
