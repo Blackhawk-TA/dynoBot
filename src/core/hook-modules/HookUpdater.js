@@ -28,7 +28,7 @@ class HookUpdater {
 		var channel = this.server.channels.get(channelId);
 
 		//Run script
-		if (running) {
+		if (running && channel !== null) {
 			try {
 				if (type === "js") {
 					require("./../../../" + path).hook(channel);

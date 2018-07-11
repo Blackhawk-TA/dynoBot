@@ -3,7 +3,7 @@
 		"type": "js",
 		"name": "test",
 		"path": "src/js-modules/test-js.js",
-		"channel": "443759738916831232",
+		"channel": null,
 		"interval": 10000,
 		"running": false
 	},
@@ -11,7 +11,7 @@
 		"type": "python",
 		"name": "test1",
 		"path": "src/py-modules/test-python-hook.py",
-		"channel": "443759738916831232",
+		"channel": null,
 		"interval": 5000,
 		"running": false
 	},
@@ -19,8 +19,8 @@
 		"type": "js",
 		"name": "currencies",
 		"path": "src/js-modules/currencyModule/priceUpdates.js",
-		"channel": "443759738916831232",
-		"interval": 10000,
+		"channel": null,
+		"interval": 7200000,
 		"running": false
 	}
 }

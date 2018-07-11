@@ -7,10 +7,8 @@ const hooks = require(base + "/cfg/hooks.json");
 module.exports = {
 	init: function(server) {
 		for (var id in hooks) {
-			var hookConfig = configHandler.readJSON(base + "/cfg/hooks.json", server.id, id);
-
-			if (hookConfig.running) {
-				var interval = hookConfig.interval;
+			if (configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "running")) {
+				var interval = configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "interval");
 
 				const hookUpdater = new HookUpdater(id, interval, server);
 				setTimeout(() => {
