@@ -14,5 +14,13 @@
 		"channel": "443759738916831232",
 		"interval": 5000,
 		"running": false
+	},
+	"currencyUpdate": {
+		"type": "js",
+		"name": "currencies",
+		"path": "src/js-modules/currencyModule/priceUpdates.js",
+		"channel": "443759738916831232",
+		"interval": 10000,
+		"running": false
 	}
 }

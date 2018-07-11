@@ -52,6 +52,21 @@
 	{
 		"type": "js",
 		"regex": "(convert)\\s(\\d+\\s)?(\\w{3})\\s(to)\\s(\\w{3})$",
-		"path": "src/js-modules/currencyConverter.js"
+		"path": "src/js-modules/currencyModule/currencyConverter.js"
+	},
+	{
+		"type": "js",
+		"regex": "(add)\\s(currency)\\s\\w{3}$",
+		"path": "src/js-modules/currencyModule/addCurrency.js"
+	},
+	{
+		"type": "js",
+		"regex": "(remove)\\s(currency)\\s\\w{3}$",
+		"path": "src/js-modules/currencyModule/removeCurrency.js"
+	},
+	{
+		"type": "js",
+		"regex": "(currency|crypto)\\s(update)",
+		"path": "src/js-modules/currencyModule/priceUpdates.js"
 	}
 ]

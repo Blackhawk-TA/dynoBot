@@ -2,15 +2,14 @@ const request = require("request");
 
 module.exports = {
 	run: function(msg) {
-		var msgArray = msg.content.split(" ");
 		var answer = "";
-		var sAmount = msgArray[msgArray.length - 4];
+		var sAmount = msg.contentArray[msg.contentArray.length - 4];
 		var amount = 1;
 		if (!isNaN(sAmount)) {
 			amount = parseFloat(sAmount);
 		}
-		var coin1 = msgArray[msgArray.length - 3].toUpperCase();
-		var coin2 = msgArray.pop().toUpperCase();
+		var coin1 = msg.contentArray[msg.contentArray.length - 3].toUpperCase();
+		var coin2 = msg.contentArray.pop().toUpperCase();
 
 		var requestLink = "https://min-api.cryptocompare.com/data/price?fsym=" + coin1 + "&tsyms=" + coin2;
 		request(requestLink, function (error, response, body) {
