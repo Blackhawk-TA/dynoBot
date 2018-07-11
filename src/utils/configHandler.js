@@ -28,13 +28,13 @@ var self = module.exports = {
 			var serverConfig = require(configPath);
 
 			if (id && entry && defaultFile[id] && defaultFile[id][entry] != null) {
-				if(serverConfig[id] && entry) {
+				if (serverConfig[id] && entry) {
 					return serverConfig[id][entry] != null ? serverConfig[id][entry] : defaultFile[id][entry];
 				} else {
 					return defaultFile[id][entry];
 				}
 			} else if (id && !entry && defaultFile[id]) {
-				if(serverConfig[id] && entry) {
+				if (serverConfig[id] && entry) {
 					return serverConfig[id] ? serverConfig[id] : defaultFile[id];
 				} else {
 					return defaultFile[id];
@@ -105,5 +105,32 @@ var self = module.exports = {
 				hookUpdater.nextCall()
 			}, interval);
 		}
+	},
+
+	/**
+	 * Overrides an existing server-specific JSON file
+	 * @param {Object} channel The channel where the message for the edit command was sent in
+	 * @param {string} configPath The non-server-specific base config file path
+	 * @param {Object} newJSON The JSON-File that overrides the existing file
+	 */
+	overrideJSON: function (channel, configPath, newJSON) {
+		var pathArray = configPath.split("/");
+		var configName = pathArray[pathArray.length - 1];
+		var guildId = channel.guild.id;
+		var pathServer = pathCfg + guildId + "/";
+		var pathJSON = pathServer + configName;
+
+		//Create directory
+		if (!fs.existsSync(pathCfg))
+			fs.mkdirSync(pathCfg);
+
+		if (!fs.existsSync(pathServer))
+			fs.mkdirSync(pathServer);
+
+		var jsonString = JSON.stringify(newJSON, null, 4);
+		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
+			if (err) throw err;
+			channel.send("Successfully edited the json file.\n```json\n" + jsonString + "```");
+		});
 	}
 };
