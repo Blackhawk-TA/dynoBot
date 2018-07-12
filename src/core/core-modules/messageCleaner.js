@@ -26,7 +26,7 @@ module.exports = {
 				}
 
 				msg.channel.bulkDelete(msgToDelete);
-				msg.channel.send(`I've deleted ${msgToDelete.length} messages related to request regarding me.`);
+				msg.channel.send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
 			.catch(console.error);
 	}
