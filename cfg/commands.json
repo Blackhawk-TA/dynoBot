@@ -1,7 +1,7 @@
 [
 	{
 		"type": "js",
-		"regex": "(show|list)\\s(command|commands)\\s(config)",
+		"regex": "help|((show|list)\\s(command|commands))",
 		"path": "src/core/showCommands.js"
 	},
 	{
