@@ -6,7 +6,7 @@
 	},
 	{
 		"type": "js",
-		"regex": "(cleanup|clean-up|purge)",
+		"regex": "cleanup|clean-up|purge",
 		"path": "src/core/core-modules/messageCleaner.js"
 	},
 	{
@@ -61,12 +61,12 @@
 	},
 	{
 		"type": "js",
-		"regex": "(add) (currency) \\w{3}$",
+		"regex": "add currency \\w{3}$",
 		"path": "src/js-modules/currencyModule/addCurrency.js"
 	},
 	{
 		"type": "js",
-		"regex": "(remove) (currency) \\w{3}$",
+		"regex": "remove currency \\w{3}$",
 		"path": "src/js-modules/currencyModule/removeCurrency.js"
 	},
 	{
