@@ -2,7 +2,7 @@
 	{
 		"type": "js",
 		"regex": "help|((show|list)\\s(command|commands))",
-		"path": "src/core/showCommands.js"
+		"path": "src/core/core-modules/showCommands.js"
 	},
 	{
 		"type": "js",
@@ -36,8 +36,13 @@
 	},
 	{
 		"type": "js",
-		"regex": "(config change)\\s(\\w+)\\s(\\w+)\\s(to)\\s(\\w+)$",
+		"regex": "(change|set)\\s(config)\\s(\\w+)\\s(\\w+)\\s(to)\\s(\\w+)$",
 		"path": "src/core/core-modules/configEditor.js"
+	},
+	{
+		"type": "js",
+		"regex": "show config",
+		"path": "src/core/core-modules/showConfig.js"
 	},
 	{
 		"type": "js",
