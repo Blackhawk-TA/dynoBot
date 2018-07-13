@@ -43,7 +43,7 @@ var self = module.exports = {
 				return serverConfig;
 			}
 		} else {
-			return entry && defaultFile[id] && defaultFile[id][entry] ? defaultFile[id][entry] : defaultFile;
+			return entry && defaultFile[id] && defaultFile[id][entry] != null ? defaultFile[id][entry] : defaultFile;
 		}
 	},
 

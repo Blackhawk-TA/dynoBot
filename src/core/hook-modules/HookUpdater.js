@@ -28,12 +28,14 @@ class HookUpdater {
 		var channel = this.server.channels.get(channelId);
 
 		//Run script
-		if (running && channel != null) {
+		if (running) {
 			try {
-				if (type === "js") {
-					require("./../../../" + path).hook(channel);
-				} else if (type === "python") {
-					pyHandler.run(path, "", channel);
+				if (channel !== undefined) {
+					if (type === "js") {
+						require("./../../../" + path).hook(channel);
+					} else if (type === "python") {
+						pyHandler.run(path, "", channel);
+					}
 				}
 			} catch(e) {
 				console.log(e);

@@ -14,7 +14,9 @@ client.on("ready", () => {
 	console.log("Bot successfully started.");
 
 	//Init hooks
-	client.guilds.every((server) => {
+	var servers = client.guilds.array();
+
+	servers.forEach((server) => {
 		hooks.init(server);
 	});
 
