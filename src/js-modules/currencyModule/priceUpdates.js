@@ -4,7 +4,7 @@ const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
 
 var loopIndex = 0;
-var answerDefault = "```js\nCurrent market situation:";
+var answerDefault = "Current market situation:```js\n";
 var answer = answerDefault;
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
 		request("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD", function (error, response, body) {
 			if (!error && response.statusCode === 200) {
 				var data = JSON.parse(body);
-				answer += "\n	1 " + currency + " equals " + data.EUR + "€ or " + data.USD + "$.";
+				answer += "\n1 " + currency + " equals " + data.EUR + "€ or " + data.USD + "$.";
 
 				loopIndex++;
 				if (config.currencies.length > loopIndex) {

@@ -19,7 +19,6 @@ client.on("ready", () => {
 	servers.forEach((server) => {
 		hooks.init(server);
 	});
-
 });
 
 client.on('guildMemberAdd', member => {
