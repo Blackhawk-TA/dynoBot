@@ -16,23 +16,28 @@
 	},
 	{
 		"type": "js",
-		"regex": "(hook|hooks) (config|show)",
+		"regex": "(hook|hooks) config",
 		"path": "src/core/hook-modules/hookConfig.js"
 	},
 	{
 		"type": "js",
-		"regex": "(off|deactivate|disable) (\\w+)$",
+		"regex": "(deactivate|disable) (\\w+)$",
 		"path": "src/core/hook-modules/hookDisable.js"
 	},
 	{
 		"type": "js",
-		"regex": "(on|activate|enable) (\\w+)$",
+		"regex": "(activate|enable) (\\w+)$",
 		"path": "src/core/hook-modules/hookEnable.js"
 	},
 	{
 		"type": "js",
 		"regex": "(interval)( of)? (\\w+) (to) (\\d|.+)$",
 		"path": "src/core/hook-modules/hookInterval.js"
+	},
+	{
+		"type": "js",
+		"regex": "(list|show) hooks",
+		"path": "src/core/hook-modules/showHooks.js"
 	},
 	{
 		"type": "js",
