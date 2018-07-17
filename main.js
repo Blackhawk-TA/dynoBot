@@ -23,13 +23,17 @@ client.on("ready", () => {
 
 client.on('guildMemberAdd', member => {
 	var pathConfig = base + "/cfg/config.json";
-	var welcomeMessage = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message");
-	if (welcomeMessage.enabled) {
-		var channel = member.guild.channels.find("name", welcomeMessage.channel);
+	var enabled = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "enabled");
+	var channelName = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "channel");
+	var part1 = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "part1");
+	var part2 = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "part2");
+
+	if (enabled === true) {
+		var channel = member.guild.channels.find("name", channelName);
 
 		if (!channel) return;
 
-		channel.send(`${welcomeMessage["part1"]} ${member} ${welcomeMessage["part2"]}`);
+		channel.send(`${part1} ${member} ${part2}`);
 	}
 });
 
