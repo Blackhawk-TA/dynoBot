@@ -36,6 +36,7 @@ class HookUpdater {
 					} else if (type === "python") {
 						pyHandler.run(path, "", channel);
 					}
+					console.log(`${new Date().toLocaleString()}: executed hook job.`);
 				}
 			} catch(e) {
 				console.log(e);

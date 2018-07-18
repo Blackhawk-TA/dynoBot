@@ -41,7 +41,7 @@
 	},
 	{
 		"type": "js",
-		"regex": "(change|set) (config) (\\w+) (\\w+) (to) (\\w+)$",
+		"regex": "(change|set) (config) (\\w+) (\\w+) (to)( \\w+){1,}",
 		"path": "src/core/core-modules/configEditor.js"
 	},
 	{

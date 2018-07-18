@@ -11,7 +11,7 @@ const hooks = require("./src/core/hooks");
 const client = new Discord.Client();
 
 client.on("ready", () => {
-	console.log("Bot successfully started.");
+	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
 
 	//Init hooks
 	var servers = client.guilds.array();
@@ -28,7 +28,7 @@ client.on('guildMemberAdd', member => {
 	var part1 = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "part1");
 	var part2 = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "part2");
 
-	if (enabled === true) {
+	if (enabled) {
 		var channel = member.guild.channels.find("name", channelName);
 
 		if (!channel) return;
