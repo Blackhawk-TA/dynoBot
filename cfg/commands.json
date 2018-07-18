@@ -42,7 +42,7 @@
 	{
 		"type": "js",
 		"regex": "(change|set) (config) (\\w+) (\\w+) (to)( .+){1,}",
-		"path": "src/core/core-modules/configEditor.js"
+		"path": "src/core/utils/configEditor.js"
 	},
 	{
 		"type": "js",

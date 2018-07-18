@@ -17,7 +17,7 @@ module.exports = {
 
 		value = value.trim();
 
-		try {
+		try { //TODO remove ugly workaround
 			value = JSON.parse(value);
 		} catch (e) {
 			console.log(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);

@@ -1,6 +1,6 @@
 const base = require("path").resolve(".");
 
-const pyHandler = require(base + "/src/core/pythonHandler");
+const pyHandler = require(base + "/src/core/utils/pythonHandler");
 const hooks = require(base + "/cfg/hooks.json");
 
 class HookUpdater {
@@ -36,7 +36,7 @@ class HookUpdater {
 					} else if (type === "python") {
 						pyHandler.run(path, "", channel);
 					}
-					console.log(`${new Date().toLocaleString()}: executed hook job.`);
+					console.log(`${new Date().toLocaleString()}: Executed hook job.`);
 				}
 			} catch(e) {
 				console.log(e);
