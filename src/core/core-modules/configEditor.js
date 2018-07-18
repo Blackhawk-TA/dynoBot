@@ -15,7 +15,13 @@ module.exports = {
 			value += " " + msg.contentArray[i];
 		}
 
-		value = JSON.parse(value.trim());
+		value = value.trim();
+
+		try {
+			value = JSON.parse(value);
+		} catch (e) {
+			console.log(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);
+		}
 
 		if (config[id] && config[id][entry]) {
 			configHandler.editJSON(msg.channel, pathCfg, id, entry, value);
