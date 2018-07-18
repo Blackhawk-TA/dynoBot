@@ -5,8 +5,8 @@ const security = require("./cfg/security.json");
 const commands = require("./cfg/commands.json");
 
 const configHandler = require(base + "/src/utils/configHandler");
-const pyHandler = require("./src/core/utils/pythonHandler");
 const hooks = require("./src/core/utils/hooks");
+const scriptWrapper = require("./src/core/utils/scriptWrapper");
 
 const client = new Discord.Client();
 
@@ -51,13 +51,7 @@ client.on("message", msg => {
 				var command = commands[i];
 				var pattern = new RegExp(command.regex);
 				if (pattern.test(msg.content)) {
-					if (command.type === "js") { //TODO move to own class (wrapper)
-						require("./" + command.path).run(msg, client);
-						bAnswered = true;
-					} else if (command.type === "python") {
-						pyHandler.run(command.path, msg.contentArray, msg.channel);
-						bAnswered = true;
-					}
+					bAnswered = scriptWrapper.run(command, msg, client);
 				}
 				i++;
 			}
