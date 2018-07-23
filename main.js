@@ -10,6 +10,10 @@ const scriptWrapper = require("./src/core/utils/scriptWrapper");
 
 const client = new Discord.Client();
 
+client.on("error", (error) => {
+	console.log(error);
+});
+
 client.on("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
 
