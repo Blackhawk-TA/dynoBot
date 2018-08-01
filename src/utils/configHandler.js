@@ -54,6 +54,7 @@ var self = module.exports = {
 	 * @param {string} id The id of the JSON array where editing takes place in
 	 * @param {string} entry The name of the entry which shall be edited
 	 * @param {*} value The value that is assigned to the entry
+	 * @param {boolean} showResult Determines if the edited json file should be shown once editing is done
 	 */
 	editJSON: function (channel, configPath, id, entry, value, showResult = true) {
 		var pathArray = configPath.split("/");
@@ -132,9 +133,11 @@ var self = module.exports = {
 			fs.mkdirSync(pathServer);
 
 		var jsonString = JSON.stringify(newJSON, null, 4);
+
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
-			channel.send("Successfully edited the json file.\n```json\n" + jsonString + "```");
+			var censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
+			channel.send("This is the new json file:\n```json\n" + censoredJson + "```");
 		});
 	}
 };

@@ -81,17 +81,32 @@
 	},
 	{
 		"type": "js",
-		"regex": "rcon cmd( \\w+){1,}$",
+		"regex": "rcon (\\w+) run( \\w+){1,}$",
 		"path": "src/js-modules/rconServer/execCommand.js"
 	},
 	{
 		"type": "js",
-		"regex": "rcon (connect|info|help)$",
+		"regex": "rcon (\\w+) (connect|info|help)$",
 		"path": "src/js-modules/rconServer/connectInfo.js"
 	},
 	{
 		"type": "js",
 		"regex": "(change|set) rcon config (\\w+) (\\w+) (to)( .+)",
 		"path": "src/js-modules/rconServer/editServerConfig.js"
+	},
+	{
+		"type": "js",
+		"regex": "rcon (\\w+) add",
+		"path": "src/js-modules/rconServer/addServer.js"
+	},
+	{
+		"type": "js",
+		"regex": "rcon (\\w+) remove",
+		"path": "src/js-modules/rconServer/removeServer.js"
+	},
+	{
+		"type": "js",
+		"regex": "rcon (list|servers)",
+		"path": "src/js-modules/rconServer/showServers.js"
 	}
 ]

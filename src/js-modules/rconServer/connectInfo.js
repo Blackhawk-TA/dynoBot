@@ -1,19 +1,23 @@
-const Rcon = require('node-source-rcon');
-
 const base = require("path").resolve(".");
-const configHandler = require(base + "/src/utils/configHandler");
-const cfgPath = base + "/cfg/moduleConfigs/rconServer.json";
 
 module.exports = {
 	run: function (msg) {
-		var address = configHandler.readJSON(cfgPath, msg.guild.id, "server_settings", "address");
-		var port = configHandler.readJSON(cfgPath, msg.guild.id, "server_settings", "port");
-		var password = configHandler.readJSON(cfgPath, msg.guild.id, "server_settings", "password");
+		var serverName = msg.contentArray[1];
+		var serverCfg = require(base + "/cfg/servers/" + msg.guild.id + "/rconServer.json");
 
-		var connectLink = `steam://connect/${address}:${port}/${password}`;
-		var connectCmd = `connect ${address}:${port}; password ${password};`;
+		if (serverCfg[serverName] !== undefined) {
+			var address = serverCfg[serverName]["address"];
+			var port = serverCfg[serverName]["port"];
+			var password = serverCfg[serverName]["rcon_password"];
 
-		msg.channel.send("You can connect to the server using this link: " + connectLink +
-			"\n Alternatively you can using following console command:```" + connectCmd + "```");
+
+			var connectLink = `steam://connect/${address}:${port}/${password}`;
+			var connectCmd = `connect ${address}:${port}; password ${password};`;
+
+			msg.channel.send("You can connect to the server using this link: " + connectLink +
+				"\n Alternatively you can using following console command:```" + connectCmd + "```");
+		} else {
+			msg.channel.send(`There is no server called ${serverName}.`);
+		}
 	}
 };
