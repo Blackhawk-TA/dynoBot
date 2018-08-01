@@ -128,8 +128,9 @@ var self = module.exports = {
 	 * @param {Object} channel The channel where the message for the edit command was sent in
 	 * @param {string} configPath The non-server-specific base config file path
 	 * @param {Object} newJSON The JSON-File that overrides the existing file
+	 * @param {boolean} showResult This sets whether the new json file is shown in discord, default value is true
 	 */
-	overrideJSON: function (channel, configPath, newJSON) {
+	overrideJSON: function (channel, configPath, newJSON, showResult = true) {
 		var pathArray = configPath.split("/");
 		var configName = pathArray[pathArray.length - 1];
 		var guildId = channel.guild.id;
@@ -148,7 +149,9 @@ var self = module.exports = {
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
 			var censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
-			channel.send("This is the new json file:\n```json\n" + censoredJson + "```");
+			if (showResult) {
+				channel.send("This is the new json file:\n```json\n" + censoredJson + "```");
+			}
 		});
 	}
 };

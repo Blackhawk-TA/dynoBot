@@ -1,117 +1,146 @@
 [
 	{
 		"type": "js",
-		"regex": "help|((show|list) (command|commands))",
-		"path": "src/core/core-modules/showCommands.js"
-	},
-	{
-		"type": "js",
-		"regex": "cleanup|clean-up|purge",
-		"path": "src/core/core-modules/messageCleaner.js"
-	},
-	{
-		"type": "js",
-		"regex": "(channel)( of)? (\\w+) (to) (\\d+)$",
-		"path": "src/core/hook-modules/hookChannel.js"
-	},
-	{
-		"type": "js",
-		"regex": "(hook|hooks) config",
-		"path": "src/core/hook-modules/hookConfig.js"
-	},
-	{
-		"type": "js",
-		"regex": "(deactivate|disable) (\\w+)$",
-		"path": "src/core/hook-modules/hookDisable.js"
-	},
-	{
-		"type": "js",
-		"regex": "(activate|enable) (\\w+)$",
-		"path": "src/core/hook-modules/hookEnable.js"
-	},
-	{
-		"type": "js",
-		"regex": "(interval)( of)? (\\w+) (to) (\\d|.+)$",
-		"path": "src/core/hook-modules/hookInterval.js"
-	},
-	{
-		"type": "js",
-		"regex": "(list|show) hooks",
-		"path": "src/core/hook-modules/showHooks.js"
-	},
-	{
-		"type": "js",
-		"regex": "(change|set) (config) (\\w+) (\\w+) (to)( .+){1,}",
-		"path": "src/core/utils/configEditor.js"
-	},
-	{
-		"type": "js",
-		"regex": "(show|list) (config|settings)",
-		"path": "src/core/core-modules/showConfig.js"
-	},
-	{
-		"type": "js",
+		"permissions": [],
 		"regex": "js-test|javascript test",
 		"path": "src/js-modules/test-js.js"
 	},
 	{
 		"type": "python",
+		"permissions": [],
 		"regex": "py-test|python test",
 		"path": "src/py-modules/test-python.py"
 	},
 	{
 		"type": "js",
+		"permissions": [],
+		"regex": "help|((show|list) (command|commands))",
+		"path": "src/core/core-modules/showCommands.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "cleanup|clean-up|purge",
+		"path": "src/core/core-modules/messageCleaner.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(channel)( of)? (\\w+) (to) (\\d+)$",
+		"path": "src/core/hook-modules/hookChannel.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(hook|hooks) config",
+		"path": "src/core/hook-modules/hookConfig.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(deactivate|disable) (\\w+)$",
+		"path": "src/core/hook-modules/hookDisable.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(activate|enable) (\\w+)$",
+		"path": "src/core/hook-modules/hookEnable.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(interval)( of)? (\\w+) (to) (\\d|.+)$",
+		"path": "src/core/hook-modules/hookInterval.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(list|show) hooks",
+		"path": "src/core/hook-modules/showHooks.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(change|set) (config) (\\w+) (\\w+) (to)( .+){1,}",
+		"path": "src/core/utils/configEditor.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(show|list) (config|settings)",
+		"path": "src/core/core-modules/showConfig.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
 		"regex": "(convert) (\\d+ )?(\\w{3}) (to) (\\w{3})$",
 		"path": "src/js-modules/currencyModule/currencyConverter.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "add currency \\w{3}$",
 		"path": "src/js-modules/currencyModule/addCurrency.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "remove currency \\w{3}$",
 		"path": "src/js-modules/currencyModule/removeCurrency.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "(currency|crypto|market) (update|stats)",
 		"path": "src/js-modules/currencyModule/priceUpdates.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "rcon (\\w+) run( \\w+){1,}$",
 		"path": "src/js-modules/rconServer/execCommand.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "rcon (\\w+) (connect|info|help)$",
 		"path": "src/js-modules/rconServer/connectInfo.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "rcon rename (\\w+) to (\\w+)$",
 		"path": "src/js-modules/rconServer/renameServer.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "(change|set) rcon config (\\w+) (\\w+) (to)( .+)",
 		"path": "src/js-modules/rconServer/editServerConfig.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "rcon (\\w+) add$",
 		"path": "src/js-modules/rconServer/addServer.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "rcon (\\w+) remove$",
 		"path": "src/js-modules/rconServer/removeServer.js"
 	},
 	{
 		"type": "js",
+		"permissions": [],
 		"regex": "rcon (list|servers)$",
 		"path": "src/js-modules/rconServer/showServers.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
+		"regex": "(\\w+) (add|remove) required role (.+)$",
+		"path": "src/core/core-modules/editPermissions.js"
 	}
 ]

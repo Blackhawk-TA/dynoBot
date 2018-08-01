@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
 const base = require("path").resolve(".");
 
-const security = require("./cfg/security.json");
-const commands = require("./cfg/commands.json");
+const security = require(base + "/cfg/security.json");
+const commands = require(base + "/cfg/commands.json");
 
 const configHandler = require(base + "/src/utils/configHandler");
-const hooks = require("./src/core/utils/hooks");
-const scriptWrapper = require("./src/core/utils/scriptWrapper");
+const hooks = require(base + "/src/core/utils/hooks");
+const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 
 const client = new Discord.Client();
 
@@ -36,7 +36,6 @@ client.on('guildMemberAdd', member => {
 		var channel = member.guild.channels.find("name", channelName);
 
 		if (!channel) return;
-
 		channel.send(`${part1} ${member} ${part2}`);
 	}
 });
@@ -46,17 +45,44 @@ client.on("message", msg => {
 		if (msg.isMentioned(client.user)) {
 			//Pre-edit message
 			var msgLowerCase = msg.content;
-			msgLowerCase.toLowerCase()
+			msgLowerCase.toLowerCase();
 			msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
 
 			var bAnswered = false;
-			var i = 0;
+			var bPermission = false;
+			var authorRolesCollection = msg.member.roles.array();
+			var authorRoles = [];
+			var serverCommands = configHandler.readJSON(base + "/cfg/commands.json", msg.guild.id);
 
+			for (var k = 0 in authorRolesCollection) {
+				authorRoles.push(authorRolesCollection[k].name);
+			}
+
+			var i = 0;
 			while (!bAnswered && i < commands.length) {
 				var command = commands[i];
 				var pattern = new RegExp(command.regex);
+				var requiredRoles = serverCommands[i].permissions;
+
 				if (pattern.test(msgLowerCase)) {
-					bAnswered = scriptWrapper.run(command, msg, client);
+					if (requiredRoles.length > 0) {
+						authorRoles.forEach(function (authorRole) {
+							requiredRoles.forEach(function (requiredRole) {
+								if (authorRole === requiredRole) {
+									bPermission = true;
+								}
+							});
+						});
+					} else {
+						bPermission = true;
+					}
+
+					if (bPermission) {
+						bAnswered = scriptWrapper.run(command, msg, client);
+					} else {
+						bAnswered = true;
+						msg.channel.send("You don't have access to this command.");
+					}
 				}
 				i++;
 			}
