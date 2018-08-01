@@ -2,7 +2,7 @@
 	"server_settings": {
 		"address": "127.0.0.1",
 		"port": "27015",
-		"password": "",
-		"rcon_password": ""
+		"password": "password",
+		"rcon_password": "rconPassword"
 	}
 }

@@ -45,7 +45,8 @@ client.on("message", msg => {
 	try {
 		if (msg.isMentioned(client.user)) {
 			//Pre-edit message
-			msg.content = msg.content.toLowerCase();
+			var msgLowerCase = msg.content;
+			msgLowerCase.toLowerCase()
 			msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
 
 			var bAnswered = false;
@@ -54,7 +55,7 @@ client.on("message", msg => {
 			while (!bAnswered && i < commands.length) {
 				var command = commands[i];
 				var pattern = new RegExp(command.regex);
-				if (pattern.test(msg.content)) {
+				if (pattern.test(msgLowerCase)) {
 					bAnswered = scriptWrapper.run(command, msg, client);
 				}
 				i++;
