@@ -20,7 +20,7 @@ module.exports = {
 		try { //TODO remove ugly workaround
 			value = JSON.parse(value);
 		} catch (e) {
-			console.log(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);
+			console.error(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);
 		}
 
 		if (config[id] && config[id][entry]) {

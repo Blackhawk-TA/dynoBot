@@ -10,6 +10,7 @@
 		"discord.js": "^11.3.2",
 		"mkdirp": "^0.5.1",
 		"path": "^0.12.7",
-		"request": "^2.87.0"
+		"request": "^2.87.0",
+		"node-source-rcon": "^0.1.2-a"
 	}
 }

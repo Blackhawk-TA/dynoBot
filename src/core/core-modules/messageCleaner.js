@@ -19,7 +19,7 @@ module.exports = {
 
 				for (var i in msgArray) { //TODO optimize
 					var diffDays = Math.round(Math.abs((msgArray[i].createdAt.getTime() - date.getTime()) / (oneDay)));
-					if ((msgArray[i].isMentioned(client.user) || msgArray[i].author.id === client.user.id) && diffDays < twoWeeks) {
+					if ((msgArray[i].isMentioned(client.user) || msgArray[i].author.id === client.user.id) && diffDays < twoWeeks && msg.deletable) {
 						msgToDelete[index] = msgArray[i];
 						index++;
 					}
@@ -28,6 +28,8 @@ module.exports = {
 				msg.channel.bulkDelete(msgToDelete);
 				msg.channel.send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
-			.catch(console.error);
+			.catch((e) => {
+				console.error(`${new Date().toLocaleString()}: ${e}`)
+			});
 	}
 };

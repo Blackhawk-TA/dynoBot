@@ -55,7 +55,7 @@ var self = module.exports = {
 	 * @param {string} entry The name of the entry which shall be edited
 	 * @param {*} value The value that is assigned to the entry
 	 */
-	editJSON: function (channel, configPath, id, entry, value) {
+	editJSON: function (channel, configPath, id, entry, value, showResult = true) {
 		var pathArray = configPath.split("/");
 		var configName = pathArray[pathArray.length - 1];
 		var guildId = channel.guild.id;
@@ -94,7 +94,11 @@ var self = module.exports = {
 
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
-			channel.send("Successfully changed " + entry + " to " + value + ".\n```json\n" + jsonString + "```");
+			if (showResult) {
+				channel.send("Successfully changed " + entry + " to " + value + ".\n```json\n" + jsonString + "```");
+			} else {
+				channel.send(`Successfully changed ${id}.${entry}. The change result is hidden due to security reasons.`);
+			}
 		});
 
 		//Trigger hook when enabling

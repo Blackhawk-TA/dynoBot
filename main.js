@@ -11,7 +11,7 @@ const scriptWrapper = require("./src/core/utils/scriptWrapper");
 const client = new Discord.Client();
 
 client.on("error", (error) => {
-	console.log(error);
+	console.error(error);
 });
 
 client.on("ready", () => {
@@ -65,7 +65,7 @@ client.on("message", msg => {
 			}
 		}
 	} catch(e) {
-		console.log(e);
+		console.error(e);
 	}
 });
 

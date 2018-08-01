@@ -39,7 +39,7 @@ class HookUpdater {
 					console.log(`${new Date().toLocaleString()}: Executed hook job.`);
 				}
 			} catch(e) {
-				console.log(e);
+				console.error(e);
 			}
 			setTimeout(() => {
 				this.nextCall();

@@ -78,5 +78,20 @@
 		"type": "js",
 		"regex": "(currency|crypto|market) (update|stats)",
 		"path": "src/js-modules/currencyModule/priceUpdates.js"
+	},
+	{
+		"type": "js",
+		"regex": "rcon cmd( \\w+){1,}$",
+		"path": "src/js-modules/rconServer/execCommand.js"
+	},
+	{
+		"type": "js",
+		"regex": "rcon (connect|info|help)$",
+		"path": "src/js-modules/rconServer/connectInfo.js"
+	},
+	{
+		"type": "js",
+		"regex": "(change|set) rcon config (\\w+) (\\w+) (to)( .+)",
+		"path": "src/js-modules/rconServer/editServerConfig.js"
 	}
 ]
