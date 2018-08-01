@@ -33,7 +33,7 @@ module.exports = {
 			console.log(`${new Date().toLocaleString()}: Server response: '${response}'`);
 
 			if (response !== "") {
-				msg.channel.send("Server response:\n```" + response + "```");
+				msg.channel.send("Server response:\n```json\n" + response + "```");
 			}
 		})
 		.catch((e) => {
