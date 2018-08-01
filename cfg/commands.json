@@ -91,22 +91,27 @@
 	},
 	{
 		"type": "js",
+		"regex": "rcon rename (\\w+) to (\\w+)$",
+		"path": "src/js-modules/rconServer/renameServer.js"
+	},
+	{
+		"type": "js",
 		"regex": "(change|set) rcon config (\\w+) (\\w+) (to)( .+)",
 		"path": "src/js-modules/rconServer/editServerConfig.js"
 	},
 	{
 		"type": "js",
-		"regex": "rcon (\\w+) add",
+		"regex": "rcon (\\w+) add$",
 		"path": "src/js-modules/rconServer/addServer.js"
 	},
 	{
 		"type": "js",
-		"regex": "rcon (\\w+) remove",
+		"regex": "rcon (\\w+) remove$",
 		"path": "src/js-modules/rconServer/removeServer.js"
 	},
 	{
 		"type": "js",
-		"regex": "rcon (list|servers)",
+		"regex": "rcon (list|servers)$",
 		"path": "src/js-modules/rconServer/showServers.js"
 	}
 ]

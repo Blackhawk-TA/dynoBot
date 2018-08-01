@@ -51,7 +51,7 @@ var self = module.exports = {
 	 * Edits a server-specific JSON file (creates one from the base config if it doesn't exist)
 	 * @param {Object} channel The channel where the message for the edit command was sent in
 	 * @param {string} configPath The non-server-specific base config file path
-	 * @param {string} id The id of the JSON array where editing takes place in
+	 * @param {string} id (can be null) The id of the JSON array where editing takes place in
 	 * @param {string} entry The name of the entry which shall be edited
 	 * @param {*} value The value that is assigned to the entry
 	 * @param {boolean} showResult Determines if the edited json file should be shown once editing is done
@@ -72,22 +72,33 @@ var self = module.exports = {
 			fs.mkdirSync(pathServer);
 
 		if (!fs.existsSync(pathJSON)) { //config does not exist, create new
-			var newJSON = {
-				[id]: {
+			var newJSON;
+			if (id === null) {
+				newJSON = {
 					[entry]: value
 				}
-			};
+			} else {
+				newJSON = {
+					[id]: {
+						[entry]: value
+					}
+				};
+			}
 
 			jsonString = JSON.stringify(newJSON, null, 4);
 		} else { //config exists, edit old one
 			var serverJSON = require(pathJSON);
 
-			if (!serverJSON[id]) {
-				serverJSON[id] = {
-					[entry]: value
-				};
+			if (id === null) {
+				serverJSON[entry] = value;
 			} else {
-				serverJSON[id][entry] = value;
+				if (!serverJSON[id]) {
+					serverJSON[id] = {
+						[entry]: value
+					};
+				} else {
+					serverJSON[id][entry] = value;
+				}
 			}
 
 			jsonString = JSON.stringify(serverJSON, null, 4);
