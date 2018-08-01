@@ -10,7 +10,7 @@ module.exports = {
 		var serverCfg;
 
 		if (fs.existsSync(cfgPath)) {
-			require(cfgPath);
+			serverCfg = require(cfgPath);
 		} else {
 			msg.channel.send("There is no server registered yet. Use the 'rcon server_name add' command to register one.");
 			return;
