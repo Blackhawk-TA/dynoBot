@@ -13,7 +13,6 @@ module.exports = {
 
 		if (fs.existsSync(serverCfgPath)) {
 			messages.push(msg.channel.send("I've sent you a private message with further instructions."));
-			console.log(messages);
 
 			var user = msg.author;
 			var dmChannel = user.createDM();
