@@ -7,7 +7,7 @@ const pathCfg = base + "/cfg/servers/";
 
 /**
  * Utils module optimized for re-use in custom js modules to allow json config handling
- * @type {{readJSON: module.exports.readJSON, editJSON: module.exports.editJSON}}
+ * @type {{readJSON: module.exports.readJSON, editJSON: module.exports.editJSON, overrideJSON: module.exports.overrideJSON}}
  */
 var self = module.exports = {
 	/**

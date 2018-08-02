@@ -43,7 +43,7 @@ class HookUpdater {
 			}
 			setTimeout(() => {
 				this.nextCall();
-			}, this.interval)
+			}, this.interval);
 		}
 	}
 }

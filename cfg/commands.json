@@ -122,6 +122,12 @@
 	{
 		"type": "js",
 		"permissions": [],
+		"regex": "(change|set) rcon password of (\\w+)",
+		"path": "src/js-modules/rconServer/editRconPassword.js"
+	},
+	{
+		"type": "js",
+		"permissions": [],
 		"regex": "rcon (\\w+) add$",
 		"path": "src/js-modules/rconServer/addServer.js"
 	},

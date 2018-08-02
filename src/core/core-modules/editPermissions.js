@@ -43,7 +43,7 @@ module.exports = {
 					if (bAddPermission) {
 						commands[k].permissions.push(requestedRole);
 						configHandler.overrideJSON(msg.channel, cmdPath, commands, false);
-						msg.channel.send(`The role '${requestedRole}' has been added to the permissions list`);
+						msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.`);
 					} else {
 						msg.channel.send(`The role '${requestedRole}' is not in the permissions list.`);
 					}

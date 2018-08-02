@@ -12,28 +12,22 @@ module.exports = {
 
 		if (fs.existsSync(serverCfgPath)) {
 			serverCfg = require(serverCfgPath);
-		}
 
-		var id = msg.contentArray[3];
-		var entry = msg.contentArray[4];
-		var value = msg.contentArray[6];
+			var id = msg.contentArray[3];
+			var entry = msg.contentArray[4];
+			var value = msg.contentArray[6];
 
-		if (serverCfg[id] && serverCfg[id][entry]) {
-			var showResult = entry !== "rcon_password";
-			configHandler.editJSON(msg.channel, pathCfg, id, entry, value, showResult);
-
-			if (!showResult) {
-				if (msg.deletable) {
-					msg.delete()
-						.then(msg => console.log(`${new Date().toLocaleString()}: Deleted message from ${msg.author.username}`))
-						.catch(console.error);
-					msg.channel.send("Your message has been deleted due to security reasons.");
+			if (entry === "rcon_password") {
+				msg.channel.send("There is a specific command for setting the rcon password. Check help for further information.")
+			} else {
+				if (serverCfg[id] && serverCfg[id][entry]) {
+					configHandler.editJSON(msg.channel, pathCfg, id, entry, value);
 				} else {
-					msg.channel.send("Your message couldn't be deleted, if you want to protect your server rcon password please grant me the right to delete messages.");
+					msg.channel.send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
 				}
 			}
 		} else {
-			msg.channel.send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
+			msg.channel.send("Sorry, this server has no rcon server config, please create one using the rcon add command.");
 		}
 	}
 };
