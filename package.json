@@ -1,10 +1,10 @@
 {
 	"name": "dynoBot",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Blackhawk-TA/ProjectTschernobyl.git"
+		"url": "https://github.com/Blackhawk-TA/dynoBot.git"
 	},
 	"dependencies": {
 		"discord.js": "^11.3.2",
