@@ -53,6 +53,7 @@ client.on("message", msg => {
 			var authorRolesCollection = msg.member.roles.array();
 			var authorRoles = [];
 			var serverCommands = configHandler.readJSON(base + "/cfg/commands.json", msg.guild.id);
+			var serverPermissions = configHandler.readJSON(base + "/cfg/permissions.json", msg.guild.id);
 
 			for (var k = 0 in authorRolesCollection) {
 				authorRoles.push(authorRolesCollection[k].name);
@@ -62,21 +63,28 @@ client.on("message", msg => {
 			while (!bAnswered && i < commands.length) {
 				var command = commands[i];
 				var pattern = new RegExp(command.regex);
-				var requiredRoles = serverCommands[i].permissions;
 
 				if (pattern.test(msgLowerCase)) {
-					if (requiredRoles.length > 0) {
-						authorRoles.forEach(function (authorRole) {
-							requiredRoles.forEach(function (requiredRole) {
-								if (authorRole === requiredRole) {
-									bPermission = true;
-								}
-							});
-						});
-					} else {
+					serverPermissions.forEach(function(cmdPermisson) {
+						if (cmdPermisson.path === serverCommands[i].path) {
+							var requiredRoles = cmdPermisson.permissions;
+							if (requiredRoles.length > 0) {
+								authorRoles.forEach(function(authorRole) {
+									requiredRoles.forEach(function(requiredRole) {
+										if (authorRole === requiredRole) {
+											bPermission = true;
+										}
+									});
+								});
+							} else {
+								bPermission = true;
+							}
+						}
+					});
+
+					if (serverPermissions.length === 0) {
 						bPermission = true;
 					}
-
 					if (bPermission) {
 						bAnswered = scriptWrapper.run(command, msg, client);
 					} else {
