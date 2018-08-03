@@ -13,8 +13,9 @@ module.exports = {
 
 		if (fs.existsSync(serverCfgPath)) {
 			var serverCfg = configHandler.readJSON(serverCfgPath, msg.guild.id, rconServer);
+			var rconConfig = configHandler.readJSON(serverCfgPath, msg.guild.id);
 
-			if (serverCfg !== undefined) {
+			if (serverCfg !== rconConfig) {
 				messages.push(msg.channel.send("I've sent you a private message with further instructions."));
 
 				var user = msg.author;
@@ -40,10 +41,10 @@ module.exports = {
 						});
 				}).catch(console.error);
 			} else {
-				msg.channel.send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
+				msg.channel.send(`There is no rcon server called '${rconServer}'.`);
 			}
 		} else {
-			msg.channel.send(`There is no rcon server called '${rconServer}'.`);
+			msg.channel.send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
 		}
 	}
 };
