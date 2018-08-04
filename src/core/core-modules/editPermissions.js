@@ -2,17 +2,22 @@ const base = require("path").resolve(".");
 
 const configHandler = require(base + "/src/utils/configHandler");
 const cmdPath = base + "/cfg/commands.json";
+const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
-	run: function (msg) {
+	run: function(msg) {
 		var commands = configHandler.readJSON(cmdPath, msg.guild.id);
+		var cmdPermissions = configHandler.readJSON(permissionsPath, msg.guild.id);
 		var serverRolesCollection = msg.guild.roles.array();
 
 		var requestedCmd = msg.contentArray[0];
 		var bAddPermission = msg.contentArray[1] === "add";
 		var requestedRole = msg.contentArray[4];
+
 		var bRoleExists = false;
 		var bRequestedCmdExists = false;
+		var bRequestedCmdInPermissions = false;
+		var bPermissionAlreadyInList = false;
 
 		var i = 0;
 		while (!bRoleExists && i < serverRolesCollection.length) {
@@ -30,31 +35,53 @@ module.exports = {
 			var cmdName = fileName.split(".")[0];
 
 			if (cmdName === requestedCmd) {
-				if (commands[k].permissions.includes(requestedRole)) {
-					if (bAddPermission) {
-						msg.channel.send(`The role '${requestedRole}' is already in the permissions list.`);
-					} else {
-						var index = commands[k].permissions.indexOf(requestedRole);
-						commands[k].permissions.splice(index);
-						configHandler.overrideJSON(msg.channel, cmdPath, commands, false);
-						msg.channel.send(`The role '${requestedRole}' has been removed from the permissions list.`);
-					}
-				} else if (bRoleExists) {
-					if (bAddPermission) {
-						commands[k].permissions.push(requestedRole);
-						configHandler.overrideJSON(msg.channel, cmdPath, commands, false);
-						msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.`);
-					} else {
-						msg.channel.send(`The role '${requestedRole}' is not in the permissions list.`);
-					}
-				}
 				bRequestedCmdExists = true;
 			} else {
 				k++;
 			}
 		}
 
-		if (!bRoleExists && !bRequestedCmdExists) {
+		var j = 0;
+		while (bRoleExists && bRequestedCmdExists && !bRequestedCmdInPermissions && j < cmdPermissions.length) {
+			commands.forEach(function(command) {
+				if (command.path === cmdPermissions[j].path) {
+					bRequestedCmdInPermissions = true;
+					if (cmdPermissions[j].permissions.includes(requestedRole)) {
+						bPermissionAlreadyInList = true;
+					}
+				}
+			});
+
+			if (!bRequestedCmdExists) {
+				j++;
+			}
+		}
+
+		if (bRoleExists && bRequestedCmdExists) {
+			if (bAddPermission && !bPermissionAlreadyInList) {
+				if (bRequestedCmdInPermissions) {
+					cmdPermissions[j].permissions.push(requestedRole);
+				} else {
+					cmdPermissions.push({
+						"permissions": [requestedRole],
+						"path": commands[k].path
+					});
+				}
+				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
+				msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: `
+					+ "`" + cmdPermissions[j].permissions + "`");
+			} else if (!bAddPermission && bRequestedCmdInPermissions && bPermissionAlreadyInList) {
+				var index = commands[k].permissions.indexOf(requestedRole);
+				cmdPermissions[j].permissions.splice(index);
+				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
+				msg.channel.send(`The role '${requestedRole}' has been removed from the permissions list.\nAllowed roles: `
+					+ "`" + cmdPermissions[j].permissions + "`");
+			} else if (bAddPermission && bPermissionAlreadyInList) {
+				msg.channel.send(`The role '${requestedRole}' is already in the permissions list.`);
+			} else if (!bAddPermission && !bRequestedCmdInPermissions || !bPermissionAlreadyInList) {
+				msg.channel.send(`The role '${requestedRole}' does not exist in the permissions list.`);
+			}
+		} else if (!bRoleExists && !bRequestedCmdExists) {
 			msg.channel.send(`The role '${requestedRole}' and the command '${requestedCmd}' both don't exist.`);
 		} else if (!bRoleExists && bRequestedCmdExists) {
 			msg.channel.send(`The role '${requestedRole}' doesn't exist.`);

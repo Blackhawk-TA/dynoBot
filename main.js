@@ -44,15 +44,14 @@ client.on("message", msg => {
 	try {
 		if (msg.isMentioned(client.user)) {
 			//Pre-edit message
-			var msgLowerCase = msg.content;
-			msgLowerCase.toLowerCase();
 			msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
 
 			var bAnswered = false;
 			var bPermission = false;
 			var authorRolesCollection = msg.member.roles.array();
 			var authorRoles = [];
-			var serverCommands = configHandler.readJSON(base + "/cfg/commands.json", msg.guild.id);
+			var commands = configHandler.readJSON(base + "/cfg/commands.json", msg.guild.id);
+			var serverPermissions = configHandler.readJSON(base + "/cfg/permissions.json", msg.guild.id);
 
 			for (var k = 0 in authorRolesCollection) {
 				authorRoles.push(authorRolesCollection[k].name);
@@ -62,22 +61,33 @@ client.on("message", msg => {
 			while (!bAnswered && i < commands.length) {
 				var command = commands[i];
 				var pattern = new RegExp(command.regex);
-				var requiredRoles = serverCommands[i].permissions;
 
-				if (pattern.test(msgLowerCase)) {
-					if (requiredRoles.length > 0) {
-						authorRoles.forEach(function (authorRole) {
-							requiredRoles.forEach(function (requiredRole) {
-								if (authorRole === requiredRole) {
-									bPermission = true;
-								}
-							});
-						});
-					} else {
+				if (pattern.test(msg.content.toLowerCase())) {
+					var bInPermissions = false;
+
+					if (serverPermissions.length === 0) {
 						bPermission = true;
+					} else {
+						serverPermissions.forEach(function(cmdPermission) {
+							if (cmdPermission.path === command.path) {
+								bInPermissions = true;
+								var requiredRoles = cmdPermission.permissions;
+								if (requiredRoles.length === 0) {
+									bPermission = true;
+								} else {
+									authorRoles.forEach(function(authorRole) {
+										requiredRoles.forEach(function(requiredRole) {
+											if (authorRole === requiredRole) {
+												bPermission = true;
+											}
+										});
+									});
+								}
+							}
+						});
 					}
 
-					if (bPermission) {
+					if (bPermission || !bInPermissions) {
 						bAnswered = scriptWrapper.run(command, msg, client);
 					} else {
 						bAnswered = true;
@@ -91,7 +101,7 @@ client.on("message", msg => {
 				msg.channel.send("Sorry, I can't help you with that.");
 			}
 		}
-	} catch(e) {
+	} catch (e) {
 		console.error(e);
 	}
 });
