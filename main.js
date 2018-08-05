@@ -7,6 +7,7 @@ const commands = require(base + "/cfg/commands.json");
 const configHandler = require(base + "/src/utils/configHandler");
 const hooks = require(base + "/src/core/utils/hooks");
 const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
+const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
 const client = new Discord.Client();
 
@@ -47,15 +48,6 @@ client.on("message", msg => {
 			msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
 
 			var bAnswered = false;
-			var bPermission = false;
-			var authorRolesCollection = msg.member.roles.array();
-			var authorRoles = [];
-			var commands = configHandler.readJSON(base + "/cfg/commands.json", msg.guild.id);
-			var serverPermissions = configHandler.readJSON(base + "/cfg/permissions.json", msg.guild.id);
-
-			for (var k = 0 in authorRolesCollection) {
-				authorRoles.push(authorRolesCollection[k].name);
-			}
 
 			var i = 0;
 			while (!bAnswered && i < commands.length) {
@@ -63,31 +55,7 @@ client.on("message", msg => {
 				var pattern = new RegExp(command.regex);
 
 				if (pattern.test(msg.content.toLowerCase())) {
-					var bInPermissions = false;
-
-					if (serverPermissions.length === 0) {
-						bPermission = true;
-					} else {
-						serverPermissions.forEach(function(cmdPermission) {
-							if (cmdPermission.path === command.path) {
-								bInPermissions = true;
-								var requiredRoles = cmdPermission.permissions;
-								if (requiredRoles.length === 0) {
-									bPermission = true;
-								} else {
-									authorRoles.forEach(function(authorRole) {
-										requiredRoles.forEach(function(requiredRole) {
-											if (authorRole === requiredRole) {
-												bPermission = true;
-											}
-										});
-									});
-								}
-							}
-						});
-					}
-
-					if (bPermission || !bInPermissions) {
+					if (permissionHandler.hasPermissions(msg, command)) {
 						bAnswered = scriptWrapper.run(command, msg, client);
 					} else {
 						bAnswered = true;

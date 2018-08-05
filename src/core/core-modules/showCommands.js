@@ -19,7 +19,7 @@ module.exports = {
 						roles += role + ", ";
 					});
 				}
-				roles = roles.slice(0, roles.length - 2);
+				roles = roles.slice(0, -2);
 			});
 
 			if (roles !== "") {

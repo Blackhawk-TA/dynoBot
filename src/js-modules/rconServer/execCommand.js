@@ -21,7 +21,6 @@ module.exports = {
 			var port = serverCfg[serverName]["port"];
 			var password = serverCfg[serverName]["rcon_password"];
 			var msgArray = msg.contentArray.slice(3, msg.contentArray.length);
-
 			var cmd = "";
 
 			msgArray.forEach(function (item) {

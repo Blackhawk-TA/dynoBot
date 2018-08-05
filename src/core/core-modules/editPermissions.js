@@ -1,6 +1,7 @@
 const base = require("path").resolve(".");
 
 const configHandler = require(base + "/src/utils/configHandler");
+const stringFormatter = require(base + "/src/utils/stringFormatter");
 const cmdPath = base + "/cfg/commands.json";
 const permissionsPath = base + "/cfg/permissions.json";
 
@@ -58,6 +59,9 @@ module.exports = {
 		}
 
 		if (bRoleExists && bRequestedCmdExists) {
+			var aAllowedRoles;
+			var sAllowedRoles;
+
 			if (bAddPermission && !bPermissionAlreadyInList) {
 				if (bRequestedCmdInPermissions) {
 					cmdPermissions[j].permissions.push(requestedRole);
@@ -67,15 +71,19 @@ module.exports = {
 						"path": commands[k].path
 					});
 				}
+
+				aAllowedRoles = cmdPermissions[j].permissions;
+				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
 				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
-				msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: `
-					+ "`" + cmdPermissions[j].permissions + "`");
+				msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (!bAddPermission && bRequestedCmdInPermissions && bPermissionAlreadyInList) {
 				var index = commands[k].permissions.indexOf(requestedRole);
-				cmdPermissions[j].permissions.splice(index);
+				cmdPermissions[j].permissions.splice(index)
+
+				aAllowedRoles = cmdPermissions[j].permissions;
+				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
 				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
-				msg.channel.send(`The role '${requestedRole}' has been removed from the permissions list.\nAllowed roles: `
-					+ "`" + cmdPermissions[j].permissions + "`");
+				msg.channel.send(`The role '${requestedRole}' has been removed from the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (bAddPermission && bPermissionAlreadyInList) {
 				msg.channel.send(`The role '${requestedRole}' is already in the permissions list.`);
 			} else if (!bAddPermission && !bRequestedCmdInPermissions || !bPermissionAlreadyInList) {
