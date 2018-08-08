@@ -9,3 +9,4 @@ venv
 cfg/servers
 cfg/security.json
 resources/logs
+/.vs
