@@ -148,5 +148,12 @@
 		"permissions": [],
 		"regex": "(\\w+) (add|remove) required role (.+)$",
 		"path": "src/core/core-modules/editPermissions.js"
+	},
+
+	{
+		"type": "python",
+		"permissions": [],
+		"regex": "(shorten|blyat|bly\\.at) [-a-zA-Z0-9@:%_\\+.~#?&\\/=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&\\/=]*)?",
+		"path": "src/py-modules/blyat.py"
 	}
 ]
