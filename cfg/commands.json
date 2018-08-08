@@ -149,7 +149,6 @@
 		"regex": "(\\w+) (add|remove) required role (.+)$",
 		"path": "src/core/core-modules/editPermissions.js"
 	},
-
 	{
 		"type": "python",
 		"permissions": [],
