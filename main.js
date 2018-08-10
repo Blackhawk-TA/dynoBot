@@ -55,6 +55,8 @@ client.on("message", msg => {
 				var pattern = new RegExp(command.regex);
 
 				if (pattern.test(msg.content.toLowerCase())) {
+					msg.aRegexGroups = pattern.exec(msg.content);
+
 					if (permissionHandler.hasPermissions(msg, command)) {
 						bAnswered = scriptWrapper.run(command, msg, client);
 					} else {
