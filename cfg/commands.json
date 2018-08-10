@@ -2,14 +2,14 @@
 	{
 		"type": "js",
 		"permissions": [],
-		"regex": "js-test|javascript test",
-		"path": "src/js-modules/test-js.js"
+		"regex": "js-example|javascript example",
+		"path": "src/js-modules/example-js.js"
 	},
 	{
 		"type": "python",
 		"permissions": [],
-		"regex": "py-test|python test",
-		"path": "src/py-modules/test-python.py"
+		"regex": "py-example|python example",
+		"path": "src/py-modules/example-python.py"
 	},
 	{
 		"type": "js",

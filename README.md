@@ -24,7 +24,7 @@ Now you can start the bot by using the command `node main.js` within the directo
 You can create modules in JavaScript or Python. There are two types of modules, a chat module and a hook module.
 A chat module is executed every time a user sends a message with the corresponding command.
 A hook is automatically executed in a specific interval. Below I will show you how to create them in JavaScript and Python.
-Alternatively you can take a look at the test modules for JavaScript and Python included in the project.
+Alternatively you can take a look at the example modules for JavaScript and Python included in the project.
 
 #### Chat module:
 JavaScript and Python modules both need an entry in the commands.json file looking like this:
@@ -32,8 +32,8 @@ JavaScript and Python modules both need an entry in the commands.json file looki
 {
     "type": "python",
     "permissions": [],
-    "regex": "py-test|python test",
-    "path": "src/py-modules/test-python.py"
+    "regex": "py-example|python example",
+    "path": "src/py-modules/example-python.py"
 }
 ```
 ##### JavaScript
