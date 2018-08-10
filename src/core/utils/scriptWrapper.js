@@ -7,7 +7,7 @@ module.exports = {
 			require(base + "/" + command.path).run(msg, client);
 			return true;
 		} else if (command.type === "python") {
-			pyHandler.run(base + "/" + command.path, msg.contentArray, msg.channel);
+			pyHandler.run(base + "/" + command.path, msg.contentArray, msg.aRegexGroups, msg.channel);
 			return true;
 		} else {
 			return false;
