@@ -31,7 +31,6 @@ JavaScript and Python modules both need an entry in the commands.json file looki
 ```json
 {
     "type": "python",
-    "permissions": [],
     "regex": "py-example|python example",
     "path": "src/py-modules/example-python.py"
 }

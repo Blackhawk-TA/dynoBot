@@ -50,8 +50,8 @@ client.on("message", msg => {
 			var bAnswered = false;
 
 			var i = 0;
-			while (!bAnswered && i < commands.length) {
-				var command = commands[i];
+			while (!bAnswered && i < commands.commandList.length) {
+				var command = commands.commandList[i];
 				var pattern = new RegExp(command.regex);
 
 				if (pattern.test(msg.content.toLowerCase())) {

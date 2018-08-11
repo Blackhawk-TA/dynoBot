@@ -6,7 +6,7 @@ const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
 	run: function (msg) {
-		var commands = configHandler.readJSON(cmdPath, msg.guild.id);
+		var commands = configHandler.readJSON(cmdPath, msg.guild.id, "commandList");
 		var cmdPermissions = configHandler.readJSON(permissionsPath, msg.guild.id);
 		var answer = "List of regex commands:```";
 

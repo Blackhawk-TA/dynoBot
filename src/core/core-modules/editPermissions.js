@@ -7,7 +7,7 @@ const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
 	run: function(msg) {
-		var commands = configHandler.readJSON(cmdPath, msg.guild.id);
+		var commands = configHandler.readJSON(cmdPath, msg.guild.id, "commandList");
 		var cmdPermissions = configHandler.readJSON(permissionsPath, msg.guild.id);
 		var serverRolesCollection = msg.guild.roles.array();
 
@@ -77,8 +77,8 @@ module.exports = {
 				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
 				msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (!bAddPermission && bRequestedCmdInPermissions && bPermissionAlreadyInList) {
-				var index = commands[k].permissions.indexOf(requestedRole);
-				cmdPermissions[j].permissions.splice(index)
+				var index = cmdPermissions[j].permissions.indexOf(requestedRole);
+				cmdPermissions[j].permissions.splice(index, 1);
 
 				aAllowedRoles = cmdPermissions[j].permissions;
 				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
