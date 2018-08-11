@@ -103,6 +103,10 @@
 			"type": "python",
 			"regex": "(shorten|blyat|bly\\.at) [-a-zA-Z0-9@:%_\\+.~#?&\\/=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&\\/=]*)?",
 			"path": "src/py-modules/blyat.py"
+		}, {
+			"type": "js",
+			"regex": "(wa|wolfram-?alpha|wolfram|alpha|wolfram alpha) (.+)$",
+			"path": "src/js-modules/wolframAlpha.js"
 		}
 	]
 }

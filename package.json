@@ -9,7 +9,9 @@
 	"dependencies": {
 		"discord.js": "latest",
 		"mkdirp": "latest",
+		"node-source-rcon": "latest",
 		"request": "latest",
-		"node-source-rcon": "latest"
+		"base64-img": "latest",
+		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
 	}
 }

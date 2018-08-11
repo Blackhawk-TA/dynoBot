@@ -18,6 +18,17 @@ It should look like this:
 	"token": "your discord bot token"
 }
 ```
+If you want to use the Wolfram|Alpha module, you'll need their API key in the security.json as well.
+You can request a free Wolfram|Alpha API key [here](https://products.wolframalpha.com/api/).
+
+With the API key, your security.json should look like this:
+```json
+{
+	"token": "your discord bot token",
+	"wolframAlphaAPI": "your api key"
+}
+```
+
 Now you can start the bot by using the command `node main.js` within the directory `dynoBot`.
 
 ### How can I create new modules?
