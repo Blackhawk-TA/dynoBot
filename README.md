@@ -57,7 +57,7 @@ module.exports = {
 };
 ```
 The code executed when the module is called belongs into the run function.
-The parameter msg is the message object from the discord wrapper ([see documentation](https://discord.js.org)].
+The parameter msg is the message object from the discord wrapper ([see documentation](https://discord.js.org)).
 It has two additions to it: `msg.contentArray` which has a chat message split up as an array,
                             `msg.aRegexGroups` which has the regex groups from the chat message as an array
 
