@@ -30,7 +30,8 @@ module.exports = {
 
 			const server = new Rcon({
 				host: address,
-				port: port
+				port: port,
+				timeout: 2500
 			});
 
 			server.authenticate(password).then(() => {
