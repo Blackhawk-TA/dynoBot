@@ -1,7 +1,7 @@
-const Rcon = require('node-source-rcon');
 const fs = require("fs");
 
 const base = require("path").resolve(".");
+const Rcon = require(base + '/resources/deprecated_modules/node-source-rcon');
 
 module.exports = {
 	run: function (msg) {

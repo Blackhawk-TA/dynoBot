@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
-const cfgPath = base + "/cfg/rconServer.json";
+const cfgPath = base + "/cfg/moduleConfigs/rconServer.json";
 
 module.exports = {
 	run: function (msg) {

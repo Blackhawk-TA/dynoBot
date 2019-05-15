@@ -1,0 +1,53 @@
+{
+  "_from": "node-source-rcon@latest",
+  "_id": "node-source-rcon@0.1.2-a",
+  "_inBundle": false,
+  "_integrity": "sha512-xoA3HBX/sQPTYslka3DFGEEW6VLUJ5K/rF5fx1te5Bp8zgr71pdQNb0Bs0ulT8+JgSR7bSr8DBtIGRTSYo4psg==",
+  "_location": "/node-source-rcon",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "node-source-rcon@latest",
+    "name": "node-source-rcon",
+    "escapedName": "node-source-rcon",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-source-rcon/-/node-source-rcon-0.1.2-a.tgz",
+  "_shasum": "fd11bc642a3f20970b6c4f0edfcecd86c58715e8",
+  "_spec": "node-source-rcon@latest",
+  "_where": "C:\\Users\\tkcbl\\WebstormProjects\\dynoBot",
+  "author": {
+    "name": "Lee Sangha",
+    "email": "totoriato@gmail.com"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/toriato/node-source-rcon/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Source RCON for NodeJS",
+  "homepage": "https://gitlab.com/toriato/node-source-rcon#readme",
+  "keywords": [
+    "srcds",
+    "source",
+    "minecraft",
+    "rcon"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "name": "node-source-rcon",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/toriato/node-source-rcon.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.2-a"
+}
