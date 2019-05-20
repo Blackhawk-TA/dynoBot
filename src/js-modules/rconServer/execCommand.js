@@ -1,13 +1,13 @@
 const fs = require("fs");
+const Rcon = require("srcds-rcon");
 
 const base = require("path").resolve(".");
-const Rcon = require(base + '/resources/deprecated_modules/node-source-rcon');
 
 module.exports = {
 	run: function (msg) {
-		var serverName = msg.contentArray[1];
-		var cfgPath = base + "/cfg/servers/" + msg.guild.id + "/rconServer.json";
-		var serverCfg;
+		let serverName = msg.contentArray[1];
+		let cfgPath = base + "/cfg/servers/" + msg.guild.id + "/rconServer.json";
+		let serverCfg;
 
 		if (fs.existsSync(cfgPath)) {
 			serverCfg = require(cfgPath);
@@ -17,38 +17,38 @@ module.exports = {
 		}
 
 		if (serverCfg !== undefined && serverCfg[serverName] !== undefined) {
-			var address = serverCfg[serverName]["address"];
-			var port = serverCfg[serverName]["port"];
-			var password = serverCfg[serverName]["rcon_password"];
-			var msgArray = msg.contentArray.slice(3, msg.contentArray.length);
-			var cmd = "";
+			let address = serverCfg[serverName]["address"];
+			let port = serverCfg[serverName]["port"];
+			let password = serverCfg[serverName]["rcon_password"];
+			let msgArray = msg.contentArray.slice(3, msg.contentArray.length);
+			let cmd = "";
 
 			msgArray.forEach(function (item) {
 				cmd += item + " ";
 			});
-			cmd.trim();
+			cmd = cmd.trim();
 
-			const server = new Rcon({
-				host: address,
-				port: port,
-				timeout: 2500
+			const server = Rcon({
+				address: `${address}:${port}`,
+				password: password
 			});
 
-			server.authenticate(password).then(() => {
+			server.connect().then(() => {
 				console.log(`${new Date().toLocaleString()}: Logged into ${address}:${port} and executed '${cmd}'`);
 				msg.channel.send("Executing following command:\n```" + cmd + "```");
-				return server.execute(cmd);
-			})
-			.then((response) => {
-				console.log(`${new Date().toLocaleString()}: Server response: '${response}'`);
 
-				if (response !== "") {
-					msg.channel.send("Server response:\n```json\n" + response + "```");
-				}
-			})
-			.catch((e) => {
-				console.error(`${new Date().toLocaleString()}: ${e}`);
-				msg.channel.send("Following error occurred while making the server request:\n```" + e + "```");
+				return server.command(cmd, 2500).then(response => {
+					console.log(`${new Date().toLocaleString()}: Server response: '${response}'`);
+
+					if (response !== "") {
+						msg.channel.send("Server response:\n```json\n" + response + "```");
+					}
+				});
+			}).then(() => {
+				server.disconnect();
+			}).catch((err) => {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
+				msg.channel.send("Following error occurred while making the server request:\n```" + err + "```");
 			});
 		} else {
 			msg.channel.send(`There is no server called ${serverName}.`);

@@ -12,6 +12,7 @@
 		"request": "^2.88.0",
 		"base64-img": "^1.0.4",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
+		"srcds-rcon": "^2.2.1",
 		"bufferutil": "^4.0.1",
 		"erlpack": "^0.1.2",
 		"uws": "^100.0.1"

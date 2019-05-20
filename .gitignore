@@ -9,4 +9,4 @@ venv
 #Instance-specific files
 cfg/servers
 cfg/security.json
-resources/servers
+resources
