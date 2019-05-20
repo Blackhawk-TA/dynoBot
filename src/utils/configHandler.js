@@ -108,10 +108,13 @@ var self = module.exports = {
 			jsonString = JSON.stringify(serverJSON, null, 4);
 		}
 
+		//In case of rcon password change censor it.
+		var censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
+
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
 			if (showResult) {
-				channel.send("Successfully changed " + entry + " to " + value + ".\n```json\n" + jsonString + "```");
+				channel.send("Successfully changed " + entry + " to " + value + ".\n```json\n" + censoredJson + "```");
 			} else {
 				channel.send(`Successfully changed ${id}.${entry}. The change result is hidden due to security reasons.`);
 			}
