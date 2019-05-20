@@ -26,9 +26,9 @@ module.exports = {
 			msgArray.forEach(function (item) {
 				cmd += item + " ";
 			});
-			cmd.trim();
+			cmd = cmd.trim();
 
-			const server = new Rcon({
+			const server = Rcon({
 				address: `${address}:${port}`,
 				password: password
 			});

@@ -18,7 +18,10 @@ module.exports = {
 			var value = msg.contentArray[6];
 
 			if (entry === "rcon_password") {
-				msg.channel.send("There is a specific command for setting the rcon password. Check help for further information.")
+				msg.channel.send("I've deleted your message for security reasons.\nThere is a specific command for setting the rcon password. Check help for further information.");
+				if (msg.deletable) {
+					msg.delete();
+				}
 			} else {
 				if (serverCfg[id] && serverCfg[id][entry]) {
 					configHandler.editJSON(msg.channel, pathCfg, id, entry, value);
