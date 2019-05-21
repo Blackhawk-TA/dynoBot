@@ -1,7 +1,12 @@
 {
 	"name": "dynobot",
-	"version": "0.9.3",
+	"version": "1.0.0",
 	"private": true,
+	"license": "MIT",
+	"main": "main.js",
+	"scripts": {
+		"start": "node main.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Blackhawk-TA/dynoBot.git"
