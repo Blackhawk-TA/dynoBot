@@ -1,14 +1,14 @@
 # dynoBot
 
 ### What is dynoBot?
-dynoBot is a modular Discord bot using JavaScript and Python.
+dynoBot is a modular Discord bot using JavaScript and optionally also Python and Lua.
 
 ### What commands does the bot have?
 You can see all available commands by typing "@BotName help" in the discord chat.
 Alternatively you can take a look at the [commands.json](https://github.com/Blackhawk-TA/dynoBot/blob/master/cfg/commands.json) file.
 
 ### How can I use the bot for my own discord server?
-It's quite simple, first of all you need nodejs and optinally python3 if you want to use python modules.
+It's quite simple, first of all you need nodejs and optionally python3 for python modules and lua for lua modules.
 After the installation, clone this repository and run `npm install` within the `dynoBot` folder. It should install all required dependencies. 
 
 Once that's done, you'll have to add the `security.json` file within the directory `dynoBot/cfg`.
@@ -18,6 +18,10 @@ It should look like this:
 	"token": "your discord bot token"
 }
 ```
+
+**IMPORTANT: When you fork this project, don't upload the security.json to your repository. This would allow others to steal your discord token.**
+
+ 
 If you want to use the Wolfram|Alpha module, you'll need their API key in the security.json as well.
 You can request a free Wolfram|Alpha API key [here](https://products.wolframalpha.com/api/).
 
@@ -38,7 +42,7 @@ A hook is automatically executed in a specific interval. Below I will show you h
 Alternatively you can take a look at the example modules for JavaScript and Python included in the project.
 
 #### Chat module:
-JavaScript and Python modules both need an entry in the commands.json file looking like this:
+JavaScript, Python and Lua modules need an entry in the commands.json file looking like this:
 ```json
 {
     "type": "python",
@@ -77,6 +81,27 @@ print("These are the regex groups" + str(regexGroups))  # This is a second messa
 sys.stdout.flush()  # cleanup
 ```
 As you can see, the print makes the bot send a message.
+
+##### Lua
+The Lua module has also no access to the [discord.js wrapper](https://discord.js.org) but gets the `msg.contentArray` and `msg.aRegexGroups`.
+The base structure looks like this:
+```lua
+-- Import lua module helper for splitting strings into arrays
+require "src/utils/luaUtils"
+
+local sMessage = arg[1] -- String of input parameters
+local sRegexGroups = arg[2] -- String of input regex groups
+
+local aMessage = utils.splitString(sMessage, ",") -- Array of input parameters
+local aRegexGroups = utils.splitString(sRegexGroups, ",") -- Array of input regex groups
+
+-- Insert code to handle the input parameters here
+
+print("I received these parameters: " .. tostring(aMessage[1]) .. tostring(aMessage[2]))  --This will be the msg that the bot sends
+print("These are the regex groups: " .. tostring(aRegexGroups[1]))  --This is a second message that the bot sends
+```
+As you can see, the print makes the bot send a message.
+Overall Lua modules are pretty similar to Python modules.
 
 #### Hook module:
 JavaScript and Python modules both need an entry in the hooks.json file looking like this:
@@ -118,6 +143,18 @@ import sys
 print("This py message is automatically sent in a specific interval")
 sys.stdout.flush()  # cleanup
 ```
+
+##### Lua
+The Lua module has also no access to the channel object, it receives no inputs.
+It just runs the lua script and every call of print creates a bot message. It should look like this:
+
+```lua
+-- Insert code here
+
+-- This will be the msg that the bot sends
+print("This lua message is automatically sent in a specific interval.")
+```
+This is again similar to Python modules.
 
 ### Can I create pull request with new modules?
 Yes, I will review your code and if it's good, I'll merge it into the master.

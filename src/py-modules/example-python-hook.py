@@ -1,6 +1,9 @@
 import sys
 
-# insert code to handle the input parameters here
+# Insert code here
 
-print("This py message is automatically sent in a specific interval")  # This will be the msg that the bot sends
-sys.stdout.flush()  # cleanup
+# This will be the msg that the bot sends
+print("This py message is automatically sent in a specific interval.")
+
+# Cleanup
+sys.stdout.flush()

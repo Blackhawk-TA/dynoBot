@@ -15,6 +15,14 @@
 		"interval": 5000,
 		"running": false
 	},
+	"example-lua": {
+		"type": "lua",
+		"name": "exampleLua",
+		"path": "src/lua-modules/example-lua-hook.lua",
+		"channel": 0,
+		"interval": 5000,
+		"running": false
+	},
 	"currencyUpdate": {
 		"type": "js",
 		"name": "currencies",

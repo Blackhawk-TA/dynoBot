@@ -1,6 +1,6 @@
 const base = require("path").resolve(".");
 
-const pyHandler = require(base + "/src/core/utils/pythonHandler");
+const languageHandler = require(base + "/src/core/utils/languageHandler");
 const hooks = require(base + "/cfg/hooks.json");
 
 class HookUpdater {
@@ -31,10 +31,18 @@ class HookUpdater {
 		if (running) {
 			try {
 				if (channel !== undefined) {
-					if (type === "js") {
-						require("./../../../" + path).hook(channel);
-					} else if (type === "python") {
-						pyHandler.run(path, "", channel);
+					switch (type) {
+						case "js":
+							require("./../../../" + path).hook(channel);
+							break;
+						case "python":
+							languageHandler.runPythonModule(path, "", "", channel);
+							break;
+						case "lua":
+							languageHandler.runLuaModule(path, "", "", channel);
+							break;
+						default:
+							break;
 					}
 					console.log(`${new Date().toLocaleString()}: Executed hook job.`);
 				}

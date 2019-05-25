@@ -1,7 +1,20 @@
 {
 	"name": "dynobot",
+	"description": "Modular Discord bot using JavaScript and optionally Python and Lua.",
+	"author": {
+		"name": "Blackhawk"
+	},
+	"keywords": [
+		"discord-bot",
+		"discord-js",
+		"javascript",
+		"python",
+		"lua",
+		"chatbot",
+		"modular",
+		"bot"
+	],
 	"version": "1.0.0",
-	"private": true,
 	"license": "MIT",
 	"main": "main.js",
 	"scripts": {
@@ -12,14 +25,15 @@
 		"url": "https://github.com/Blackhawk-TA/dynoBot.git"
 	},
 	"dependencies": {
-		"discord.js": "^11.5.0",
-		"mkdirp": "^0.5.1",
-		"request": "^2.88.0",
 		"base64-img": "^1.0.4",
-		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
-		"srcds-rcon": "^2.2.1",
 		"bufferutil": "^4.0.1",
+		"discord.js": "^11.5.0",
 		"erlpack": "^0.1.2",
-		"uws": "^100.0.1"
+		"mkdirp": "^0.5.1",
+		"npmrc": "^1.1.1",
+		"request": "^2.88.0",
+		"srcds-rcon": "^2.2.1",
+		"uws": "^100.0.1",
+		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
 	}
 }

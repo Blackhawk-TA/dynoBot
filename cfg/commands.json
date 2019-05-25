@@ -8,6 +8,10 @@
 			"regex": "py-example|python example",
 			"path": "src/py-modules/example-python.py"
 		}, {
+			"type": "lua",
+			"regex": "lua-example|lua example",
+			"path": "src/lua-modules/example-lua.lua"
+		}, {
 			"type": "js",
 			"regex": "help|((show|list) (command|commands))",
 			"path": "src/core/core-modules/showCommands.js"
