@@ -8,10 +8,10 @@ module.exports = {
 				require(base + "/" + command.path).run(msg, client);
 				return true;
 			case "python":
-				languageHandler.runPythonModule(base + "/" + command.path, msg.contentArray, msg.aRegexGroups, msg.channel);
+				languageHandler.runScript("python3", base + "/" + command.path, msg.contentArray, msg.aRegexGroups, msg.channel);
 				return true;
 			case "lua":
-				languageHandler.runLuaModule(base + "/" + command.path, msg.contentArray, msg.aRegexGroups, msg.channel);
+				languageHandler.runScript("lua", base + "/" + command.path, msg.contentArray, msg.aRegexGroups, msg.channel);
 				return true;
 			default:
 				return false;
