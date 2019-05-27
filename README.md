@@ -29,7 +29,7 @@ Nevertheless dynoBot can be used without writing a single line of code as long a
 You can see all available commands by typing "@BotName help" in the discord chat.
 Alternatively you can take a look at the [commands.json](https://github.com/Blackhawk-TA/dynoBot/blob/master/cfg/commands.json) file.
 
-The currently included modules of the bot focus on currency conversion, remote control of rcon enabled game servers and WolframAlpha requests, link shortening.
+The currently included modules of the bot focus on currency conversion, remote control of rcon enabled game servers, WolframAlpha requests and link shortening.
 
 ### How can I use the bot for my own discord server?
 It's quite simple, first of all you need nodejs and optionally python3 for python modules and lua for lua modules.
