@@ -1,11 +1,35 @@
 # dynoBot
 
+### Overview
+1. [What is dynoBot](#what-is-dynobot)
+2. [Chat commands](#what-commands-does-the-bot-have)
+3. [How to use](#how-can-i-use-the-bot-for-my-own-discord-server)
+4. [Creating new modules](#how-can-i-create-new-modules)
+	1. [Chat modules](#chat-module)
+		1. [JavaScript](#javascript-chat-module)
+		2. [Python](#python-chat-module)
+		3. [Lua](#lua-chat-module)
+	2. [Hook modules](#hook-module)
+		1. [JavaScript](#javascript-hook-module)
+		2. [Python](#python-hook-module)
+		3. [Lua](#lua-hook-module)
+5. [Contribute](#can-i-create-pull-request-with-new-modules)
+
 ### What is dynoBot?
 dynoBot is a modular Discord bot using JavaScript and optionally also Python and Lua.
+It is built in a way that creating new modules can be done with ease in a scripting language you prefer.
+
+The idea behind the bot is to create the modules you need by yourself with a minimum amount of effort.
+Therefore dynoBot can be considered as a framework which handles everything related to the discord api, so you can immediately start developing your own modules.
+
+Nevertheless dynoBot can be used without writing a single line of code as long as the included modules are all you need.
+
 
 ### What commands does the bot have?
 You can see all available commands by typing "@BotName help" in the discord chat.
 Alternatively you can take a look at the [commands.json](https://github.com/Blackhawk-TA/dynoBot/blob/master/cfg/commands.json) file.
+
+The currently included modules of the bot focus on currency conversion, remote control of rcon enabled game servers and WolframAlpha requests, link shortening.
 
 ### How can I use the bot for my own discord server?
 It's quite simple, first of all you need nodejs and optionally python3 for python modules and lua for lua modules.
@@ -36,10 +60,10 @@ With the API key, your security.json should look like this:
 Now you can start the bot by using the command `node main.js` within the directory `dynoBot`.
 
 ### How can I create new modules?
-You can create modules in JavaScript or Python. There are two types of modules, a chat module and a hook module.
+You can create modules in JavaScript, Python or Lua. There are two types of modules, a chat module and a hook module.
 A chat module is executed every time a user sends a message with the corresponding command.
-A hook is automatically executed in a specific interval. Below I will show you how to create them in JavaScript and Python.
-Alternatively you can take a look at the example modules for JavaScript and Python included in the project.
+A hook is automatically executed in a specific interval. Below I will show you how to create them in JavaScript, Python and Lua.
+Alternatively you can take a look at the example modules for JavaScript, Python and Lua included in the project.
 
 #### Chat module:
 JavaScript, Python and Lua modules need an entry in the commands.json file looking like this:
@@ -50,7 +74,7 @@ JavaScript, Python and Lua modules need an entry in the commands.json file looki
     "path": "src/py-modules/example-python.py"
 }
 ```
-##### JavaScript
+##### JavaScript chat module
 The JavaScript module has direct access to the [discord.js wrapper](https://discord.js.org).
 The base structure of a module looks like this:
 ```js
@@ -65,7 +89,7 @@ The parameter msg is the message object from the discord wrapper ([see documenta
 It has two additions to it: `msg.contentArray` which has a chat message split up as an array,
                             `msg.aRegexGroups` which has the regex groups from the chat message as an array
 
-##### Python
+##### Python chat module
 The Python module has no access to the [discord.js wrapper](https://discord.js.org) but gets the `msg.contentArray` and `msg.aRegexGroups`.
 The base structure looks like this:
 ```python
@@ -82,7 +106,7 @@ sys.stdout.flush()  # cleanup
 ```
 As you can see, the print makes the bot send a message.
 
-##### Lua
+##### Lua chat module
 The Lua module has also no access to the [discord.js wrapper](https://discord.js.org) but gets the `msg.contentArray` and `msg.aRegexGroups`.
 The base structure looks like this:
 ```lua
@@ -119,7 +143,7 @@ JavaScript and Python modules both need an entry in the hooks.json file looking 
 }
 ```
 
-##### JavaScript
+##### JavaScript hook module
 The JavaScript module has access to the channel object of the [discord.js wrapper](https://discord.js.org).
 The code executed when the module is called belongs into the hook function.
 
@@ -133,7 +157,7 @@ module.exports = {
 
 The hook function is executed when the hooks.json has the an existing channel and is running.
 
-##### Python
+##### Python hook module
 The Python module has no access to the channel object, it receives no inputs.
 It just runs the python script and every call of print creates a bot message. It should look like this:
 
@@ -147,7 +171,7 @@ print("This py message is automatically sent in a specific interval")
 sys.stdout.flush()  # cleanup
 ```
 
-##### Lua
+##### Lua hook module
 The Lua module has also no access to the channel object, it receives no inputs.
 It just runs the lua script and every call of print creates a bot message. It should look like this:
 
