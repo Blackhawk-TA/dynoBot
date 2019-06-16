@@ -4,12 +4,12 @@ const cfgPath = base + "/cfg/moduleConfigs/currencies.json";
 
 module.exports = {
 	run: function(msg) {
-		var config = configHandler.readJSON(cfgPath, msg.guild.id);
-		var currency = msg.contentArray[msg.contentArray.length - 1].toUpperCase();
+		let config = configHandler.readJSON(cfgPath, msg.getServer().getId());
+		let currency = msg.getContentArray()[msg.getContentArray().length - 1].toUpperCase();
 
 		//Check if currency exists in file
-		var index = -1;
-		for (var i = 0; i < config.currencies.length; i++) {
+		let index = -1;
+		for (let i = 0; i < config.currencies.length; i++) {
 			if (config.currencies[i] === currency) {
 				index = i;
 			}

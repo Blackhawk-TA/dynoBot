@@ -10,9 +10,9 @@ module.exports = {
 		if (security.wolframAlphaAPI) {
 			msg.channel.send("I'm processing your request, please wait...");
 
-			var waApi = WolframAlphaAPI(security.wolframAlphaAPI);
-			var question = msg.aRegexGroups[2];
-			var guildId = msg.channel.guild.id;
+			let waApi = WolframAlphaAPI(security.wolframAlphaAPI);
+			let question = msg.aRegexGroups[2]; //TODO convert
+			let serverId = msg.channel.getServer().getId();
 
 			waApi.getSimple({
 				i: question,
@@ -20,8 +20,8 @@ module.exports = {
 				background: '323232',
 				foreground: 'white',
 			}).then((result) => {
-				var resourceDirectory = base + "/resources";
-				var resultDirectory = resourceDirectory + "/servers/" + guildId;
+				let resourceDirectory = base + "/resources";
+				let resultDirectory = resourceDirectory + "/servers/" + serverId;
 
 				if (!fs.existsSync(resourceDirectory))
 					fs.mkdirSync(resourceDirectory);
@@ -33,8 +33,8 @@ module.exports = {
 					fs.mkdirSync(resultDirectory);
 
 				base64Img.img(result, resultDirectory, "lastWolframAlphaRequest", function (err, filePath) {
-					var fileName = filePath.split("/").pop();
-					msg.channel.send("This is the result of your request:\n", {
+					let fileName = filePath.split("/").pop();
+					msg.channel.send("This is the result of your request:\n", { //TODO support this
 						files: [{
 							attachment: filePath,
 							name: fileName

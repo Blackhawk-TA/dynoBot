@@ -7,19 +7,19 @@ const pathCfg = base + "/cfg/moduleConfigs/rconServer.json";
 
 module.exports = {
 	run: function (msg) {
-		var serverCfgPath = base + "/cfg/servers/" + msg.guild.id + "/rconServer.json";
-		var serverCfg = {};
+		let serverCfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
+		let serverCfg = {};
 
 		if (fs.existsSync(serverCfgPath)) {
 			serverCfg = require(serverCfgPath);
 
-			var id = msg.contentArray[3];
-			var entry = msg.contentArray[4];
-			var value = msg.contentArray[6];
+			let id = msg.getContentArray()[3];
+			let entry = msg.getContentArray()[4];
+			let value = msg.getContentArray()[6];
 
 			if (entry === "rcon_password") {
 				msg.channel.send("I've deleted your message for security reasons.\nThere is a specific command for setting the rcon password. Check help for further information.");
-				if (msg.deletable) {
+				if (msg.isDeletable()) {
 					msg.delete();
 				}
 			} else {

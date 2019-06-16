@@ -6,11 +6,13 @@ const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
 	run: function(msg) {
-		var answer = "List of available hooks:```";
-		for (var id in hooks) {
-			var isEnabled = configHandler.readJSON(configPath, msg.channel.guild.id, id, "running");
-			var active = isEnabled ? "active" : "inactive";
-			answer += `\n${hooks[id].name}: (${active})`;
+		let answer = "List of available hooks:```";
+		for (let id in hooks) {
+			if (hooks.hasOwnProperty(id)) {
+				let isEnabled = configHandler.readJSON(configPath, msg.channel.getServer().getId(), id, "running");
+				let active = isEnabled ? "active" : "inactive";
+				answer += `\n${hooks[id].name}: (${active})`;
+			}
 		}
 		msg.channel.send(answer + "```");
 	}

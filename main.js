@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 const base = require("path").resolve(".");
 
 const security = require(base + "/cfg/security.json");
@@ -9,71 +8,70 @@ const hooks = require(base + "/src/core/utils/hooks");
 const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
-const client = new Discord.Client();
+const {DiscordBot} = require("chatbot-api-wrapper");
+const Bot = new DiscordBot(security.token);
 
-client.on("error", (error) => {
+Bot.client.registerEvent("error");
+Bot.client.registerEvent("ready");
+Bot.client.registerEvent("guildMemberAdd");
+Bot.client.registerEvent("message");
+
+Bot.client.events.on("error", (error) => {
 	console.error(error);
 });
 
-client.on("ready", () => {
+Bot.client.events.on("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
 
 	//Init hooks
-	var servers = client.guilds.array();
+	let servers = Bot.client.getServers();
 
 	servers.forEach((server) => {
 		hooks.init(server);
 	});
-});
 
-client.on('guildMemberAdd', member => {
-	var pathConfig = base + "/cfg/config.json";
-	var enabled = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "enabled");
-	var channelName = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "channel");
-	var part1 = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "part1");
-	var part2 = configHandler.readJSON(pathConfig, member.guild.id, "welcome_message", "part2");
+	Bot.client.events.on("guildMemberAdd", member => {
+		let pathConfig = base + "/cfg/config.json",
+			enabled = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "enabled"),
+			channelName = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "channel"),
+			part1 = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "part1"),
+			part2 = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "part2");
 
-	if (enabled) {
-		var channel = member.guild.channels.find("name", channelName);
-
-		if (!channel) return;
-		channel.send(`${part1} ${member} ${part2}`);
-	}
-});
-
-client.on("message", msg => {
-	try {
-		if (msg.isMentioned(client.user)) {
-			//Pre-edit message
-			msg.contentArray = msg.content.split(" ").splice(1, msg.content.length);
-
-			var bAnswered = false;
-
-			var i = 0;
-			while (!bAnswered && i < commands.commandList.length) {
-				var command = commands.commandList[i];
-				var pattern = new RegExp(command.regex);
-
-				if (pattern.test(msg.content.toLowerCase())) {
-					msg.aRegexGroups = pattern.exec(msg.content);
-
-					if (permissionHandler.hasPermissions(msg, command)) {
-						bAnswered = scriptWrapper.run(command, msg, client);
-					} else {
-						bAnswered = true;
-						msg.channel.send("You don't have access to this command.");
-					}
+		if (enabled) {
+			member.getServer().getChannels().forEach(channel => {
+				if (channel.getName() === channelName) {
+					channel.send(`${part1} ${member} ${part2}`);
 				}
-				i++;
-			}
-
-			if (!bAnswered) {
-				msg.channel.send("Sorry, I can't help you with that.");
-			}
+			});
 		}
-	} catch (e) {
-		console.error(e);
-	}
-});
+	});
 
-client.login(security.token);
+	Bot.client.events.on("message", msg => {
+		try {
+			if (msg.isMentioned(Bot.client.user)) {
+				let bAnswered = false,
+					i = 0;
+				while (!bAnswered && i < commands.commandList.length) {
+					let command = commands.commandList[i],
+						pattern = new RegExp(command.regex);
+
+					if (pattern.test(msg.getContent().toLowerCase())) {
+						if (permissionHandler.hasPermissions(msg, command)) {
+							bAnswered = scriptWrapper.run(command, msg, Bot.client);
+						} else {
+							bAnswered = true;
+							msg.channel.send("You don't have access to this command.");
+						}
+					}
+					i++;
+				}
+
+				if (!bAnswered) {
+					msg.channel.send("Sorry, I can't help you with that.");
+				}
+			}
+		} catch (e) {
+			console.error(e);
+		}
+	});
+});

@@ -6,9 +6,9 @@ const hooks = require(base + "/cfg/hooks.json");
 
 module.exports = {
 	init: function(server) {
-		for (var id in hooks) {
-			if (configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "running")) {
-				var interval = configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "interval");
+		for (let id in hooks) {
+			if (hooks.hasOwnProperty(id) && configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "running")) {
+				let interval = configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "interval");
 
 				const hookUpdater = new HookUpdater(id, interval, server);
 				setTimeout(() => {
@@ -18,11 +18,11 @@ module.exports = {
 		}
 	},
 	changeEntry: function(name, channel, entry, value) {
-		var index = -1;
+		let index = -1;
 
 		//Get index
-		for (var id in hooks) {
-			if (hooks[id].name === name && hooks[id][entry] !== undefined) {
+		for (let id in hooks) {
+			if (hooks.hasOwnProperty(id) && hooks[id].name === name && hooks[id][entry] !== undefined) {
 				index = id;
 			}
 		}

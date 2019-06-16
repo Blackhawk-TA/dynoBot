@@ -80,14 +80,13 @@ The base structure of a module looks like this:
 ```js
 module.exports = {
 	run: function(msg, client) {
-		msg.channel.send("I received these parameters: " + msg.contentArray);
+		msg.channel.send("I received these parameters: " + msg.getContentArray());
 	}
 };
 ```
 The code executed when the module is called belongs into the run function.
-The parameter msg is the message object from the discord wrapper ([see documentation](https://discord.js.org)).
-It has two additions to it: `msg.contentArray` which has a chat message split up as an array,
-                            `msg.aRegexGroups` which has the regex groups from the chat message as an array
+The parameters msg and client are by the [chatbot-api-wrapper](https://github.com/Blackhawk-TA/chatbot-api-wrapper).
+You can find further information about the implementation there.
 
 ##### Python chat module
 The Python module has no access to the [discord.js wrapper](https://discord.js.org) but gets the `msg.contentArray` and `msg.aRegexGroups`.

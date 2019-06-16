@@ -7,20 +7,20 @@ const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
 	run: function(msg) {
-		var commands = configHandler.readJSON(cmdPath, msg.guild.id, "commandList");
-		var cmdPermissions = configHandler.readJSON(permissionsPath, msg.guild.id);
-		var serverRolesCollection = msg.guild.roles.array();
+		let commands = configHandler.readJSON(cmdPath, msg.getServer().getId(), "commandList");
+		let cmdPermissions = configHandler.readJSON(permissionsPath, msg.getServer().getId());
+		let serverRolesCollection = msg.getServer().getRoles();
 
-		var requestedCmd = msg.contentArray[0];
-		var bAddPermission = msg.contentArray[1] === "add";
-		var requestedRole = msg.contentArray[4];
+		let requestedCmd = msg.getContentArray()[0];
+		let bAddPermission = msg.getContentArray()[1] === "add";
+		let requestedRole = msg.getContentArray()[4];
 
-		var bRoleExists = false;
-		var bRequestedCmdExists = false;
-		var bRequestedCmdInPermissions = false;
-		var bPermissionAlreadyInList = false;
+		let bRoleExists = false;
+		let bRequestedCmdExists = false;
+		let bRequestedCmdInPermissions = false;
+		let bPermissionAlreadyInList = false;
 
-		var i = 0;
+		let i = 0;
 		while (!bRoleExists && i < serverRolesCollection.length) {
 			if (serverRolesCollection[i].name === requestedRole) {
 				bRoleExists = true;
@@ -29,11 +29,11 @@ module.exports = {
 			}
 		}
 
-		var k = 0;
+		let k = 0;
 		while (!bRequestedCmdExists && k < commands.length) {
-			var pathArray = commands[k].path.split("/");
-			var fileName = pathArray[pathArray.length - 1];
-			var cmdName = fileName.split(".")[0];
+			let pathArray = commands[k].path.split("/");
+			let fileName = pathArray[pathArray.length - 1];
+			let cmdName = fileName.split(".")[0];
 
 			if (cmdName === requestedCmd) {
 				bRequestedCmdExists = true;
@@ -42,7 +42,7 @@ module.exports = {
 			}
 		}
 
-		var j = 0;
+		let j = 0;
 		while (bRoleExists && bRequestedCmdExists && !bRequestedCmdInPermissions && j < cmdPermissions.length) {
 			commands.forEach(function(command) {
 				if (command.path === cmdPermissions[j].path) {
@@ -59,8 +59,8 @@ module.exports = {
 		}
 
 		if (bRoleExists && bRequestedCmdExists) {
-			var aAllowedRoles;
-			var sAllowedRoles;
+			let aAllowedRoles;
+			let sAllowedRoles;
 
 			if (bAddPermission && !bPermissionAlreadyInList) {
 				if (bRequestedCmdInPermissions) {
@@ -77,7 +77,7 @@ module.exports = {
 				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
 				msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (!bAddPermission && bRequestedCmdInPermissions && bPermissionAlreadyInList) {
-				var index = cmdPermissions[j].permissions.indexOf(requestedRole);
+				let index = cmdPermissions[j].permissions.indexOf(requestedRole);
 				cmdPermissions[j].permissions.splice(index, 1);
 
 				aAllowedRoles = cmdPermissions[j].permissions;

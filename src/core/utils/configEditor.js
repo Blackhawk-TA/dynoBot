@@ -5,14 +5,14 @@ const config = require(base + "/cfg/config.json");
 
 module.exports = {
 	run: function(msg) {
-		var pathCfg = base + "/cfg/config.json";
-		var id = msg.contentArray[2];
-		var entry = msg.contentArray[3];
-		var value = "";
-		var valueStartIndex = 5;
+		let pathCfg = base + "/cfg/config.json";
+		let id = msg.getContentArray()[2];
+		let entry = msg.getContentArray()[3];
+		let value = "";
+		let valueStartIndex = 5;
 
-		for (var i = valueStartIndex; i < msg.contentArray.length; i++) {
-			value += " " + msg.contentArray[i];
+		for (let i = valueStartIndex; i < msg.getContentArray().length; i++) {
+			value += " " + msg.getContentArray()[i];
 		}
 
 		value = value.trim();

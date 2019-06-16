@@ -7,25 +7,22 @@ const oneDay = 86400000; //in ms
 
 module.exports = {
 	run: function (msg, client) {
-		var pathConfig = base + "/cfg/config.json";
-		var amount = configHandler.readJSON(pathConfig, msg.guild.id, "message_cleaner", "amount");
+		let pathConfig = base + "/cfg/config.json";
+		let amount = configHandler.readJSON(pathConfig, msg.getServer().getId(), "message_cleaner", "amount");
 
-		msg.channel.fetchMessages({limit: amount})
+		msg.channel.getMessages(amount)
 			.then(messages => {
-				var msgArray = messages.array();
-				var msgToDelete = [];
-				var index = 0;
-				var date = new Date();
+				let msgToDelete = [];
+				let date = new Date();
 
-				for (var i in msgArray) { //TODO optimize
-					var diffDays = Math.round(Math.abs((msgArray[i].createdAt.getTime() - date.getTime()) / (oneDay)));
-					if ((msgArray[i].isMentioned(client.user) || msgArray[i].author.id === client.user.id) && diffDays < twoWeeks && msg.deletable) {
-						msgToDelete[index] = msgArray[i];
-						index++;
+				messages.forEach(message => { //TODO optimize
+					let diffDays = Math.round(Math.abs((message.getCreationDate().getTime() - date.getTime()) / (oneDay)));
+					if ((message.isMentioned(client.user) || message.getAuthor().getId() === client.user.getId()) && diffDays < twoWeeks && msg.isDeletable()) {
+						msgToDelete.push(message);
 					}
-				}
+				});
 
-				msg.channel.bulkDelete(msgToDelete);
+				msg.channel.deleteMessageArray(msgToDelete);
 				msg.channel.send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
 			.catch((e) => {

@@ -10,7 +10,7 @@ module.exports = {
 	 * @return {string} The formatted array as string
 	 */
 	arrayToString: function(array, separator) {
-		var string = "";
+		let string = "";
 
 		array.forEach(function(item) {
 			string = string.concat(item, separator);

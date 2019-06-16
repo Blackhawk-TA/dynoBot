@@ -9,7 +9,7 @@ const pathCfg = base + "/cfg/servers/";
  * Utils module optimized for re-use in custom js modules to allow json config handling
  * @type {{readJSON: module.exports.readJSON, editJSON: module.exports.editJSON, overrideJSON: module.exports.overrideJSON}}
  */
-var self = module.exports = {
+let self = module.exports = {
 	/**
 	 * Reads from a json file. Looks for server-specific file first and falls back to default file on the pre-defined path
 	 * @param {string} defaultPath The non-server-specific base config file path, used if no server-specific file found
@@ -19,13 +19,13 @@ var self = module.exports = {
 	 * @return {*} The value of the json entry when id and entry are set, else the entire json file.
 	 */
 	readJSON: function (defaultPath, serverId, id = null, entry = null) {
-		var pathArray = defaultPath.split("/");
-		var configName = pathArray[pathArray.length - 1];
-		var configPath = pathCfg + serverId + "/" + configName;
-		var defaultFile = require(defaultPath);
+		let pathArray = defaultPath.split("/");
+		let configName = pathArray[pathArray.length - 1];
+		let configPath = pathCfg + serverId + "/" + configName;
+		let defaultFile = require(defaultPath);
 
 		if (fs.existsSync(configPath)) {
-			var serverConfig = require(configPath);
+			let serverConfig = require(configPath);
 
 			if (id && entry && defaultFile[id] && defaultFile[id][entry] != null) {
 				if (serverConfig[id] && entry) {
@@ -61,12 +61,12 @@ var self = module.exports = {
 	 * @param {boolean} showResult Determines if the edited json file should be shown once editing is done
 	 */
 	editJSON: function (channel, configPath, id, entry, value, showResult = true) {
-		var pathArray = configPath.split("/");
-		var configName = pathArray[pathArray.length - 1];
-		var guildId = channel.guild.id;
-		var pathServer = pathCfg + guildId + "/";
-		var pathJSON = pathServer + configName;
-		var jsonString = "";
+		let pathArray = configPath.split("/");
+		let configName = pathArray[pathArray.length - 1];
+		let serverId = channel.getServer().getId();
+		let pathServer = pathCfg + serverId + "/";
+		let pathJSON = pathServer + configName;
+		let jsonString = "";
 
 		//Create directory
 		if (!fs.existsSync(pathCfg))
@@ -76,8 +76,8 @@ var self = module.exports = {
 			fs.mkdirSync(pathServer);
 
 		if (!fs.existsSync(pathJSON)) { //config does not exist, create new
-			var newJSON;
-			if (id === null) {
+			let newJSON;
+			if (id) {
 				newJSON = {
 					[entry]: value
 				}
@@ -91,9 +91,9 @@ var self = module.exports = {
 
 			jsonString = JSON.stringify(newJSON, null, 4);
 		} else { //config exists, edit old one
-			var serverJSON = require(pathJSON);
+			let serverJSON = require(pathJSON);
 
-			if (id === null) {
+			if (id) {
 				serverJSON[entry] = value;
 			} else {
 				if (!serverJSON[id]) {
@@ -109,7 +109,7 @@ var self = module.exports = {
 		}
 
 		//In case of rcon password change censor it.
-		var censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
+		let censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
 
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
@@ -122,8 +122,8 @@ var self = module.exports = {
 
 		//Trigger hook when enabling
 		if (entry === "running" && configName === "hooks.json") {
-			var interval = self.readJSON(configPath, channel.guild.id, id, "interval");
-			const hookUpdater = new HookUpdater(id, interval, channel.guild);
+			let interval = self.readJSON(configPath, channel.getServer().getId(), id, "interval");
+			const hookUpdater = new HookUpdater(id, interval, channel.getServer());
 			setTimeout(() => {
 				hookUpdater.nextCall()
 			}, interval);
@@ -138,11 +138,11 @@ var self = module.exports = {
 	 * @param {boolean} showResult This sets whether the new json file is shown in discord, default value is true
 	 */
 	overrideJSON: function (channel, configPath, newJSON, showResult = true) {
-		var pathArray = configPath.split("/");
-		var configName = pathArray[pathArray.length - 1];
-		var guildId = channel.guild.id;
-		var pathServer = pathCfg + guildId + "/";
-		var pathJSON = pathServer + configName;
+		let pathArray = configPath.split("/");
+		let configName = pathArray[pathArray.length - 1];
+		let serverId = channel.getServer().getId();
+		let pathServer = pathCfg + serverId + "/";
+		let pathJSON = pathServer + configName;
 
 		//Create directory
 		if (!fs.existsSync(pathCfg))
@@ -151,11 +151,11 @@ var self = module.exports = {
 		if (!fs.existsSync(pathServer))
 			fs.mkdirSync(pathServer);
 
-		var jsonString = JSON.stringify(newJSON, null, 4);
+		let jsonString = JSON.stringify(newJSON, null, 4);
 
 		fs.writeFile(pathJSON, jsonString, "utf-8", function (err) {
 			if (err) throw err;
-			var censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
+			let censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
 			if (showResult) {
 				channel.send("This is the new json file:\n```json\n" + censoredJson + "```");
 			}

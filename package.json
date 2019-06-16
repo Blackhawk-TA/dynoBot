@@ -26,9 +26,11 @@
 	},
 	"dependencies": {
 		"base64-img": "^1.0.4",
+		"chatbot-api-wrapper": "https://github.com/Blackhawk-TA/chatbot-api-wrapper/archive/v1.0.0-beta-4.tar.gz",
 		"bufferutil": "^4.0.1",
 		"discord.js": "^11.5.0",
 		"mkdirp": "^0.5.1",
+		"npm": "^6.9.0",
 		"npmrc": "^1.1.1",
 		"request": "^2.88.0",
 		"srcds-rcon": "^2.2.1",
