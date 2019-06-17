@@ -7,7 +7,7 @@ module.exports = {
 
 		switch (command.type) {
 			case "js":
-				require(base + "/" + command.path).run(msg, client);
+				require(base + "/" + command.path).run(msg, client, msg.getRegexGroups(pattern));
 				return true;
 			case "python":
 				languageHandler.runScript("python3", base + "/" + command.path, msg.getContentArray(), msg.getRegexGroups(pattern), msg.channel);

@@ -6,12 +6,12 @@ const base64Img = require('base64-img');
 const fs = require("fs");
 
 module.exports = {
-	run: function (msg) {
+	run: function (msg, client, regexGroups) {
 		if (security.wolframAlphaAPI) {
 			msg.channel.send("I'm processing your request, please wait...");
 
 			let waApi = WolframAlphaAPI(security.wolframAlphaAPI);
-			let question = msg.aRegexGroups[2]; //TODO convert
+			let question = regexGroups[2];
 			let serverId = msg.channel.getServer().getId();
 
 			waApi.getSimple({
