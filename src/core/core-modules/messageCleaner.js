@@ -17,13 +17,13 @@ module.exports = {
 				var index = 0;
 				var date = new Date();
 
-				for (var i in msgArray) { //TODO optimize
-					var diffDays = Math.round(Math.abs((msgArray[i].createdAt.getTime() - date.getTime()) / (oneDay)));
-					if ((msgArray[i].isMentioned(client.user) || msgArray[i].author.id === client.user.id) && diffDays < twoWeeks && msg.deletable) {
-						msgToDelete[index] = msgArray[i];
+				msgArray.forEach(message => { //TODO optimize
+					var diffDays = Math.round(Math.abs((message.createdAt.getTime() - date.getTime()) / (oneDay)));
+					if ((message.isMentioned(client.user) || message.author.id === client.user.id) && diffDays < twoWeeks && msg.deletable) {
+						msgToDelete[index] = message;
 						index++;
 					}
-				}
+				});
 
 				msg.channel.bulkDelete(msgToDelete);
 				msg.channel.send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);

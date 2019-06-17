@@ -7,7 +7,7 @@ const hooks = require(base + "/cfg/hooks.json");
 module.exports = {
 	init: function(server) {
 		for (var id in hooks) {
-			if (configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "running")) {
+			if (hooks.hasOwnProperty(id) && configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "running")) {
 				var interval = configHandler.readJSON(base + "/cfg/hooks.json", server.id, id, "interval");
 
 				const hookUpdater = new HookUpdater(id, interval, server);
@@ -22,7 +22,7 @@ module.exports = {
 
 		//Get index
 		for (var id in hooks) {
-			if (hooks[id].name === name && hooks[id][entry] !== undefined) {
+			if (hooks.hasOwnProperty(id) && hooks[id].name === name && hooks[id][entry] !== undefined) {
 				index = id;
 			}
 		}
