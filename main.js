@@ -8,7 +8,7 @@ const hooks = require(base + "/src/core/utils/hooks");
 const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
-const {DiscordBot} = require("chatbot-api-wrapper");
+const {DiscordBot} = require("dynobot-framework");
 const Bot = new DiscordBot(security.token);
 
 Bot.client.registerEvent("error");
