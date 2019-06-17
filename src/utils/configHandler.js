@@ -77,7 +77,7 @@ let self = module.exports = {
 
 		if (!fs.existsSync(pathJSON)) { //config does not exist, create new
 			let newJSON;
-			if (id) {
+			if (!id) {
 				newJSON = {
 					[entry]: value
 				}
@@ -93,7 +93,7 @@ let self = module.exports = {
 		} else { //config exists, edit old one
 			let serverJSON = require(pathJSON);
 
-			if (id) {
+			if (!id) {
 				serverJSON[entry] = value;
 			} else {
 				if (!serverJSON[id]) {
