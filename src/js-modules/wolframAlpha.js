@@ -34,7 +34,7 @@ module.exports = {
 
 				base64Img.img(result, resultDirectory, "lastWolframAlphaRequest", function (err, filePath) {
 					let fileName = filePath.split("/").pop();
-					msg.channel.send("This is the result of your request:\n", { //TODO support this
+					msg.channel.send("This is the result of your request:\n", {
 						files: [{
 							attachment: filePath,
 							name: fileName

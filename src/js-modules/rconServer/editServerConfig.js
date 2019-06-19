@@ -13,9 +13,9 @@ module.exports = {
 		if (fs.existsSync(serverCfgPath)) {
 			serverCfg = require(serverCfgPath);
 
-			let id = msg.getContentArray()[3];
-			let entry = msg.getContentArray()[4];
-			let value = msg.getContentArray()[6];
+			let id = msg.getContentArray()[4];
+			let entry = msg.getContentArray()[5];
+			let value = msg.getContentArray()[7];
 
 			if (entry === "rcon_password") {
 				msg.channel.send("I've deleted your message for security reasons.\nThere is a specific command for setting the rcon password. Check help for further information.");

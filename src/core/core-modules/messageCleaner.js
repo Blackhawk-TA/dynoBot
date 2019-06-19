@@ -15,7 +15,7 @@ module.exports = {
 				let msgToDelete = [];
 				let date = new Date();
 
-				messages.forEach(message => { //TODO optimize
+				messages.forEach(message => {
 					let diffDays = Math.round(Math.abs((message.getCreationDate().getTime() - date.getTime()) / (oneDay)));
 					if ((message.isMentioned(client.user) || message.getAuthor().getId() === client.user.getId()) && diffDays < twoWeeks && msg.isDeletable()) {
 						msgToDelete.push(message);

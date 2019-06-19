@@ -6,10 +6,10 @@ const config = require(base + "/cfg/config.json");
 module.exports = {
 	run: function(msg) {
 		let pathCfg = base + "/cfg/config.json";
-		let id = msg.getContentArray()[2];
-		let entry = msg.getContentArray()[3];
+		let id = msg.getContentArray()[3];
+		let entry = msg.getContentArray()[4];
 		let value = "";
-		let valueStartIndex = 5;
+		let valueStartIndex = 6;
 
 		for (let i = valueStartIndex; i < msg.getContentArray().length; i++) {
 			value += " " + msg.getContentArray()[i];

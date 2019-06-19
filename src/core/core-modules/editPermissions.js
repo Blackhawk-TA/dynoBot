@@ -11,9 +11,9 @@ module.exports = {
 		let cmdPermissions = configHandler.readJSON(permissionsPath, msg.getServer().getId());
 		let serverRolesCollection = msg.getServer().getRoles();
 
-		let requestedCmd = msg.getContentArray()[0];
-		let bAddPermission = msg.getContentArray()[1] === "add";
-		let requestedRole = msg.getContentArray()[4];
+		let requestedCmd = msg.getContentArray()[1];
+		let bAddPermission = msg.getContentArray()[2] === "add";
+		let requestedRole = msg.getContentArray()[5];
 
 		let bRoleExists = false;
 		let bRequestedCmdExists = false;
