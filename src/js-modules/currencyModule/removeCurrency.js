@@ -16,10 +16,10 @@ module.exports = {
 		}
 
 		if (index === -1) {
-			msg.channel.send(currency + " does not exist in the currency list.");
+			msg.getChannel().send(currency + " does not exist in the currency list.");
 		} else {
 			config.currencies.splice(index, 1);
-			configHandler.overrideJSON(msg.channel, cfgPath, config);
+			configHandler.overrideJSON(msg.getChannel(), cfgPath, config);
 		}
 	}
 };

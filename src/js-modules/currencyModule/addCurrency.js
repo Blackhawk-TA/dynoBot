@@ -13,7 +13,7 @@ module.exports = {
 			if (!error && response.statusCode === 200) {
 				let data = JSON.parse(body);
 				if (data.EUR === undefined) {
-					msg.channel.send(currency + " does not exist.");
+					msg.getChannel().send(currency + " does not exist.");
 				} else {
 					//Currency exists and can be added
 					let alreadyExists = false;
@@ -24,14 +24,14 @@ module.exports = {
 					}
 
 					if (alreadyExists) {
-						msg.channel.send(currency + " already exists in the currency list.");
+						msg.getChannel().send(currency + " already exists in the currency list.");
 					} else {
 						config.currencies.push(currency);
-						configHandler.overrideJSON(msg.channel, cfgPath, config);
+						configHandler.overrideJSON(msg.getChannel(), cfgPath, config);
 					}
 				}
 			} else {
-				msg.channel.send("There was an timeout at the API request, please try again later.");
+				msg.getChannel().send("There was an timeout at the API request, please try again later.");
 			}
 		});
 	}

@@ -23,7 +23,7 @@ module.exports = {
 			} else {
 				answer = "Sorry I just can't handle the pressure... \nhttps://giphy.com/gifs/high-quality-relationship-programmer-UNZ3HQH0Enzos"
 			}
-			msg.channel.send(answer)
+			msg.getChannel().send(answer)
 		});
 	}
 };

@@ -8,11 +8,11 @@ const fs = require("fs");
 module.exports = {
 	run: function (msg, client, regexGroups) {
 		if (security.wolframAlphaAPI) {
-			msg.channel.send("I'm processing your request, please wait...");
+			msg.getChannel().send("I'm processing your request, please wait...");
 
 			let waApi = WolframAlphaAPI(security.wolframAlphaAPI);
 			let question = regexGroups[2];
-			let serverId = msg.channel.getServer().getId();
+			let serverId = msg.getChannel().getServer().getId();
 
 			waApi.getSimple({
 				i: question,
@@ -34,7 +34,7 @@ module.exports = {
 
 				base64Img.img(result, resultDirectory, "lastWolframAlphaRequest", function (err, filePath) {
 					let fileName = filePath.split("/").pop();
-					msg.channel.send("This is the result of your request:\n", {
+					msg.getChannel().send("This is the result of your request:\n", {
 						files: [{
 							attachment: filePath,
 							name: fileName
@@ -44,10 +44,10 @@ module.exports = {
 
 			}).catch((error) => {
 				console.log(`${new Date().toLocaleString()}: ${error}`);
-				msg.channel.send("Following problem occurred:\n```" + error + "```");
+				msg.getChannel().send("Following problem occurred:\n```" + error + "```");
 			});
 		} else {
-			msg.channel.send("My owner hasn't set up the Wolfram|Alpha module.")
+			msg.getChannel().send("My owner hasn't set up the Wolfram|Alpha module.")
 		}
 	}
 };

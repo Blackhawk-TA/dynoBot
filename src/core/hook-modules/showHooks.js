@@ -9,11 +9,11 @@ module.exports = {
 		let answer = "List of available hooks:```";
 		for (let id in hooks) {
 			if (hooks.hasOwnProperty(id)) {
-				let isEnabled = configHandler.readJSON(configPath, msg.channel.getServer().getId(), id, "running");
+				let isEnabled = configHandler.readJSON(configPath, msg.getChannel().getServer().getId(), id, "running");
 				let active = isEnabled ? "active" : "inactive";
 				answer += `\n${hooks[id].name}: (${active})`;
 			}
 		}
-		msg.channel.send(answer + "```");
+		msg.getChannel().send(answer + "```");
 	}
 };

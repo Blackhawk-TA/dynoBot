@@ -10,20 +10,20 @@ module.exports = {
 		let pathConfig = base + "/cfg/config.json";
 		let amount = configHandler.readJSON(pathConfig, msg.getServer().getId(), "message_cleaner", "amount");
 
-		msg.channel.getMessages(amount)
+		msg.getChannel().getMessages(amount)
 			.then(messages => {
 				let msgToDelete = [];
 				let date = new Date();
 
 				messages.forEach(message => {
 					let diffDays = Math.round(Math.abs((message.getCreationDate().getTime() - date.getTime()) / (oneDay)));
-					if ((message.isMentioned(client.user) || message.getAuthor().getId() === client.user.getId()) && diffDays < twoWeeks && msg.isDeletable()) {
+					if ((message.isMentioned(client.getUser()) || message.getAuthor().getId() === client.getUser().getId()) && diffDays < twoWeeks && msg.isDeletable()) {
 						msgToDelete.push(message);
 					}
 				});
 
-				msg.channel.deleteMessageArray(msgToDelete);
-				msg.channel.send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
+				msg.getChannel().deleteMessages(msgToDelete);
+				msg.getChannel().send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
 			.catch((e) => {
 				console.error(`${new Date().toLocaleString()}: ${e}`)

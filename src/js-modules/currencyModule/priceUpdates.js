@@ -30,7 +30,7 @@ module.exports = {
 
 	run: function(msg) {
 		let config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", msg.getServer().getId());
-		module.exports.pushUpdate(msg.channel, config.currencies[loopIndex], config);
+		module.exports.pushUpdate(msg.getChannel(), config.currencies[loopIndex], config);
 	},
 
 	hook: function(channel) {

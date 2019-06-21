@@ -15,7 +15,7 @@ module.exports = {
 			let rconConfig = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
 			if (serverCfg !== rconConfig) {
-				msg.channel.send("I've sent you a private message with further instructions.");
+				msg.getChannel().send("I've sent you a private message with further instructions.");
 
 				let user = msg.getAuthor();
 
@@ -23,27 +23,28 @@ module.exports = {
 					resolved.send(`Hello ${user.getName()}, you requested to change the rcon password of '${rconServer}' on the server '${msg.getServer().getName()}'.`
 						+ " Please enter the rcon password within the next 60 seconds.");
 
-					let pattern = new RegExp(/(.+)/);
-					let filter = m => pattern.test(m.content) && m.author.id === msg.getAuthor().getId(); //TODO fix m not being wrapped
-
-					resolved.awaitMessages(filter, {max: 1, time: 60000, errors: ['time']})
+					resolved.awaitMessages({max: 2, time: 60000, errors: ['time']})
 						.then((collected) => {
-							let answer = collected[0].getContent();
-
-							resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
-							configHandler.editJSON(msg.channel, pathCfg, rconServer, "rcon_password", answer, false);
+							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
+								let answer = collected[1].getContent();
+								resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
+								configHandler.editJSON(msg.getChannel(), pathCfg, rconServer, "rcon_password", answer, false);
+							} else {
+								resolved.send("The password could not be changed. Please try again.");
+								msg.getChannel().send("The password could not be changed. Please try again.");
+							}
 						})
 						.catch((reason) => {
 							console.error(reason);
 							resolved.send("The time for entering the password has passed. Please request a new rcon password change.");
-							msg.channel.send("The time for entering the password has passed. Please request a new rcon password change.");
+							msg.getChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
 						});
 				}).catch(console.error);
 			} else {
-				msg.channel.send(`There is no rcon server called '${rconServer}'.`);
+				msg.getChannel().send(`There is no rcon server called '${rconServer}'.`);
 			}
 		} else {
-			msg.channel.send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
+			msg.getChannel().send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
 		}
 	}
 };

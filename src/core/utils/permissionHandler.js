@@ -4,29 +4,32 @@ const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
 	hasPermissions: function(msg, command) {
-		let cmdPermissions = configHandler.readJSON(base + "/cfg/permissions.json", msg.getServer().getId());
 		let bPermission = true;
-		let bInPermissionsList = false;
-		let authorRolesCollection = msg.getAuthorRoles();
-		let authorRoles = [];
 
-		authorRolesCollection.forEach(authorRole => {
-			authorRoles.push(authorRole.getName());
-		});
+		if (msg.hasServer()) {
+			let cmdPermissions = configHandler.readJSON(base + "/cfg/permissions.json", msg.getServer().getId());
+			let bInPermissionsList = false;
+			let authorRolesCollection = msg.getAuthorRoles();
+			let authorRoles = [];
 
-		cmdPermissions.forEach(function(cmdPermission) {
-			let requiredRoles = cmdPermission.permissions;
-			if (cmdPermission.path === command.path && requiredRoles.length > 0) {
-				authorRoles.forEach(function(authorRole) {
-					requiredRoles.forEach(function(requiredRole) {
-						if (authorRole === requiredRole) {
-							bInPermissionsList = true;
-						}
+			authorRolesCollection.forEach(authorRole => {
+				authorRoles.push(authorRole.getName());
+			});
+
+			cmdPermissions.forEach(function(cmdPermission) {
+				let requiredRoles = cmdPermission.permissions;
+				if (cmdPermission.path === command.path && requiredRoles.length > 0) {
+					authorRoles.forEach(function(authorRole) {
+						requiredRoles.forEach(function(requiredRole) {
+							if (authorRole === requiredRole) {
+								bInPermissionsList = true;
+							}
+						});
 					});
-				});
-				bPermission = bInPermissionsList;
-			}
-		});
+					bPermission = bInPermissionsList;
+				}
+			});
+		}
 
 		return bPermission;
 	}

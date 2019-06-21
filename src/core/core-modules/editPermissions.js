@@ -74,27 +74,27 @@ module.exports = {
 
 				aAllowedRoles = cmdPermissions[j].permissions;
 				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
-				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
-				msg.channel.send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: ${sAllowedRoles}`);
+				configHandler.overrideJSON(msg.getChannel(), permissionsPath, cmdPermissions, false);
+				msg.getChannel().send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (!bAddPermission && bRequestedCmdInPermissions && bPermissionAlreadyInList) {
 				let index = cmdPermissions[j].permissions.indexOf(requestedRole);
 				cmdPermissions[j].permissions.splice(index, 1);
 
 				aAllowedRoles = cmdPermissions[j].permissions;
 				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
-				configHandler.overrideJSON(msg.channel, permissionsPath, cmdPermissions, false);
-				msg.channel.send(`The role '${requestedRole}' has been removed from the permissions list.\nAllowed roles: ${sAllowedRoles}`);
+				configHandler.overrideJSON(msg.getChannel(), permissionsPath, cmdPermissions, false);
+				msg.getChannel().send(`The role '${requestedRole}' has been removed from the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (bAddPermission && bPermissionAlreadyInList) {
-				msg.channel.send(`The role '${requestedRole}' is already in the permissions list.`);
+				msg.getChannel().send(`The role '${requestedRole}' is already in the permissions list.`);
 			} else if (!bAddPermission && !bRequestedCmdInPermissions || !bPermissionAlreadyInList) {
-				msg.channel.send(`The role '${requestedRole}' does not exist in the permissions list.`);
+				msg.getChannel().send(`The role '${requestedRole}' does not exist in the permissions list.`);
 			}
 		} else if (!bRoleExists && !bRequestedCmdExists) {
-			msg.channel.send(`The role '${requestedRole}' and the command '${requestedCmd}' both don't exist.`);
+			msg.getChannel().send(`The role '${requestedRole}' and the command '${requestedCmd}' both don't exist.`);
 		} else if (!bRoleExists && bRequestedCmdExists) {
-			msg.channel.send(`The role '${requestedRole}' doesn't exist.`);
+			msg.getChannel().send(`The role '${requestedRole}' doesn't exist.`);
 		} else if (bRoleExists && !bRequestedCmdExists) {
-			msg.channel.send(`The command '${requestedCmd}' doesn't exist.`);
+			msg.getChannel().send(`The command '${requestedCmd}' doesn't exist.`);
 		}
 	}
 };

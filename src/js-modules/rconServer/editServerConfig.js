@@ -18,19 +18,19 @@ module.exports = {
 			let value = msg.getContentArray()[7];
 
 			if (entry === "rcon_password") {
-				msg.channel.send("I've deleted your message for security reasons.\nThere is a specific command for setting the rcon password. Check help for further information.");
+				msg.getChannel().send("I've deleted your message for security reasons.\nThere is a specific command for setting the rcon password. Check help for further information.");
 				if (msg.isDeletable()) {
 					msg.delete();
 				}
 			} else {
 				if (serverCfg[id] && serverCfg[id][entry]) {
-					configHandler.editJSON(msg.channel, pathCfg, id, entry, value);
+					configHandler.editJSON(msg.getChannel(), pathCfg, id, entry, value);
 				} else {
-					msg.channel.send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
+					msg.getChannel().send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
 				}
 			}
 		} else {
-			msg.channel.send("Sorry, this server has no rcon server config, please create one using the rcon add command.");
+			msg.getChannel().send("Sorry, this server has no rcon server config, please create one using the rcon add command.");
 		}
 	}
 };

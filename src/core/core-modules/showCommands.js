@@ -6,8 +6,9 @@ const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
 	run: function (msg) {
-		let commands = configHandler.readJSON(cmdPath, msg.getServer().getId(), "commandList");
-		let cmdPermissions = configHandler.readJSON(permissionsPath, msg.getServer().getId());
+		let serverId = msg.hasServer() ? msg.getServer().getId() : 0;
+		let commands = configHandler.readJSON(cmdPath, serverId, "commandList");
+		let cmdPermissions = configHandler.readJSON(permissionsPath, serverId);
 		let answer = "List of regex commands:```";
 
 		commands.forEach(function (command) {
@@ -31,6 +32,6 @@ module.exports = {
 			let name = fileName.split(".")[0];
 			answer += `\n${name}${roles}: ${command.regex}`;
 		});
-		msg.channel.send(answer + "```");
+		msg.getChannel().send(answer + "```");
 	}
 };

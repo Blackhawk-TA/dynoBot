@@ -18,7 +18,7 @@ let self = module.exports = {
 	 * @param {string} entry (optional) The entry of the JSON array within the id
 	 * @return {*} The value of the json entry when id and entry are set, else the entire json file.
 	 */
-	readJSON: function (defaultPath, serverId, id = null, entry = null) {
+	readJSON: function (defaultPath, serverId, id = "", entry = "") {
 		let pathArray = defaultPath.split("/");
 		let configName = pathArray[pathArray.length - 1];
 		let configPath = pathCfg + serverId + "/" + configName;

@@ -21,9 +21,9 @@ module.exports = {
 			"password": "password",
 			"rcon_password": "rcon_password"
 		};
-		configHandler.overrideJSON(msg.channel, cfgPath, serverCfg);
+		configHandler.overrideJSON(msg.getChannel(), cfgPath, serverCfg);
 
 		console.log(`${new Date().toLocaleString()}: Added rcon server '${serverName}' on ${msg.getServer().getId()}.`);
-		msg.channel.send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
+		msg.getChannel().send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
 	}
 };

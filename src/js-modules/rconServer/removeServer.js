@@ -14,12 +14,12 @@ module.exports = {
 
 			delete serverCfg[serverName];
 
-			configHandler.overrideJSON(msg.channel, cfgPath, serverCfg);
+			configHandler.overrideJSON(msg.getChannel(), cfgPath, serverCfg);
 
 			console.log(`${new Date().toLocaleString()}: Removed rcon server '${serverName}' on ${msg.getServer().getId()}.`);
-			msg.channel.send(`The server '${serverName}' has been removed.`);
+			msg.getChannel().send(`The server '${serverName}' has been removed.`);
 		} else {
-			msg.channel.send("There is no server registered yet. Use the 'rcon server_name add' command to register one.");
+			msg.getChannel().send("There is no server registered yet. Use the 'rcon server_name add' command to register one.");
 		}
 	}
 };

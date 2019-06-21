@@ -11,26 +11,26 @@ const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 const {DiscordBot} = require("dynobot-framework");
 const Bot = new DiscordBot(security.token);
 
-Bot.client.registerEvent("error");
-Bot.client.registerEvent("ready");
-Bot.client.registerEvent("guildMemberAdd");
-Bot.client.registerEvent("message");
+Bot.getClient().registerEvent("error");
+Bot.getClient().registerEvent("ready");
+Bot.getClient().registerEvent("serverMemberAdd");
+Bot.getClient().registerEvent("message");
 
-Bot.client.events.on("error", (error) => {
+Bot.getClient().getEvents().on("error", (error) => {
 	console.error(error);
 });
 
-Bot.client.events.on("ready", () => {
+Bot.getClient().getEvents().on("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
 
 	//Init hooks
-	let servers = Bot.client.getServers();
+	let servers = Bot.getClient().getServers();
 
 	servers.forEach((server) => {
 		hooks.init(server);
 	});
 
-	Bot.client.events.on("guildMemberAdd", member => {
+	Bot.getClient().getEvents().on("serverMemberAdd", member => {
 		let pathConfig = base + "/cfg/config.json",
 			enabled = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "enabled"),
 			channelName = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "channel"),
@@ -46,9 +46,10 @@ Bot.client.events.on("ready", () => {
 		}
 	});
 
-	Bot.client.events.on("message", msg => {
+	Bot.getClient().getEvents().on("message", msg => {
 		try {
-			if (msg.isMentioned(Bot.client.user)) {
+			let BotUser = Bot.getClient().getUser();
+			if (msg.isMentioned(BotUser) && msg.getAuthor().getId() !== BotUser.getId()) {
 				let bAnswered = false,
 					i = 0;
 				while (!bAnswered && i < commands.commandList.length) {
@@ -57,17 +58,17 @@ Bot.client.events.on("ready", () => {
 
 					if (pattern.test(msg.getContent().toLowerCase())) {
 						if (permissionHandler.hasPermissions(msg, command)) {
-							bAnswered = scriptWrapper.run(command, msg, Bot.client);
+							bAnswered = scriptWrapper.run(command, msg, Bot.getClient());
 						} else {
 							bAnswered = true;
-							msg.channel.send("You don't have access to this command.");
+							msg.getChannel().send("You don't have access to this command.");
 						}
 					}
 					i++;
 				}
 
 				if (!bAnswered) {
-					msg.channel.send("Sorry, I can't help you with that.");
+					msg.getChannel().send("Sorry, I can't help you with that.");
 				}
 			}
 		} catch (e) {

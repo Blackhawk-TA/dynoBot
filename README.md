@@ -80,7 +80,7 @@ The base structure of a module looks like this:
 ```js
 module.exports = {
 	run: function(msg, client) {
-		msg.channel.send("I received these parameters: " + msg.getContentArray());
+		msg.getChannel().send("I received these parameters: " + msg.getContentArray());
 	}
 };
 ```
