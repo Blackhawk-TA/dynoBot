@@ -14,18 +14,18 @@ class HookUpdater {
 	 * Calls the hook and and schedules the next call
 	 */
 	nextCall() {
-		var configHandler = require(base + "/src/utils/configHandler");
-		var pathConfig = base + "/cfg/hooks.json";
+		let configHandler = require(base + "/src/utils/configHandler");
+		let pathConfig = base + "/cfg/hooks.json";
 
 		//Non-editable
-		var type = hooks[this.id].type;
-		var path = hooks[this.id].path;
+		let type = hooks[this.id].type;
+		let path = hooks[this.id].path;
 
 		//Editable
-		var channelId = configHandler.readJSON(pathConfig, this.server.id, this.id, "channel");
-		this.interval = configHandler.readJSON(pathConfig, this.server.id, this.id, "interval");
-		var running = configHandler.readJSON(pathConfig, this.server.id, this.id, "running");
-		var channel = this.server.channels.get(channelId);
+		let channelId = configHandler.readJSON(pathConfig, this.server.getId(), this.id, "channel");
+		this.interval = configHandler.readJSON(pathConfig, this.server.getId(), this.id, "interval");
+		let running = configHandler.readJSON(pathConfig, this.server.getId(), this.id, "running");
+		let channel = this.server.hasChannel(channelId);
 
 		//Run script
 		if (running) {
@@ -36,10 +36,10 @@ class HookUpdater {
 							require("./../../../" + path).hook(channel);
 							break;
 						case "python":
-							languageHandler.runPythonModule(path, "", "", channel);
+							languageHandler.runScript("python", path, "", "", channel);
 							break;
 						case "lua":
-							languageHandler.runLuaModule(path, "", "", channel);
+							languageHandler.runScript("lua", path, "", "", channel);
 							break;
 						default:
 							break;

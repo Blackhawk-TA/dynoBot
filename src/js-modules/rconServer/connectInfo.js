@@ -2,22 +2,21 @@ const base = require("path").resolve(".");
 
 module.exports = {
 	run: function (msg) {
-		var serverName = msg.contentArray[1];
-		var serverCfg = require(base + "/cfg/servers/" + msg.guild.id + "/rconServer.json");
+		let serverName = msg.getContentArray(true)[1];
+		let serverCfg = require(base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json");
 
 		if (serverCfg[serverName] !== undefined) {
-			var address = serverCfg[serverName]["address"];
-			var port = serverCfg[serverName]["port"];
-			var password = serverCfg[serverName]["password"];
+			let address = serverCfg[serverName]["address"];
+			let port = serverCfg[serverName]["port"];
+			let password = serverCfg[serverName]["password"];
 
+			let connectLink = `steam://connect/${address}:${port}/${password}`;
+			let connectCmd = `connect ${address}:${port}; password ${password};`;
 
-			var connectLink = `steam://connect/${address}:${port}/${password}`;
-			var connectCmd = `connect ${address}:${port}; password ${password};`;
-
-			msg.channel.send("You can connect to the server using this link: " + connectLink +
+			msg.getChannel().send("You can connect to the server using this link: " + connectLink +
 				"\nAlternatively you can using following console command:```" + connectCmd + "```");
 		} else {
-			msg.channel.send(`There is no server called ${serverName}.`);
+			msg.getChannel().send(`There is no server called ${serverName}.`);
 		}
 	}
 };

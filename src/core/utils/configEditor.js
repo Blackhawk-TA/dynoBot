@@ -5,28 +5,29 @@ const config = require(base + "/cfg/config.json");
 
 module.exports = {
 	run: function(msg) {
-		var pathCfg = base + "/cfg/config.json";
-		var id = msg.contentArray[2];
-		var entry = msg.contentArray[3];
-		var value = "";
-		var valueStartIndex = 5;
+		let contentArray = msg.getContentArray(true),
+			pathCfg = base + "/cfg/config.json",
+			id = contentArray[2],
+			entry = contentArray[3],
+			value = "",
+			valueStartIndex = 5;
 
-		for (var i = valueStartIndex; i < msg.contentArray.length; i++) {
-			value += " " + msg.contentArray[i];
+		for (let i = valueStartIndex; i < contentArray.length; i++) {
+			value += " " + contentArray[i];
 		}
 
 		value = value.trim();
 
-		try { //TODO remove ugly workaround
+		try {
 			value = JSON.parse(value);
 		} catch (e) {
 			console.error(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);
 		}
 
 		if (config[id] && config[id][entry]) {
-			configHandler.editJSON(msg.channel, pathCfg, id, entry, value);
+			configHandler.editJSON(msg.getChannel(), pathCfg, id, entry, value);
 		} else {
-			msg.channel.send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
+			msg.getChannel().send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
 		}
 	}
 };

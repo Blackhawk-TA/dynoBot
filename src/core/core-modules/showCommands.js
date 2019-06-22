@@ -6,12 +6,13 @@ const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
 	run: function (msg) {
-		var commands = configHandler.readJSON(cmdPath, msg.guild.id, "commandList");
-		var cmdPermissions = configHandler.readJSON(permissionsPath, msg.guild.id);
-		var answer = "List of regex commands:```";
+		let serverId = msg.hasServer() ? msg.getServer().getId() : 0;
+		let commands = configHandler.readJSON(cmdPath, serverId, "commandList");
+		let cmdPermissions = configHandler.readJSON(permissionsPath, serverId);
+		let answer = "List of regex commands:```";
 
 		commands.forEach(function (command) {
-			var roles = "";
+			let roles = "";
 
 			cmdPermissions.forEach(function (permission) {
 				if (command.path === permission.path) {
@@ -26,11 +27,11 @@ module.exports = {
 				roles = " (" + roles + ")"
 			}
 
-			var pathArray = command.path.split("/");
-			var fileName = pathArray[pathArray.length - 1];
-			var name = fileName.split(".")[0];
+			let pathArray = command.path.split("/");
+			let fileName = pathArray[pathArray.length - 1];
+			let name = fileName.split(".")[0];
 			answer += `\n${name}${roles}: ${command.regex}`;
 		});
-		msg.channel.send(answer + "```");
+		msg.getChannel().send(answer + "```");
 	}
 };

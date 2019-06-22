@@ -4,22 +4,23 @@ const cfgPath = base + "/cfg/moduleConfigs/currencies.json";
 
 module.exports = {
 	run: function(msg) {
-		var config = configHandler.readJSON(cfgPath, msg.guild.id);
-		var currency = msg.contentArray[msg.contentArray.length - 1].toUpperCase();
+		let contentArray = msg.getContentArray(true),
+			config = configHandler.readJSON(cfgPath, msg.getServer().getId()),
+			currency = contentArray[contentArray.length - 1].toUpperCase();
 
 		//Check if currency exists in file
-		var index = -1;
-		for (var i = 0; i < config.currencies.length; i++) {
+		let index = -1;
+		for (let i = 0; i < config.currencies.length; i++) {
 			if (config.currencies[i] === currency) {
 				index = i;
 			}
 		}
 
 		if (index === -1) {
-			msg.channel.send(currency + " does not exist in the currency list.");
+			msg.getChannel().send(currency + " does not exist in the currency list.");
 		} else {
 			config.currencies.splice(index, 1);
-			configHandler.overrideJSON(msg.channel, cfgPath, config);
+			configHandler.overrideJSON(msg.getChannel(), cfgPath, config);
 		}
 	}
 };

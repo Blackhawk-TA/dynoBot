@@ -3,17 +3,17 @@ const request = require("request");
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
 
-var loopIndex = 0;
-var answerDefault = "Current market situation:```js\n";
-var answer = answerDefault;
+let loopIndex = 0;
+let answerDefault = "Current market situation:```js\n";
+let answer = answerDefault;
 
 module.exports = {
 	pushUpdate: function(channel, currency, config) {
-		var self = this;
+		let self = this;
 
 		request("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD", function (error, response, body) {
 			if (!error && response.statusCode === 200) {
-				var data = JSON.parse(body);
+				let data = JSON.parse(body);
 				answer += "\n1 " + currency + " equals " + data.EUR + "€ or " + data.USD + "$.";
 
 				loopIndex++;
@@ -29,12 +29,12 @@ module.exports = {
 	},
 
 	run: function(msg) {
-		var config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", msg.guild.id);
-		module.exports.pushUpdate(msg.channel, config.currencies[loopIndex], config);
+		let config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", msg.getServer().getId());
+		module.exports.pushUpdate(msg.getChannel(), config.currencies[loopIndex], config);
 	},
 
 	hook: function(channel) {
-		var config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", channel.guild.id);
+		let config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", channel.getServer().getId());
 		module.exports.pushUpdate(channel, config.currencies[loopIndex], config);
 	}
 };

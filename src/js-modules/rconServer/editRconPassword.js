@@ -7,44 +7,44 @@ const pathCfg = base + "/cfg/moduleConfigs/rconServer.json";
 
 module.exports = {
 	run: function(msg) {
-		var serverCfgPath = base + "/cfg/servers/" + msg.guild.id + "/rconServer.json";
-		var rconServer = msg.contentArray[4];
-		var messages = [];
+		let serverCfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
+		let rconServer = msg.getContentArray(true)[4];
 
 		if (fs.existsSync(serverCfgPath)) {
-			var serverCfg = configHandler.readJSON(serverCfgPath, msg.guild.id, rconServer);
-			var rconConfig = configHandler.readJSON(serverCfgPath, msg.guild.id);
+			let serverCfg = configHandler.readJSON(serverCfgPath, msg.getServer().getId(), rconServer);
+			let rconConfig = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
 			if (serverCfg !== rconConfig) {
-				messages.push(msg.channel.send("I've sent you a private message with further instructions."));
+				msg.getChannel().send("I've sent you a private message with further instructions.");
 
-				var user = msg.author;
-				var dmChannel = user.createDM();
+				let user = msg.getAuthor();
 
-				user.send(`Hello ${user.username}, you requested to change the rcon password of '${rconServer}' on the server '${msg.guild.name}'.`
-					+ " Please enter the rcon password within the next 60 seconds.");
+				user.createDM().then((resolved) => {
+					resolved.send(`Hello ${user.getName()}, you requested to change the rcon password of '${rconServer}' on the server '${msg.getServer().getName()}'.`
+						+ " Please enter the rcon password within the next 60 seconds.");
 
-				dmChannel.then((resolved) => {
-					var pattern = new RegExp(/(.+)/);
-					var filter = m => pattern.test(m.content) && m.author === msg.author;
-
-					resolved.awaitMessages(filter, {max: 1, time: 60000, errors: ['time']})
+					resolved.awaitMessages({max: 2, time: 60000, errors: ['time']})
 						.then((collected) => {
-							var answer = collected.array()[0].content;
-
-							resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
-							configHandler.editJSON(msg.channel, pathCfg, rconServer, "rcon_password", answer, false);
+							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
+								let answer = collected[1].getContent(true);
+								resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
+								configHandler.editJSON(msg.getChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
+							} else {
+								resolved.send("The password could not be changed. Please try again.");
+								msg.getChannel().send("The password could not be changed. Please try again.");
+							}
 						})
-						.catch(() => {
+						.catch((reason) => {
+							console.error(reason);
 							resolved.send("The time for entering the password has passed. Please request a new rcon password change.");
-							msg.channel.send("The time for entering the password has passed. Please request a new rcon password change.");
+							msg.getChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
 						});
 				}).catch(console.error);
 			} else {
-				msg.channel.send(`There is no rcon server called '${rconServer}'.`);
+				msg.getChannel().send(`There is no rcon server called '${rconServer}'.`);
 			}
 		} else {
-			msg.channel.send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
+			msg.getChannel().send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
 		}
 	}
 };

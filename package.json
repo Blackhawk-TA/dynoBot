@@ -14,7 +14,7 @@
 		"modular",
 		"bot"
 	],
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"license": "MIT",
 	"main": "main.js",
 	"scripts": {
@@ -28,7 +28,9 @@
 		"base64-img": "^1.0.4",
 		"bufferutil": "^4.0.1",
 		"discord.js": "^11.5.0",
+		"dynobot-framework": "^1.0.0",
 		"mkdirp": "^0.5.1",
+		"npm": "^6.9.0",
 		"npmrc": "^1.1.1",
 		"request": "^2.88.0",
 		"srcds-rcon": "^2.2.1",
