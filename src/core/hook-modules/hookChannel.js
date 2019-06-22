@@ -8,7 +8,7 @@ module.exports = {
 			name = contentArray[contentArray.length - 3],
 			channelId = contentArray[contentArray.length - 1];
 
-		if (msg.getServer().hasChannel(channelId)) { //TODO check if it works
+		if (msg.getServer().hasChannel(channelId)) {
 			hooks.changeEntry(name, msg.getChannel(), "channel", channelId);
 		} else {
 			msg.getChannel().send("Sorry, but a channel with the id " + channelId + " does not exist on this server.");

@@ -5,9 +5,9 @@ const base = require("path").resolve(".");
 
 module.exports = {
 	run: function (msg) {
-		let serverName = msg.getContentArray(true)[0];
-		let cfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
-		let serverCfg;
+		let serverName = msg.getContentArray(true)[1],
+			cfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json",
+			serverCfg;
 
 		if (fs.existsSync(cfgPath)) {
 			serverCfg = require(cfgPath);
@@ -16,12 +16,12 @@ module.exports = {
 			return;
 		}
 
-		if (serverCfg !== undefined && serverCfg[serverName] !== undefined) {
-			let address = serverCfg[serverName]["address"];
-			let port = serverCfg[serverName]["port"];
-			let password = serverCfg[serverName]["rcon_password"];
-			let msgArray = msg.getContentArray(true).slice(3, msg.getContentArray(true).length);
-			let cmd = "";
+		if (serverCfg && serverCfg[serverName]) {
+			let address = serverCfg[serverName]["address"],
+				port = serverCfg[serverName]["port"],
+				password = serverCfg[serverName]["rcon_password"],
+				msgArray = msg.getContentArray(true).slice(3, msg.getContentArray(true).length),
+				cmd = "";
 
 			msgArray.forEach(function (item) {
 				cmd += item + " ";

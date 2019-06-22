@@ -10,7 +10,7 @@ module.exports = {
 			id = contentArray[2],
 			entry = contentArray[3],
 			value = "",
-			valueStartIndex = 6;
+			valueStartIndex = 5;
 
 		for (let i = valueStartIndex; i < contentArray.length; i++) {
 			value += " " + contentArray[i];
@@ -18,7 +18,7 @@ module.exports = {
 
 		value = value.trim();
 
-		try { //TODO remove ugly workaround
+		try {
 			value = JSON.parse(value);
 		} catch (e) {
 			console.error(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);

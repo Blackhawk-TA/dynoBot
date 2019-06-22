@@ -25,7 +25,7 @@ class HookUpdater {
 		let channelId = configHandler.readJSON(pathConfig, this.server.getId(), this.id, "channel");
 		this.interval = configHandler.readJSON(pathConfig, this.server.getId(), this.id, "interval");
 		let running = configHandler.readJSON(pathConfig, this.server.getId(), this.id, "running");
-		let channel = this.server.getChannels().get(channelId);
+		let channel = this.server.hasChannel(channelId);
 
 		//Run script
 		if (running) {

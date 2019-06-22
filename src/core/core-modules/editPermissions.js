@@ -9,7 +9,7 @@ module.exports = {
 	run: function(msg) {
 		let commands = configHandler.readJSON(cmdPath, msg.getServer().getId(), "commandList"),
 			cmdPermissions = configHandler.readJSON(permissionsPath, msg.getServer().getId()),
-			serverRolesCollection = msg.getServer().getRoles();
+			serverRoles = msg.getServer().getRoles();
 
 		let contentArray = msg.getContentArray(true),
 			requestedCmd = contentArray[0],
@@ -22,8 +22,8 @@ module.exports = {
 			bPermissionAlreadyInList = false;
 
 		let i = 0;
-		while (!bRoleExists && i < serverRolesCollection.length) {
-			if (serverRolesCollection[i].name === requestedRole) {
+		while (!bRoleExists && i < serverRoles.length) {
+			if (serverRoles[i].getName() === requestedRole) {
 				bRoleExists = true;
 			} else {
 				i++;

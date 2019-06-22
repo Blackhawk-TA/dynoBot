@@ -29,12 +29,8 @@
 			"path": "src/core/hook-modules/hookConfig.js"
 		}, {
 			"type": "js",
-			"regex": "(deactivate|disable) (.+)$",
-			"path": "src/core/hook-modules/hookDisable.js"
-		}, {
-			"type": "js",
-			"regex": "(activate|enable) (.+)$",
-			"path": "src/core/hook-modules/hookEnable.js"
+			"regex": "(enable|disable) (.+)$",
+			"path": "src/core/hook-modules/hookToggle.js"
 		}, {
 			"type": "js",
 			"regex": "(interval)( of)? (.+) (to) (.+)$",
