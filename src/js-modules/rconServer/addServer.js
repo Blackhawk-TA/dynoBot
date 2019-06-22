@@ -13,7 +13,7 @@ module.exports = {
 			serverCfg = require(serverCfgPath);
 		}
 
-		let serverName = msg.getContentArray()[2];
+		let serverName = msg.getContentArray(true)[1];
 
 		serverCfg[serverName] = {
 			"address": "127.0.0.1",

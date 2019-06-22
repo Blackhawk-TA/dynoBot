@@ -5,7 +5,7 @@ const base = require("path").resolve(".");
 
 module.exports = {
 	run: function (msg) {
-		let serverName = msg.getContentArray() [1];
+		let serverName = msg.getContentArray(true)[0];
 		let cfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
 		let serverCfg;
 
@@ -20,7 +20,7 @@ module.exports = {
 			let address = serverCfg[serverName]["address"];
 			let port = serverCfg[serverName]["port"];
 			let password = serverCfg[serverName]["rcon_password"];
-			let msgArray = msg.getContentArray() .slice(3, msg.getContentArray() .length);
+			let msgArray = msg.getContentArray(true).slice(3, msg.getContentArray(true).length);
 			let cmd = "";
 
 			msgArray.forEach(function (item) {

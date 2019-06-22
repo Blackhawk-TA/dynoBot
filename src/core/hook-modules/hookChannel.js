@@ -4,10 +4,11 @@ const hooks = require(base + "/src/core/utils/hooks");
 
 module.exports = {
 	run: function(msg) {
-		let name = msg.getContentArray()[msg.getContentArray().length - 3];
-		let channelId = msg.getContentArray()[msg.getContentArray().length - 1];
+		let contentArray = msg.getContentArray(true),
+			name = contentArray[contentArray.length - 3],
+			channelId = contentArray[contentArray.length - 1];
 
-		if (msg.getServer().getChannels().get(channelId) !== undefined) { //TODO check if it works
+		if (msg.getServer().hasChannel(channelId)) { //TODO check if it works
 			hooks.changeEntry(name, msg.getChannel(), "channel", channelId);
 		} else {
 			msg.getChannel().send("Sorry, but a channel with the id " + channelId + " does not exist on this server.");

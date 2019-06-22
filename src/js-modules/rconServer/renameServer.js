@@ -11,8 +11,9 @@ module.exports = {
 			serverCfg = require(serverCfgPath);
 		}
 
-		let oldName = msg.getContentArray()[3];
-		let newName = msg.getContentArray()[5];
+		let contentArray = msg.getContentArray(true);
+		let oldName = contentArray[2];
+		let newName = contentArray[4];
 
 		if (serverCfg[oldName]) {
 			serverCfg[newName] = serverCfg[oldName];

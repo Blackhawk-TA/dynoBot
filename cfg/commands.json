@@ -21,7 +21,7 @@
 			"path": "src/core/core-modules/messageCleaner.js"
 		}, {
 			"type": "js",
-			"regex": "(channel)( of)? (\\w+) (to) (\\d+)$",
+			"regex": "(channel)( of)? (.+) (to) (\\d+)$",
 			"path": "src/core/hook-modules/hookChannel.js"
 		}, {
 			"type": "js",
@@ -29,15 +29,15 @@
 			"path": "src/core/hook-modules/hookConfig.js"
 		}, {
 			"type": "js",
-			"regex": "(deactivate|disable) (\\w+)$",
+			"regex": "(deactivate|disable) (.+)$",
 			"path": "src/core/hook-modules/hookDisable.js"
 		}, {
 			"type": "js",
-			"regex": "(activate|enable) (\\w+)$",
+			"regex": "(activate|enable) (.+)$",
 			"path": "src/core/hook-modules/hookEnable.js"
 		}, {
 			"type": "js",
-			"regex": "(interval)( of)? (\\w+) (to) (\\d|.+)$",
+			"regex": "(interval)( of)? (.+) (to) (.+)$",
 			"path": "src/core/hook-modules/hookInterval.js"
 		}, {
 			"type": "js",
@@ -45,7 +45,7 @@
 			"path": "src/core/hook-modules/showHooks.js"
 		}, {
 			"type": "js",
-			"regex": "(change|set) (config) (\\w+) (\\w+) (to)( .+){1,}",
+			"regex": "(change|set) (config) (.+) (.+) (to)( .+){1,}",
 			"path": "src/core/utils/configEditor.js"
 		}, {
 			"type": "js",
@@ -53,15 +53,15 @@
 			"path": "src/core/core-modules/showConfig.js"
 		}, {
 			"type": "js",
-			"regex": "(convert) (\\d+ )?(\\w{3}) (to) (\\w{3})$",
+			"regex": "(convert) (\\d+ )?(.{3}) (to) (.{3})$",
 			"path": "src/js-modules/currencyModule/currencyConverter.js"
 		}, {
 			"type": "js",
-			"regex": "add currency \\w{3}$",
+			"regex": "add currency .{3}$",
 			"path": "src/js-modules/currencyModule/addCurrency.js"
 		}, {
 			"type": "js",
-			"regex": "remove currency \\w{3}$",
+			"regex": "remove currency .{3}$",
 			"path": "src/js-modules/currencyModule/removeCurrency.js"
 		}, {
 			"type": "js",
@@ -69,31 +69,31 @@
 			"path": "src/js-modules/currencyModule/priceUpdates.js"
 		}, {
 			"type": "js",
-			"regex": "rcon (\\w+) run( \\w+){1,}$",
+			"regex": "rcon (.+) run( .+){1,}$",
 			"path": "src/js-modules/rconServer/execCommand.js"
 		}, {
 			"type": "js",
-			"regex": "rcon (\\w+) (connect|info|help)$",
+			"regex": "rcon (.+) (connect|info|help)$",
 			"path": "src/js-modules/rconServer/connectInfo.js"
 		}, {
 			"type": "js",
-			"regex": "rcon rename (\\w+) to (\\w+)$",
+			"regex": "rcon rename (.+) to (.+)$",
 			"path": "src/js-modules/rconServer/renameServer.js"
 		}, {
 			"type": "js",
-			"regex": "(change|set) rcon config (\\w+) (\\w+) (to)( .+)",
+			"regex": "(change|set) rcon config (.+) (.+) (to)( .+)",
 			"path": "src/js-modules/rconServer/editServerConfig.js"
 		}, {
 			"type": "js",
-			"regex": "(change|set) rcon password of (\\w+)",
+			"regex": "(change|set) rcon password of (.+)",
 			"path": "src/js-modules/rconServer/editRconPassword.js"
 		}, {
 			"type": "js",
-			"regex": "rcon (\\w+) add$",
+			"regex": "rcon (.+) add$",
 			"path": "src/js-modules/rconServer/addServer.js"
 		}, {
 			"type": "js",
-			"regex": "rcon (\\w+) remove$",
+			"regex": "rcon (.+) remove$",
 			"path": "src/js-modules/rconServer/removeServer.js"
 		}, {
 			"type": "js",
@@ -101,7 +101,7 @@
 			"path": "src/js-modules/rconServer/showServers.js"
 		}, {
 			"type": "js",
-			"regex": "(\\w+) (add|remove) required role (.+)$",
+			"regex": "(.+) (add|remove) required role (.+)$",
 			"path": "src/core/core-modules/editPermissions.js"
 		}, {
 			"type": "python",

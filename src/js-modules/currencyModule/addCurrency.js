@@ -6,8 +6,9 @@ const cfgPath = base + "/cfg/moduleConfigs/currencies.json";
 
 module.exports = {
 	run: function (msg) {
-		let config = configHandler.readJSON(cfgPath, msg.getServer().getId());
-		let currency = msg.getContentArray()[msg.getContentArray().length - 1].toUpperCase();
+		let contentArray = msg.getContentArray(true),
+			config = configHandler.readJSON(cfgPath, msg.getServer().getId()),
+			currency = contentArray[contentArray.length - 1].toUpperCase();
 
 		request("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD", function (error, response, body) {
 			if (!error && response.statusCode === 200) {

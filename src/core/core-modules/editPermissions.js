@@ -7,18 +7,19 @@ const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
 	run: function(msg) {
-		let commands = configHandler.readJSON(cmdPath, msg.getServer().getId(), "commandList");
-		let cmdPermissions = configHandler.readJSON(permissionsPath, msg.getServer().getId());
-		let serverRolesCollection = msg.getServer().getRoles();
+		let commands = configHandler.readJSON(cmdPath, msg.getServer().getId(), "commandList"),
+			cmdPermissions = configHandler.readJSON(permissionsPath, msg.getServer().getId()),
+			serverRolesCollection = msg.getServer().getRoles();
 
-		let requestedCmd = msg.getContentArray()[1];
-		let bAddPermission = msg.getContentArray()[2] === "add";
-		let requestedRole = msg.getContentArray()[5];
+		let contentArray = msg.getContentArray(true),
+			requestedCmd = contentArray[0],
+			bAddPermission = contentArray[1] === "add",
+			requestedRole = contentArray[4];
 
-		let bRoleExists = false;
-		let bRequestedCmdExists = false;
-		let bRequestedCmdInPermissions = false;
-		let bPermissionAlreadyInList = false;
+		let bRoleExists = false,
+			bRequestedCmdExists = false,
+			bRequestedCmdInPermissions = false,
+			bPermissionAlreadyInList = false;
 
 		let i = 0;
 		while (!bRoleExists && i < serverRolesCollection.length) {

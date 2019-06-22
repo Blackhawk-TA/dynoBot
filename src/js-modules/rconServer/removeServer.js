@@ -10,7 +10,7 @@ module.exports = {
 
 		if (fs.existsSync(serverCfgPath)) {
 			let serverCfg = require(serverCfgPath);
-			let serverName = msg.getContentArray() [1];
+			let serverName = msg.getContentArray(true)[5];
 
 			delete serverCfg[serverName];
 

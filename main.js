@@ -56,7 +56,7 @@ Bot.getClient().getEvents().on("ready", () => {
 					let command = commands.commandList[i],
 						pattern = new RegExp(command.regex);
 
-					if (pattern.test(msg.getContent().toLowerCase())) {
+					if (pattern.test(msg.getContent(true).toLowerCase())) {
 						if (permissionHandler.hasPermissions(msg, command)) {
 							bAnswered = scriptWrapper.run(command, msg, Bot.getClient());
 						} else {

@@ -2,7 +2,7 @@ const base = require("path").resolve(".");
 
 module.exports = {
 	run: function (msg) {
-		let serverName = msg.getContentArray()[2];
+		let serverName = msg.getContentArray(true)[1];
 		let serverCfg = require(base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json");
 
 		if (serverCfg[serverName] !== undefined) {

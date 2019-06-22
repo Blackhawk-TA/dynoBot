@@ -8,7 +8,7 @@ const pathCfg = base + "/cfg/moduleConfigs/rconServer.json";
 module.exports = {
 	run: function(msg) {
 		let serverCfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
-		let rconServer = msg.getContentArray()[5];
+		let rconServer = msg.getContentArray(true)[4];
 
 		if (fs.existsSync(serverCfgPath)) {
 			let serverCfg = configHandler.readJSON(serverCfgPath, msg.getServer().getId(), rconServer);
@@ -26,9 +26,9 @@ module.exports = {
 					resolved.awaitMessages({max: 2, time: 60000, errors: ['time']})
 						.then((collected) => {
 							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
-								let answer = collected[1].getContent();
+								let answer = collected[1].getContent(true);
 								resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
-								configHandler.editJSON(msg.getChannel(), pathCfg, rconServer, "rcon_password", answer, false);
+								configHandler.editJSON(msg.getChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
 							} else {
 								resolved.send("The password could not be changed. Please try again.");
 								msg.getChannel().send("The password could not be changed. Please try again.");
