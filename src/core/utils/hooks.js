@@ -12,7 +12,7 @@ module.exports = {
 
 				const hookUpdater = new HookUpdater(id, interval, server);
 				setTimeout(() => {
-					hookUpdater.nextCall()
+					hookUpdater.nextCall();
 				}, interval);
 			}
 		}
@@ -30,7 +30,7 @@ module.exports = {
 		if (index === -1) {
 			channel.send("Sorry, but " + name + " or " + entry + " is an invalid parameter.");
 		} else {
-			configHandler.editJSON(channel, base + "/cfg/hooks.json", index, entry, value)
+			configHandler.editJSON(channel, base + "/cfg/hooks.json", index, entry, value);
 		}
 	}
 };

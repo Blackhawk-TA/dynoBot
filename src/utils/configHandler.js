@@ -80,7 +80,7 @@ let self = module.exports = {
 			if (!id) {
 				newJSON = {
 					[entry]: value
-				}
+				};
 			} else {
 				newJSON = {
 					[id]: {
@@ -125,7 +125,7 @@ let self = module.exports = {
 			let interval = self.readJSON(configPath, channel.getServer().getId(), id, "interval");
 			const hookUpdater = new HookUpdater(id, interval, channel.getServer());
 			setTimeout(() => {
-				hookUpdater.nextCall()
+				hookUpdater.nextCall();
 			}, interval);
 		}
 	},

@@ -13,6 +13,6 @@ module.exports = {
 		process.on("error", (e) => {
 			channel.send("There was a problem while executing this command. Please contact the person hosting the bot.");
 			console.error(e);
-		})
+		});
 	}
 };

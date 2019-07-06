@@ -24,7 +24,7 @@ module.exports = {
 			});
 
 			if (roles !== "") {
-				roles = " (" + roles + ")"
+				roles = " (" + roles + ")";
 			}
 
 			let pathArray = command.path.split("/");

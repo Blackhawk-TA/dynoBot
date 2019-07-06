@@ -1,0 +1,33 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"modules": true
+		}
+	},
+	"plugins": ["promise"],
+	"rules": {
+		"block-scoped-var": "error",
+		"camelcase": "warn",
+		"comma-spacing": ["error", {"before": false, "after": true}],
+		"default-case": "warn",
+		"indent": ["error", "tab", {
+			"SwitchCase": 1
+		}],
+		"key-spacing": ["error", {
+			"mode": "strict",
+			"beforeColon": false,
+			"afterColon": true
+		}],
+		"no-multi-spaces": "error",
+		"no-trailing-spaces": "error",
+		"object-curly-spacing": "error",
+		"promise/catch-or-return": "error",
+		"quotes": ["error", "double", {
+			"allowTemplateLiterals":  true,
+			"avoidEscape": true
+		}],
+		"semi": ["error", "always"]
+	}
+}

@@ -26,7 +26,7 @@ module.exports = {
 				msg.getChannel().send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
 			.catch((e) => {
-				console.error(`${new Date().toLocaleString()}: ${e}`)
+				console.error(`${new Date().toLocaleString()}: ${e}`);
 			});
 	}
 };

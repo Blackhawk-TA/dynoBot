@@ -1,7 +1,7 @@
 const fs = require("fs");
 const base = require("path").resolve(".");
 
-const configPath =  base + "/cfg/config.json";
+const configPath = base + "/cfg/config.json";
 const config = require(configPath);
 
 module.exports = {

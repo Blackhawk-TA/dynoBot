@@ -23,7 +23,7 @@ module.exports = {
 					resolved.send(`Hello ${user.getName()}, you requested to change the rcon password of '${rconServer}' on the server '${msg.getServer().getName()}'.`
 						+ " Please enter the rcon password within the next 60 seconds.");
 
-					resolved.awaitMessages({max: 2, time: 60000, errors: ['time']})
+					resolved.awaitMessages({max: 2, time: 60000, errors: ["time"]})
 						.then((collected) => {
 							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
 								let answer = collected[1].getContent(true);
