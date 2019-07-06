@@ -27,8 +27,8 @@
 	},
 	"dependencies": {
 		"base64-img": "^1.0.4",
-		"discord.js": "^11.5.0",
-		"dynobot-framework": "^1.0.0",
+		"discord.js": "^11.5.1",
+		"dynobot-framework": "^1.0.4",
 		"mkdirp": "^0.5.1",
 		"request": "^2.88.0",
 		"srcds-rcon": "^2.2.1",
