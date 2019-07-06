@@ -11,7 +11,7 @@ module.exports = {
 		if (isFinite(interval * 60000) && interval > 0) {
 			hooks.changeEntry(name, msg.getChannel(), "interval", interval * 60000);
 		} else {
-			msg.getChannel().send(interval + " is not allowed as interval.")
+			msg.getChannel().send(interval + " is not allowed as interval.");
 		}
 	}
 };

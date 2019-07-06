@@ -2,7 +2,7 @@ const base = require("path").resolve(".");
 const security = require(base + "/cfg/security.json");
 
 const WolframAlphaAPI = require("wolfram-alpha-api");
-const base64Img = require('base64-img');
+const base64Img = require("base64-img");
 const fs = require("fs");
 
 module.exports = {
@@ -17,8 +17,8 @@ module.exports = {
 			waApi.getSimple({
 				i: question,
 				width: 1024,
-				background: '323232',
-				foreground: 'white',
+				background: "323232",
+				foreground: "white",
 			}).then((result) => {
 				let resourceDirectory = base + "/resources";
 				let resultDirectory = resourceDirectory + "/servers/" + serverId;
@@ -47,7 +47,7 @@ module.exports = {
 				msg.getChannel().send("Following problem occurred:\n```" + error + "```");
 			});
 		} else {
-			msg.getChannel().send("My owner hasn't set up the Wolfram|Alpha module.")
+			msg.getChannel().send("My owner hasn't set up the Wolfram|Alpha module.");
 		}
 	}
 };

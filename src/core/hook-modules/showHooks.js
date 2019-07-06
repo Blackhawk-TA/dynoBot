@@ -1,6 +1,6 @@
 const base = require("path").resolve(".");
 
-const configPath =  base + "/cfg/hooks.json";
+const configPath = base + "/cfg/hooks.json";
 const hooks = require(configPath);
 const configHandler = require(base + "/src/utils/configHandler");
 
