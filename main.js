@@ -11,17 +11,12 @@ const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 const {DiscordBot} = require("dynobot-framework");
 const Bot = new DiscordBot(security.token);
 
-Bot.getClient().registerEvent("error");
-Bot.getClient().registerEvent("ready");
-Bot.getClient().registerEvent("serverMemberAdd");
-Bot.getClient().registerEvent("message");
-
-Bot.getClient().getEvents().on("error", (error) => {
-	console.error(error);
-});
-
-Bot.getClient().getEvents().on("ready", () => {
+Bot.onEvent("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
+
+	Bot.onEvent("error", (error) => {
+		console.error(error);
+	});
 
 	//Init hooks
 	let servers = Bot.getClient().getServers();
@@ -30,7 +25,7 @@ Bot.getClient().getEvents().on("ready", () => {
 		hooks.init(server);
 	});
 
-	Bot.getClient().getEvents().on("serverMemberAdd", member => {
+	Bot.onEvent("serverMemberAdd", member => {
 		let pathConfig = base + "/cfg/config.json",
 			enabled = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "enabled"),
 			channelName = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "channel"),
@@ -46,7 +41,7 @@ Bot.getClient().getEvents().on("ready", () => {
 		}
 	});
 
-	Bot.getClient().getEvents().on("message", msg => {
+	Bot.onEvent("message", msg => {
 		try {
 			let BotUser = Bot.getClient().getUser();
 			if (msg.isMentioned(BotUser) && msg.getAuthor().getId() !== BotUser.getId()) {
