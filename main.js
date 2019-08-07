@@ -53,7 +53,7 @@ Bot.onEvent("ready", () => {
 
 					if (pattern.test(msg.getContent(true).toLowerCase())) {
 						if (permissionHandler.hasPermissions(msg, command)) {
-							bAnswered = scriptWrapper.run(command, msg, Bot.getClient());
+							bAnswered = scriptWrapper.run(msg, Bot.getClient(), command);
 						} else {
 							bAnswered = true;
 							msg.getChannel().send("You don't have access to this command.");

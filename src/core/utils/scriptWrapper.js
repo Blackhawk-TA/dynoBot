@@ -2,7 +2,7 @@ const base = require("path").resolve(".");
 const languageHandler = require(base + "/src/core/utils/languageHandler");
 
 module.exports = {
-	run: function(command, msg, client) {
+	run: function(msg, client, command) {
 		let pattern = new RegExp(command.regex);
 
 		switch (command.type) {
