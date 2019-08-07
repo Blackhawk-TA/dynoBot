@@ -20,7 +20,7 @@ module.exports = {
 					msg.getChannel().send(`Added member <@${authorId}> to '${scheduleName}'.`);
 					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers);
 				} else {
-					msg.getChannel().send(`<@${authorId}> is already a member of this schedule.`)
+					msg.getChannel().send(`<@${authorId}> is already a member of this schedule.`);
 				}
 			} else if (mode === "leave") {
 				if (scheduleMembers.includes(authorId)) {
@@ -30,7 +30,7 @@ module.exports = {
 					msg.getChannel().send(`Removed member <@${authorId}> to '${scheduleName}'.`);
 					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers);
 				} else {
-					msg.getChannel().send(`<@${authorId}> is not a member of this schedule.`)
+					msg.getChannel().send(`<@${authorId}> is not a member of this schedule.`);
 				}
 			}
 		} else {
