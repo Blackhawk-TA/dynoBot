@@ -2,15 +2,18 @@
 	"commandList": [{
 			"type": "js",
 			"regex": "js-example|javascript example",
-			"path": "src/js-modules/example-js.js"
+			"path": "src/js-modules/example-js.js",
+			"hidden": true
 		}, {
 			"type": "python",
 			"regex": "py-example|python example",
-			"path": "src/py-modules/example-python.py"
+			"path": "src/py-modules/example-python.py",
+			"hidden": true
 		}, {
 			"type": "lua",
 			"regex": "lua-example|lua example",
-			"path": "src/lua-modules/example-lua.lua"
+			"path": "src/lua-modules/example-lua.lua",
+			"hidden": true
 		}, {
 			"type": "js",
 			"regex": "help|((show|list) (command|commands))",

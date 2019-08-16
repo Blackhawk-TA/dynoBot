@@ -12,25 +12,27 @@ module.exports = {
 		let answer = "List of regex commands:```";
 
 		commands.forEach(function (command) {
-			let roles = "";
+			if (!command.hidden) {
+				let roles = "";
 
-			cmdPermissions.forEach(function (permission) {
-				if (command.path === permission.path) {
-					permission.permissions.forEach(function (role) {
-						roles += role + ", ";
-					});
+				cmdPermissions.forEach(function(permission) {
+					if (command.path === permission.path) {
+						permission.permissions.forEach(function(role) {
+							roles += role + ", ";
+						});
+					}
+					roles = roles.slice(0, -2);
+				});
+
+				if (roles !== "") {
+					roles = " (" + roles + ")";
 				}
-				roles = roles.slice(0, -2);
-			});
 
-			if (roles !== "") {
-				roles = " (" + roles + ")";
+				let pathArray = command.path.split("/");
+				let fileName = pathArray[pathArray.length - 1];
+				let name = fileName.split(".")[0];
+				answer += `\n${name}${roles}: ${command.regex}`;
 			}
-
-			let pathArray = command.path.split("/");
-			let fileName = pathArray[pathArray.length - 1];
-			let name = fileName.split(".")[0];
-			answer += `\n${name}${roles}: ${command.regex}`;
 		});
 		msg.getChannel().send(answer + "```");
 	}
