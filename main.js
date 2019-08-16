@@ -34,7 +34,7 @@ Bot.onEvent("ready", () => {
 
 		if (enabled) {
 			member.getServer().getChannels().forEach(channel => {
-				if (channel.getName() === channelName) {
+				if (channel.getName() === channelName && channel.isTextChannel()) {
 					channel.send(`${part1} <@${member.getId()}> ${part2}`);
 				}
 			});
