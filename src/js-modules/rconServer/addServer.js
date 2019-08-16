@@ -5,7 +5,7 @@ const configHandler = require(base + "/src/utils/configHandler");
 const cfgPath = base + "/cfg/moduleConfigs/rconServer.json";
 
 module.exports = {
-	run: function (msg) {
+	run: function (msg, client, regexGroups) {
 		let serverCfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
 		let serverCfg = {};
 
@@ -13,17 +13,21 @@ module.exports = {
 			serverCfg = require(serverCfgPath);
 		}
 
-		let serverName = msg.getContentArray(true)[1];
+		let serverName = regexGroups[1];
 
-		serverCfg[serverName] = {
-			"address": "127.0.0.1",
-			"port": "27015",
-			"password": "password",
-			"rcon_password": "rcon_password"
-		};
-		configHandler.overrideJSON(msg.getChannel(), cfgPath, serverCfg);
+		if (!serverCfg[serverName]) {
+			serverCfg[serverName] = {
+				"address": "127.0.0.1",
+				"port": "27015",
+				"password": "password",
+				"rcon_password": "rcon_password"
+			};
+			configHandler.overrideJSON(msg.getChannel(), cfgPath, serverCfg);
 
-		console.log(`${new Date().toLocaleString()}: Added rcon server '${serverName}' on ${msg.getServer().getId()}.`);
-		msg.getChannel().send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
+			console.log(`${new Date().toLocaleString()}: Added rcon server '${serverName}' on ${msg.getServer().getId()}.`);
+			msg.getChannel().send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
+		} else {
+			msg.getChannel().send(`A server with the name ${serverName} already exists.`);
+		}
 	}
 };

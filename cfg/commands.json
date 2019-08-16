@@ -16,120 +16,176 @@
 			"path": "src/lua-modules/example-lua.lua",
 			"hidden": true
 		}, {
+			"group": "basic",
 			"type": "js",
-			"regex": "help|((show|list) (command|commands))",
+			"regex": "(.*)\\s?help|commands",
+			"help": "help / <command-group (rcon, schedule, basic, etc.)> help",
 			"path": "src/core/core-modules/showCommands.js"
 		}, {
+			"group": "basic",
 			"type": "js",
 			"regex": "cleanup|clean-up|purge",
+			"help": "cleanup",
 			"path": "src/core/core-modules/messageCleaner.js"
 		}, {
-			"type": "js",
-			"regex": "(channel)( of)? (.+) (to) (\\d+)$",
-			"path": "src/core/hook-modules/hookChannel.js"
-		}, {
-			"type": "js",
-			"regex": "(hook|hooks) config",
-			"path": "src/core/hook-modules/hookConfig.js"
-		}, {
-			"type": "js",
-			"regex": "(enable|disable) (.+)$",
-			"path": "src/core/hook-modules/hookToggle.js"
-		}, {
-			"type": "js",
-			"regex": "(interval)( of)? (.+) (to) (.+)$",
-			"path": "src/core/hook-modules/hookInterval.js"
-		}, {
-			"type": "js",
-			"regex": "(list|show) hooks",
-			"path": "src/core/hook-modules/showHooks.js"
-		}, {
-			"type": "js",
-			"regex": "(change|set) (config) (.+) (.+) (to)( .+){1,}",
-			"path": "src/core/utils/configEditor.js"
-		}, {
+			"group": "basic",
 			"type": "js",
 			"regex": "(show|list) (config|settings)",
+			"help": "show config",
 			"path": "src/core/core-modules/showConfig.js"
 		}, {
+			"group": "basic",
 			"type": "js",
-			"regex": "(convert) (\\d+ )?(.{3}) (to) (.{3})$",
-			"path": "src/js-modules/currencyModule/currencyConverter.js"
+			"regex": "(change|set) (config) (.+) (.+) (to)( .+){1,}",
+			"help": "set config <id> <entry> to <value>",
+			"path": "src/core/utils/configEditor.js"
 		}, {
-			"type": "js",
-			"regex": "add currency .{3}$",
-			"path": "src/js-modules/currencyModule/addCurrency.js"
-		}, {
-			"type": "js",
-			"regex": "remove currency .{3}$",
-			"path": "src/js-modules/currencyModule/removeCurrency.js"
-		}, {
-			"type": "js",
-			"regex": "(currency|crypto|market) (update|stats)",
-			"path": "src/js-modules/currencyModule/priceUpdates.js"
-		}, {
-			"type": "js",
-			"regex": "rcon (.+) run( .+){1,}$",
-			"path": "src/js-modules/rconServer/execCommand.js"
-		}, {
-			"type": "js",
-			"regex": "rcon (.+) (connect|info|help)$",
-			"path": "src/js-modules/rconServer/connectInfo.js"
-		}, {
-			"type": "js",
-			"regex": "rcon rename (.+) to (.+)$",
-			"path": "src/js-modules/rconServer/renameServer.js"
-		}, {
-			"type": "js",
-			"regex": "(change|set) rcon config (.+) (.+) (to)( .+)",
-			"path": "src/js-modules/rconServer/editServerConfig.js"
-		}, {
-			"type": "js",
-			"regex": "(change|set) rcon password of (.+)",
-			"path": "src/js-modules/rconServer/editRconPassword.js"
-		}, {
-			"type": "js",
-			"regex": "rcon (.+) add$",
-			"path": "src/js-modules/rconServer/addServer.js"
-		}, {
-			"type": "js",
-			"regex": "rcon (.+) remove$",
-			"path": "src/js-modules/rconServer/removeServer.js"
-		}, {
-			"type": "js",
-			"regex": "rcon (list|servers)$",
-			"path": "src/js-modules/rconServer/showServers.js"
-		}, {
+			"group": "basic",
 			"type": "js",
 			"regex": "(.+) (add|remove) required role (.+)$",
+			"help": "<command> add/remove required role <role-name>",
 			"path": "src/core/core-modules/editPermissions.js"
+		}, {
+			"group": "hook",
+			"type": "js",
+			"regex": "(channel)( of)? (.+) (to) (\\d+)$",
+			"help": "set channel of <hook-name> to <channel-name>",
+			"path": "src/core/hook-modules/hookChannel.js"
+		}, {
+			"group": "hook",
+			"type": "js",
+			"regex": "(hook|hooks) config",
+			"help": "hook config",
+			"path": "src/core/hook-modules/hookConfig.js"
+		}, {
+			"group": "hook",
+			"type": "js",
+			"regex": "(enable|disable) (.+)$",
+			"help": "enable/disable <hook-name>",
+			"path": "src/core/hook-modules/hookToggle.js"
+		}, {
+			"group": "hook",
+			"type": "js",
+			"regex": "(interval)( of)? (.+) (to) (.+)$",
+			"help": "set interval of <hook-name> to <interval>",
+			"path": "src/core/hook-modules/hookInterval.js"
+		}, {
+			"group": "hook",
+			"type": "js",
+			"regex": "(list|show) hooks",
+			"help": "list hooks",
+			"path": "src/core/hook-modules/showHooks.js"
+		}, {
+			"group": "currency",
+			"type": "js",
+			"regex": "(convert) (\\d+ )?(.{3}) (to) (.{3})$",
+			"help": "convert <currency (EUR)> to <currency (USD)>",
+			"path": "src/js-modules/currencyModule/currencyConverter.js"
+		}, {
+			"group": "currency",
+			"type": "js",
+			"regex": "add currency .{3}$",
+			"help": "add currency <currency (EUR)>",
+			"path": "src/js-modules/currencyModule/addCurrency.js"
+		}, {
+			"group": "currency",
+			"type": "js",
+			"regex": "remove currency .{3}$",
+			"help": "remove currency <currency (EUR)>",
+			"path": "src/js-modules/currencyModule/removeCurrency.js"
+		}, {
+			"group": "currency",
+			"type": "js",
+			"regex": "(currency|crypto|market) (update|stats)",
+			"help": "currency update/stats",
+			"path": "src/js-modules/currencyModule/priceUpdates.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "rcon (.+) run( .+){1,}$",
+			"help": "rcon <server-name> run <command>",
+			"path": "src/js-modules/rconServer/execCommand.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "rcon (.+) (connect|info|help)$",
+			"help": "rcon <server-name> connect",
+			"path": "src/js-modules/rconServer/connectInfo.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "rcon rename (.+) to (.+)$",
+			"help": "rcon rename <old-server-name> to <new-server-name>",
+			"path": "src/js-modules/rconServer/renameServer.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "(change|set) rcon config (.+) (.+) (to)( .+)",
+			"help": "set rcon config <server-name> <entry> to <value>",
+			"path": "src/js-modules/rconServer/editServerConfig.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "(change|set) rcon password of (.+)",
+			"help": "set rcon password of <server-name>",
+			"path": "src/js-modules/rconServer/editRconPassword.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "rcon add (.+)",
+			"help": "rcon add <server-name>",
+			"path": "src/js-modules/rconServer/addServer.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "rcon remove (.+)",
+			"help": "rcon remove <server-name>",
+			"path": "src/js-modules/rconServer/removeServer.js"
+		}, {
+			"group": "rcon",
+			"type": "js",
+			"regex": "rcon (list|servers)$",
+			"help": "rcon servers/list",
+			"path": "src/js-modules/rconServer/showServers.js"
 		}, {
 			"type": "python",
 			"regex": "(shorten|blyat|bly\\.at) [-a-zA-Z0-9@:%_\\+.~#?&\\/=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&\\/=]*)?",
+			"help": "shorten/blyat <url>",
 			"path": "src/py-modules/blyat.py"
 		}, {
 			"type": "js",
 			"regex": "(wa|wolfram-?alpha|wolfram|alpha|wolfram alpha) (.+)$",
+			"help": "wa <command>",
 			"path": "src/js-modules/wolframAlpha.js"
 		}, {
+			"group": "schedule",
 			"type": "js",
 			"regex": "add schedule (.+) for (\\d{2}:\\d{2} .{3,6}, \\d{4}-\\d{2}-\\d{2})$",
+			"help": "add schedule <name> for <hh:mm UTC-X, yyyy-mm-dd>",
 			"path": "src/js-modules/scheduler/addSchedule.js"
 		}, {
+			"group": "schedule",
 			"type": "js",
 			"regex": "remove schedule (.+)$",
+			"help": "remove schedule <name>",
 			"path": "src/js-modules/scheduler/removeSchedule.js"
 		}, {
+			"group": "schedule",
 			"type": "js",
 			"regex": "change schedule (name|date) of (.+) to (.+)$",
+			"help": "change schedule name/date of <schedule-name> to <value>",
 			"path": "src/js-modules/scheduler/editSchedule.js"
 		}, {
+			"group": "schedule",
 			"type": "js",
 			"regex": "(join|leave) schedule (.+)",
+			"help": "join/leave schedule <name>",
 			"path": "src/js-modules/scheduler/scheduleMembers.js"
 		}, {
+			"group": "schedule",
 			"type": "js",
 			"regex": "list schedule[s]?\\s?(.*)$",
+			"help": "list schedules / list schedule <name>",
 			"path": "src/js-modules/scheduler/listSchedules.js"
 		}
 	]

@@ -73,11 +73,22 @@ Alternatively you can take a look at the example modules for JavaScript, Python 
 JavaScript, Python and Lua modules need an entry in the commands.json file looking like this:
 ```json
 {
+    "group": "command-group-name",
     "type": "python",
     "regex": "py-example|python example",
-    "path": "src/py-modules/example-python.py"
+    "help": "python example",
+    "path": "src/py-modules/example-python.py",
+    "hidden": false
 }
 ```
+The content of the help property will be used for the command list. If it does not exist, the regex property will be used.
+
+The group property can be used to allow filtering while using the help command.
+For example there is a group called "basic" including all built-in core commands.
+If you want to see only commands of the "basic" group in the command list, use "<group-name> help" instead of the normal help command.
+
+Setting hidden to true will exclude the command from the command list.
+
 ##### JavaScript chat module
 The JavaScript module has direct access to the [discord.js wrapper](https://discord.js.org).
 The base structure of a module looks like this:

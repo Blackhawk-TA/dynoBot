@@ -5,12 +5,12 @@ const configHandler = require(base + "/src/utils/configHandler");
 const cfgPath = base + "/cfg/moduleConfigs/rconServer.json";
 
 module.exports = {
-	run: function (msg) {
+	run: function (msg, client, regexGroups) {
 		let serverCfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/rconServer.json";
 
 		if (fs.existsSync(serverCfgPath)) {
 			let serverCfg = require(serverCfgPath);
-			let serverName = msg.getContentArray(true)[5];
+			let serverName = regexGroups[1];
 
 			delete serverCfg[serverName];
 

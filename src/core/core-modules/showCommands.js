@@ -5,15 +5,24 @@ const cmdPath = base + "/cfg/commands.json";
 const permissionsPath = base + "/cfg/permissions.json";
 
 module.exports = {
-	run: function (msg) {
-		let serverId = msg.hasServer() ? msg.getServer().getId() : 0;
-		let commands = configHandler.readJSON(cmdPath, serverId, "commandList");
-		let cmdPermissions = configHandler.readJSON(permissionsPath, serverId);
-		let answer = "List of regex commands:```";
+	run: function (msg, client, regexGroups) {
+		let serverId = msg.hasServer() ? msg.getServer().getId() : 0,
+			commands = configHandler.readJSON(cmdPath, serverId, "commandList"),
+			cmdPermissions = configHandler.readJSON(permissionsPath, serverId),
+			answer = "";
 
 		commands.forEach(function (command) {
 			if (!command.hidden) {
 				let roles = "";
+
+				if (regexGroups[1]) {
+					let firstSpaceIndex = regexGroups[1].indexOf(" "),
+						commandGroup = regexGroups[1].substring(firstSpaceIndex).trim();
+
+					if (commandGroup && commandGroup !== command.group) {
+						return; //Skip command if it's not of the required group
+					}
+				}
 
 				cmdPermissions.forEach(function(permission) {
 					if (command.path === permission.path) {
@@ -28,12 +37,19 @@ module.exports = {
 					roles = " (" + roles + ")";
 				}
 
-				let pathArray = command.path.split("/");
-				let fileName = pathArray[pathArray.length - 1];
-				let name = fileName.split(".")[0];
-				answer += `\n${name}${roles}: ${command.regex}`;
+				let pathArray = command.path.split("/"),
+					fileName = pathArray[pathArray.length - 1],
+					name = fileName.split(".")[0],
+					commandHelp = command.help ? command.help : command.regex;
+
+				answer += `\n${name}${roles}: ${commandHelp}`;
 			}
 		});
-		msg.getChannel().send(answer + "```");
+
+		if (answer === "") {
+			answer = "No commands found.";
+		}
+
+		msg.getChannel().send("Command list:```" + answer + "```");
 	}
 };
