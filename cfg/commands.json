@@ -1,5 +1,6 @@
 {
-	"commandList": [{
+	"commandList": [
+		{
 			"type": "js",
 			"regex": "js-example|javascript example",
 			"path": "src/js-modules/example-js.js",
@@ -112,12 +113,16 @@
 			"path": "src/js-modules/wolframAlpha.js"
 		}, {
 			"type": "js",
-			"regex": "(add) schedule (.+) for (\\d{2}:\\d{2} .{3,6}, \\d{4}-\\d{2}-\\d{2})$",
-			"path": "src/js-modules/scheduler/addRemoveSchedule.js"
+			"regex": "add schedule (.+) for (\\d{2}:\\d{2} .{3,6}, \\d{4}-\\d{2}-\\d{2})$",
+			"path": "src/js-modules/scheduler/addSchedule.js"
 		}, {
 			"type": "js",
-			"regex": "(remove) schedule (.+)$",
-			"path": "src/js-modules/scheduler/addRemoveSchedule.js"
+			"regex": "remove schedule (.+)$",
+			"path": "src/js-modules/scheduler/removeSchedule.js"
+		}, {
+			"type": "js",
+			"regex": "change schedule (name|date) of (.+) to (.+)$",
+			"path": "src/js-modules/scheduler/editSchedule.js"
 		}, {
 			"type": "js",
 			"regex": "(join|leave) schedule (.+)",

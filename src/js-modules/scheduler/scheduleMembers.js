@@ -17,8 +17,7 @@ module.exports = {
 					scheduleMembers.push(authorId);
 
 					console.log(`${new Date().toLocaleString()}: Added member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
-					msg.getChannel().send(`Added member <@${authorId}> to '${scheduleName}'.`);
-					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers);
+					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers, false);
 				} else {
 					msg.getChannel().send(`<@${authorId}> is already a member of this schedule.`);
 				}
@@ -27,8 +26,7 @@ module.exports = {
 					scheduleMembers.splice(scheduleMembers.indexOf(authorId), 1);
 
 					console.log(`${new Date().toLocaleString()}: Removed member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
-					msg.getChannel().send(`Removed member <@${authorId}> to '${scheduleName}'.`);
-					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers);
+					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers, false);
 				} else {
 					msg.getChannel().send(`<@${authorId}> is not a member of this schedule.`);
 				}

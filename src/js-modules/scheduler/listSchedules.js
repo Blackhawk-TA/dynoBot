@@ -20,8 +20,10 @@ module.exports = {
 
 		if (formattedSchedule) {
 			msg.getChannel().send(formattedSchedule);
-		} else {
+		} else if (scheduleName) {
 			msg.getChannel().send("There was a problem fetching the schedule. Check if the requested schedule name is correct.");
+		} else {
+			msg.getChannel().send("There are no schedules.");
 		}
 	},
 
