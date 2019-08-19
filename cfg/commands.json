@@ -148,11 +148,6 @@
 			"help": "rcon servers/list",
 			"path": "src/js-modules/rconServer/showServers.js"
 		}, {
-			"type": "python",
-			"regex": "(shorten|blyat|bly\\.at) [-a-zA-Z0-9@:%_\\+.~#?&\\/=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&\\/=]*)?",
-			"help": "shorten/blyat <url>",
-			"path": "src/py-modules/blyat.py"
-		}, {
 			"type": "js",
 			"regex": "(wa|wolfram-?alpha|wolfram|alpha|wolfram alpha) (.+)$",
 			"help": "wa <command>",
