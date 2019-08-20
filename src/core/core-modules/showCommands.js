@@ -40,9 +40,14 @@ module.exports = {
 				let pathArray = command.path.split("/"),
 					fileName = pathArray[pathArray.length - 1],
 					name = fileName.split(".")[0],
-					commandHelp = command.help ? command.help : command.regex;
+					commandHelp = command.help ? command.help : command.regex,
+					groupIdentifier = "[no group] ";
 
-				answer += `\n${name}${roles}: ${commandHelp}`;
+				if (command.group) {
+					groupIdentifier = "[" + command.group + "] ";
+				}
+
+				answer += `\n${groupIdentifier}${name}${roles}: ${commandHelp}`;
 			}
 		});
 
