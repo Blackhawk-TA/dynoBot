@@ -12,9 +12,12 @@
 		"lua",
 		"chatbot",
 		"modular",
-		"bot"
+		"bot",
+		"voice",
+		"music",
+		"youtube"
 	],
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"license": "MIT",
 	"main": "main.js",
 	"scripts": {
@@ -32,7 +35,10 @@
 		"mkdirp": "^0.5.4",
 		"request": "^2.88.2",
 		"srcds-rcon": "^2.2.1",
-		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
+		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
+		"ytdl-core": "^2.1.1",
+		"ytpl": "^0.1.20",
+		"ytsr": "^0.1.12"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",

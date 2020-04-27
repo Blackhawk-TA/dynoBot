@@ -182,6 +182,30 @@
 			"regex": "list schedule[s]?\\s?(.*)$",
 			"help": "list schedules / list schedule <name>",
 			"path": "src/js-modules/scheduler/listSchedules.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "join voice",
+			"help": "join voice",
+			"path": "src/js-modules/voice/join.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "leave voice",
+			"help": "leave voice",
+			"path": "src/js-modules/voice/leave.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "pause voice",
+			"help": "pause voice",
+			"path": "src/js-modules/voice/pause.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "resume voice",
+			"help": "resume voice",
+			"path": "src/js-modules/voice/resume.js"
 		}
 	]
 }
