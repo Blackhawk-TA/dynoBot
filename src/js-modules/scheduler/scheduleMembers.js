@@ -17,22 +17,22 @@ module.exports = {
 					scheduleMembers.push(authorId);
 
 					console.log(`${new Date().toLocaleString()}: Added member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
-					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers, false);
+					configHandler.editJSON(msg.getTextChannel(), configPath, scheduleName, "members", scheduleMembers, false);
 				} else {
-					msg.getChannel().send(`<@${authorId}> is already a member of this schedule.`);
+					msg.getTextChannel().send(`<@${authorId}> is already a member of this schedule.`);
 				}
 			} else if (mode === "leave") {
 				if (scheduleMembers.includes(authorId)) {
 					scheduleMembers.splice(scheduleMembers.indexOf(authorId), 1);
 
 					console.log(`${new Date().toLocaleString()}: Removed member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
-					configHandler.editJSON(msg.getChannel(), configPath, scheduleName, "members", scheduleMembers, false);
+					configHandler.editJSON(msg.getTextChannel(), configPath, scheduleName, "members", scheduleMembers, false);
 				} else {
-					msg.getChannel().send(`<@${authorId}> is not a member of this schedule.`);
+					msg.getTextChannel().send(`<@${authorId}> is not a member of this schedule.`);
 				}
 			}
 		} else {
-			msg.getChannel().send(`There is no schedule called '${scheduleName}'.`);
+			msg.getTextChannel().send(`There is no schedule called '${scheduleName}'.`);
 		}
 	}
 };

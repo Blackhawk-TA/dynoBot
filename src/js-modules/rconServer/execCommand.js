@@ -12,7 +12,7 @@ module.exports = {
 		if (fs.existsSync(cfgPath)) {
 			serverCfg = require(cfgPath);
 		} else {
-			msg.getChannel().send("There is no server registered yet. Use the 'rcon server_name add' command to register one.");
+			msg.getTextChannel().send("There is no server registered yet. Use the 'rcon server_name add' command to register one.");
 			return;
 		}
 
@@ -35,23 +35,23 @@ module.exports = {
 
 			server.connect().then(() => {
 				console.log(`${new Date().toLocaleString()}: Logged into ${address}:${port} and executed '${cmd}'`);
-				msg.getChannel().send("Executing following command:\n```" + cmd + "```");
+				msg.getTextChannel().send("Executing following command:\n```" + cmd + "```");
 
 				return server.command(cmd, 2500).then(response => {
 					console.log(`${new Date().toLocaleString()}: Server response: '${response}'`);
 
 					if (response !== "") {
-						msg.getChannel().send("Server response:\n```json\n" + response + "```");
+						msg.getTextChannel().send("Server response:\n```json\n" + response + "```");
 					}
 				});
 			}).then(() => {
 				server.disconnect();
 			}).catch((err) => {
 				console.error(`${new Date().toLocaleString()}: ${err}`);
-				msg.getChannel().send("Following error occurred while making the server request:\n```" + err + "```");
+				msg.getTextChannel().send("Following error occurred while making the server request:\n```" + err + "```");
 			});
 		} else {
-			msg.getChannel().send(`There is no server called ${serverName}.`);
+			msg.getTextChannel().send(`There is no server called ${serverName}.`);
 		}
 	}
 };

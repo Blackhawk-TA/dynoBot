@@ -22,17 +22,17 @@ module.exports = {
 					scheduleCfg[scheduleName].date = newValue;
 					configModified = true;
 				} else {
-					msg.getChannel().send("Invalid date format. Try hh:mm UTC-X, yyyy-mm-dd.");
+					msg.getTextChannel().send("Invalid date format. Try hh:mm UTC-X, yyyy-mm-dd.");
 				}
 			}
 
 			if (configModified) {
-				configHandler.overrideJSON(msg.getChannel(), configPath, scheduleCfg, false);
+				configHandler.overrideJSON(msg.getTextChannel(), configPath, scheduleCfg, false);
 				console.log(`${new Date().toLocaleString()}: Changed schedule '${changeType}' on ${msg.getServer().getId()}.`);
-				msg.getChannel().send(`Changed ${changeType} of ${scheduleName} to ${newValue}.`);
+				msg.getTextChannel().send(`Changed ${changeType} of ${scheduleName} to ${newValue}.`);
 			}
 		} else {
-			msg.getChannel().send(`A schedule with the name '${scheduleName}' does not exist.`);
+			msg.getTextChannel().send(`A schedule with the name '${scheduleName}' does not exist.`);
 		}
 	}
 };

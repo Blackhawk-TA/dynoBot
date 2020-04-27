@@ -25,9 +25,9 @@ module.exports = {
 		}
 
 		if (config[id] && config[id][entry]) {
-			configHandler.editJSON(msg.getChannel(), pathCfg, id, entry, value);
+			configHandler.editJSON(msg.getTextChannel(), pathCfg, id, entry, value);
 		} else {
-			msg.getChannel().send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
+			msg.getTextChannel().send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
 		}
 	}
 };

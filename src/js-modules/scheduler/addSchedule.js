@@ -17,14 +17,14 @@ module.exports = {
 					members: []
 				};
 
-				configHandler.overrideJSON(msg.getChannel(), configPath, scheduleCfg, false);
+				configHandler.overrideJSON(msg.getTextChannel(), configPath, scheduleCfg, false);
 				console.log(`${new Date().toLocaleString()}: Added schedule '${scheduleName}' on ${msg.getServer().getId()}.`);
-				msg.getChannel().send(`Added ${scheduleName} to the schedule.`);
+				msg.getTextChannel().send(`Added ${scheduleName} to the schedule.`);
 			} else {
-				msg.getChannel().send("Invalid date format. Try hh:mm UTC-X, yyyy-mm-dd.");
+				msg.getTextChannel().send("Invalid date format. Try hh:mm UTC-X, yyyy-mm-dd.");
 			}
 		} else {
-			msg.getChannel().send(`A schedule with the name '${scheduleName}' already exists.`);
+			msg.getTextChannel().send(`A schedule with the name '${scheduleName}' already exists.`);
 		}
 	}
 };

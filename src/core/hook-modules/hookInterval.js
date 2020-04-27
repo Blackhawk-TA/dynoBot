@@ -9,9 +9,9 @@ module.exports = {
 			interval = contentArray[contentArray.length - 1];
 
 		if (isFinite(interval * 60000) && interval > 0) {
-			hooks.changeEntry(name, msg.getChannel(), "interval", interval * 60000);
+			hooks.changeEntry(name, msg.getTextChannel(), "interval", interval * 60000);
 		} else {
-			msg.getChannel().send(interval + " is not allowed as interval.");
+			msg.getTextChannel().send(interval + " is not allowed as interval.");
 		}
 	}
 };

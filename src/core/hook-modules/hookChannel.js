@@ -9,9 +9,9 @@ module.exports = {
 			channelId = contentArray[contentArray.length - 1];
 
 		if (msg.getServer().hasChannel(channelId)) {
-			hooks.changeEntry(name, msg.getChannel(), "channel", channelId);
+			hooks.changeEntry(name, msg.getTextChannel(), "channel", channelId);
 		} else {
-			msg.getChannel().send("Sorry, but a channel with the id " + channelId + " does not exist on this server.");
+			msg.getTextChannel().send("Sorry, but a channel with the id " + channelId + " does not exist on this server.");
 		}
 	}
 };

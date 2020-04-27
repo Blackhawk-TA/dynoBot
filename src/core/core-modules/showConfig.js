@@ -11,7 +11,7 @@ module.exports = {
 
 		let pathArray = configPath.split("/");
 		let configName = pathArray[pathArray.length - 1];
-		let serverId = msg.getChannel().getServer().getId();
+		let serverId = msg.getTextChannel().getServer().getId();
 		let pathServer = base + "/cfg/servers/" + serverId + "/";
 
 		if (fs.existsSync(pathServer + configName)) {
@@ -19,6 +19,6 @@ module.exports = {
 			answer += "\n\nThis is the server specific config:\n```json\n" + JSON.stringify(customConfig, null, 4) + "```";
 		}
 
-		msg.getChannel().send(answer);
+		msg.getTextChannel().send(answer);
 	}
 };

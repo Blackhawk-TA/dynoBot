@@ -22,12 +22,12 @@ module.exports = {
 				"password": "password",
 				"rcon_password": "rcon_password"
 			};
-			configHandler.overrideJSON(msg.getChannel(), cfgPath, serverCfg);
+			configHandler.overrideJSON(msg.getTextChannel(), cfgPath, serverCfg);
 
 			console.log(`${new Date().toLocaleString()}: Added rcon server '${serverName}' on ${msg.getServer().getId()}.`);
-			msg.getChannel().send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
+			msg.getTextChannel().send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
 		} else {
-			msg.getChannel().send(`A server with the name ${serverName} already exists.`);
+			msg.getTextChannel().send(`A server with the name ${serverName} already exists.`);
 		}
 	}
 };

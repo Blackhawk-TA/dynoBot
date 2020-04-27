@@ -6,6 +6,6 @@ module.exports = {
 	run: function(msg) {
 		let pathConfig = base + "/cfg/hooks.json";
 		let hookConfig = configHandler.readJSON(pathConfig, msg.getServer().getId());
-		msg.getChannel().send("```json\n" + JSON.stringify(hookConfig, null, 4) + "```");
+		msg.getTextChannel().send("```json\n" + JSON.stringify(hookConfig, null, 4) + "```");
 	}
 };

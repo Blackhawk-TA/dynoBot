@@ -57,14 +57,14 @@ Bot.onEvent("ready", () => {
 							bAnswered = scriptWrapper.run(msg, Bot.getClient(), command);
 						} else {
 							bAnswered = true;
-							msg.getChannel().send("You don't have access to this command.");
+							msg.getTextChannel().send("You don't have access to this command.");
 						}
 					}
 					i++;
 				}
 
 				if (!bAnswered) {
-					msg.getChannel().send("Sorry, I can't help you with that.");
+					msg.getTextChannel().send("Sorry, I can't help you with that.");
 				}
 			}
 		} catch (e) {
