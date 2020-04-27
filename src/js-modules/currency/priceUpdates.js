@@ -29,12 +29,12 @@ module.exports = {
 	},
 
 	run: function(msg) {
-		let config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", msg.getServer().getId());
+		let config = configHandler.readJSON(base + "/cfg/modules/currencies.json", msg.getServer().getId());
 		module.exports.pushUpdate(msg.getChannel(), config.currencies[loopIndex], config);
 	},
 
 	hook: function(channel) {
-		let config = configHandler.readJSON(base + "/cfg/moduleConfigs/currencies.json", channel.getServer().getId());
+		let config = configHandler.readJSON(base + "/cfg/modules/currencies.json", channel.getServer().getId());
 		module.exports.pushUpdate(channel, config.currencies[loopIndex], config);
 	}
 };

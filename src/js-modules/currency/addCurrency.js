@@ -2,7 +2,7 @@ const request = require("request");
 
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
-const cfgPath = base + "/cfg/moduleConfigs/currencies.json";
+const cfgPath = base + "/cfg/modules/currencies.json";
 
 module.exports = {
 	run: function (msg) {

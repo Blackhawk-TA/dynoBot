@@ -4,7 +4,7 @@ const configHandler = require(base + "/src/utils/configHandler");
 module.exports = {
 	run: function (msg) {
 		let serverName = msg.getContentArray(true)[1],
-			serverCfgPath = base + "/cfg/moduleConfigs/rconServer.json",
+			serverCfgPath = base + "/cfg/modules/rconServer.json",
 			serverCfg = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
 		if (serverCfg[serverName] !== undefined) {

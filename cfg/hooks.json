@@ -26,7 +26,7 @@
 	"currencyUpdate": {
 		"type": "js",
 		"name": "currencies",
-		"path": "src/js-modules/currencyModule/priceUpdates.js",
+		"path": "src/js-modules/currency/priceUpdates.js",
 		"channel": 0,
 		"interval": 7200000,
 		"running": false

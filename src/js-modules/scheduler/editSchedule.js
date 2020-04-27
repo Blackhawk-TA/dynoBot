@@ -3,7 +3,7 @@ const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
 	run: function(msg, client, regexGroups) {
-		let configPath = base + "/cfg/moduleConfigs/scheduler.json",
+		let configPath = base + "/cfg/modules/scheduler.json",
 			scheduleCfg = configHandler.readJSON(configPath, msg.getServer().getId()),
 			changeType = regexGroups[1],
 			scheduleName = regexGroups[2],

@@ -80,25 +80,25 @@
 			"type": "js",
 			"regex": "(convert) (\\d+ )?(.{3}) (to) (.{3})$",
 			"help": "convert <currency (EUR)> to <currency (USD)>",
-			"path": "src/js-modules/currencyModule/currencyConverter.js"
+			"path": "src/js-modules/currency/currencyConverter.js"
 		}, {
 			"group": "currency",
 			"type": "js",
 			"regex": "add currency .{3}$",
 			"help": "add currency <currency (EUR)>",
-			"path": "src/js-modules/currencyModule/addCurrency.js"
+			"path": "src/js-modules/currency/addCurrency.js"
 		}, {
 			"group": "currency",
 			"type": "js",
 			"regex": "remove currency .{3}$",
 			"help": "remove currency <currency (EUR)>",
-			"path": "src/js-modules/currencyModule/removeCurrency.js"
+			"path": "src/js-modules/currency/removeCurrency.js"
 		}, {
 			"group": "currency",
 			"type": "js",
 			"regex": "(currency|crypto|market) (update|stats)",
 			"help": "currency update/stats",
-			"path": "src/js-modules/currencyModule/priceUpdates.js"
+			"path": "src/js-modules/currency/priceUpdates.js"
 		}, {
 			"group": "rcon",
 			"type": "js",
