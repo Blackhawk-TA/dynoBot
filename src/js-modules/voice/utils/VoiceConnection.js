@@ -11,7 +11,7 @@ class VoiceConnection {
 	 * @param connection The connection object from the dynoBot-Framework
 	 */
 	constructor(connection) {
-		this._aPlaylist = [];
+		this._aPlaylist = ["https://www.youtube.com/watch?v=P_FCuMAl8oA"];
 		this._oConnection = connection;
 		this._sId = connection.getVoiceChannel().getId();
 	}

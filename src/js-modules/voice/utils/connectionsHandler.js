@@ -9,7 +9,7 @@ module.exports = {
 	getConnection: function(sChannelId) {
 		let i = 0;
 		while (i < aVoiceConnections.length) {
-			if (aVoiceConnections[i].getVoiceChannel().getId() === sChannelId) {
+			if (aVoiceConnections[i].getId() === sChannelId) {
 				return aVoiceConnections[i];
 			}
 			i++;
@@ -33,7 +33,7 @@ module.exports = {
 		let i = 0;
 		while (i < aVoiceConnections.length) {
 			if (aVoiceConnections[i].getId() === sId) {
-				return aVoiceConnections.splice(i, 1);
+				return aVoiceConnections.splice(i, 1)[0];
 			}
 			i++;
 		}
