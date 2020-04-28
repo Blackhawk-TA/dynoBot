@@ -3,12 +3,12 @@ const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectio
 
 module.exports = {
 	run: function(msg) {
-		let voiceChannel = msg.getAuthor().getVoiceChannel();
+		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
-		if (voiceChannel) {
-			let connection = connectionsHandler.unregisterConnection(voiceChannel.getId());
+		if (oVoiceChannel) {
+			let oConnection = connectionsHandler.unregisterConnection(oVoiceChannel.getId());
 
-			connection.getApiConnection().disconnect();
+			oConnection.getApiConnection().disconnect();
 			msg.getTextChannel().send("Ok, I will leave the channel.");
 		} else {
 			msg.getTextChannel().send("You cannot order me to leave a channel in which you are not in.");

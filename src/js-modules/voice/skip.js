@@ -7,11 +7,10 @@ module.exports = {
 
 		if (oVoiceChannel) {
 			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId());
-
-			oConnection.getApiConnection().pause();
-			msg.getTextChannel().send("Ok, I will pause. Enter resume to continue listening.");
+			oConnection.play();
+			msg.getTextChannel().send("Title skipped.");
 		} else {
-			msg.getTextChannel().send("You can only pause me when you're in the same voice channel.");
+			msg.getTextChannel().send("You can only skip a title when we are in the same voice channel.");
 		}
 	}
 };

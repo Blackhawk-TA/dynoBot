@@ -15,7 +15,8 @@
 		"bot",
 		"voice",
 		"music",
-		"youtube"
+		"youtube",
+		"stream"
 	],
 	"version": "1.2.0",
 	"license": "MIT",
