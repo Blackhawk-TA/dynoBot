@@ -10,7 +10,7 @@ const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
 // const {DiscordBot} = require("dynobot-framework");
 const {DiscordBot} = require(base + "/../dynoBot-Framework/build/src/DiscordBot.js"); //TODO remove
-const Bot = new DiscordBot(security.token);
+const Bot = new DiscordBot(security.realToken);
 
 Bot.onEvent("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);

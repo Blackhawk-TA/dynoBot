@@ -15,12 +15,6 @@ module.exports = {
 
 				if (aPlaylist.length > 0) {
 					oVoiceConnection.play();
-
-					//Plays the next title when the previous one ended
-					oVoiceConnection.getApiConnection().onEvent("end", () => {
-						oVoiceConnection.play();
-					});
-
 					msg.getTextChannel().send("Ok, I've joined you and I'll play your playlist.");
 				} else {
 					msg.getTextChannel().send("I've joined you, but the playlist is empty so I can't play anything.");

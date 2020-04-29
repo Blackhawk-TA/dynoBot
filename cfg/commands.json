@@ -215,6 +215,12 @@
 		}, {
 			"group": "voice",
 			"type": "js",
+			"regex": "add playlist http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/playlist\\?list=(\\w+))",
+			"help": "add playlist <YouTube link>",
+			"path": "src/js-modules/voice/addPlaylist.js"
+		}, {
+			"group": "voice",
+			"type": "js",
 			"regex": "skip title",
 			"help": "skip title",
 			"path": "src/js-modules/voice/skip.js"

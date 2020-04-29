@@ -50,11 +50,18 @@ class VoiceConnection {
 	 * Removes the first item of the playlist and plays it.
 	 */
 	play() {
-		this._sCurrentTitle = this._aPlaylist.shift();
-		this._oConnection.play(ytDownload(this._sCurrentTitle, {
-			filter: "audioonly",
-			quality: "highestaudio"
-		}));
+		if (this._aPlaylist.length > 0) {
+			this._sCurrentTitle = this._aPlaylist.shift();
+			this._oConnection.play(ytDownload(this._sCurrentTitle, {
+				filter: "audioonly",
+				quality: "highestaudio"
+			}));
+
+			//Plays the next title when the previous one ended
+			this._oConnection.onEvent("end", () => {
+				this.play();
+			});
+		}
 	}
 
 	/**
@@ -90,9 +97,20 @@ class VoiceConnection {
 
 	/**
 	 * Adds a YouTube playlist to the current playlist
-	 * @param {string} url The url of the playlist
+	 * @param {string} playlistId The id of the playlist
 	 */
-	addPlaylist(url) {
+	addPlaylist(playlistId) {
+		return new Promise((resolve, reject) => {
+			ytPlaylist(playlistId).then(function(playlist) {
+				playlist.items.forEach(title => {
+					this._aPlaylist.push(title.url_simple);
+				}).bind(this);
+				resolve();
+			}).catch(error => {
+				console.error(`${new Date().toLocaleString()}: ${error}`);
+				reject();
+			});
+		});
 	}
 }
 
