@@ -1,5 +1,5 @@
 const ytDownload = require("ytdl-core");
-const ytPlaylist = require("ytpl");
+const ytPlaylist = require("youtube-playlist-info");
 const ytSearch = require("youtube-search");
 
 const base = require("path").resolve(".");
@@ -127,14 +127,18 @@ class VoiceConnection {
 	 */
 	addPlaylist(playlistId) {
 		return new Promise((resolve, reject) => {
-			ytPlaylist(playlistId).then(function(playlist) {
-				playlist.items.forEach(title => {
-					this._aPlaylist.push(title.url_simple);
-				}).bind(this);
+			const options = {
+				maxResults: 100
+			};
+
+			ytPlaylist(security.googleAPI, playlistId, options).then(items => {
+				items.forEach(title => {
+					this.addTitle("https://www.youtube.com/watch?v=" + title.resourceId.videoId);
+				});
 				resolve();
-			}).catch(error => {
-				console.error(`${new Date().toLocaleString()}: ${error}`);
-				reject();
+			}).catch(err => {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
+				reject(err);
 			});
 		});
 	}
@@ -152,7 +156,8 @@ class VoiceConnection {
 		return new Promise((resolve, reject) => {
 			ytSearch(name, options, function(err, results) {
 				if(err) {
-					reject(error);
+					console.error(`${new Date().toLocaleString()}: ${err}`);
+					reject(err);
 				} else {
 					resolve(results[0].link);
 				}

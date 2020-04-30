@@ -30,15 +30,16 @@
 		"url": "https://github.com/Blackhawk-TA/dynoBot.git"
 	},
 	"dependencies": {
-		"dynobot-framework": "~1.1.4",
 		"base64-img": "^1.0.4",
+		"dynobot-framework": "~1.1.4",
 		"mkdirp": "^0.5.4",
 		"request": "^2.88.2",
 		"srcds-rcon": "^2.2.1",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
+		"youtube-playlist-info": "^1.1.2",
+		"youtube-search": "^1.1.4",
 		"ytdl-core": "^2.1.1",
-		"ytpl": "^0.1.20",
-		"youtube-search": "^1.1.4"
+		"ytpl": "^0.1.20"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",
