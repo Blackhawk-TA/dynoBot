@@ -7,34 +7,43 @@ module.exports = {
 
 		if (oVoiceChannel) {
 			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId()),
-				sUrl = regexGroups[2],
-				sResponse = "";
+				sAddType = regexGroups[1],
+				sQuery = regexGroups[2],
+				sResponse = "",
+				bIsSearch = !regexGroups[3];
 
 			if (oConnection) {
-				switch (regexGroups[1]) {
-					case "current": //Plays the requested title immediately
-						oConnection.addNextTitle(sUrl);
-						oConnection.play();
-						sResponse = "Ok, I will play this title now.";
-						break;
-					case "next":
-						oConnection.addNextTitle(sUrl);
-						sResponse = "Ok, this will be the next title.";
-						break;
-					case "last":
-						oConnection.addTitle(sUrl);
-						sResponse = "Ok, the title was added to the end of the playlist";
-						break;
-					default:
-						break;
+				if (bIsSearch) {
+					oConnection.searchTitle(sQuery).then(sUrl => {
+						sResponse = this._handleAddTitle(oConnection, sAddType, sUrl);
+						msg.getTextChannel().send(sResponse);
+					}).catch(error => {
+						console.error(`${new Date().toLocaleString()}: ${error}`);
+						msg.getTextChannel().send("I could not find this title.");
+					});
+				} else {
+					sResponse = this._handleAddTitle(oConnection, sAddType, sQuery);
+					msg.getTextChannel().send(sResponse);
 				}
 			} else {
-				sResponse = "You can only edit the playlist when we are in the same voice channel.";
+				msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
 			}
-
-			msg.getTextChannel().send(sResponse);
 		} else {
 			msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
+		}
+	},
+
+	_handleAddTitle: function(oConnection, sAddType, sUrl) {
+		switch (sAddType) {
+			case "current":
+				oConnection.addCurrentTitle(sUrl);
+				return "Ok, I will play this title now.";
+			case "next":
+				oConnection.addNextTitle(sUrl);
+				return "Ok, this will be the next title.";
+			default:
+				oConnection.addTitle(sUrl);
+				return "Ok, the title was added to the end of the playlist";
 		}
 	}
 };

@@ -185,32 +185,38 @@
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "join voice",
-			"help": "join voice",
+			"regex": "join(\\svoice)?",
+			"help": "join",
 			"path": "src/js-modules/voice/join.js"
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "leave voice",
-			"help": "leave voice",
+			"regex": "leave(\\svoice)?",
+			"help": "leave",
 			"path": "src/js-modules/voice/leave.js"
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "pause title",
-			"help": "pause title",
+			"regex": "pause(\\stitle|music)?",
+			"help": "pause",
 			"path": "src/js-modules/voice/pause.js"
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "resume title",
-			"help": "resume title",
+			"regex": "resume(\\stitle|music)?",
+			"help": "resume",
 			"path": "src/js-modules/voice/resume.js"
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "add (current|next|last) title (http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/watch\\?v=|\\.be\\/)([\\w\\-\\_]*)(&(amp;)?\u200C\u200B[\\w\\?\u200C\u200B=]*)?)",
-			"help": "add current/next/last title <YouTube link>",
+			"regex": "skip(\\stitle|song)?",
+			"help": "skip",
+			"path": "src/js-modules/voice/skip.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "add (current|next|last)?\\s?title (http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/watch\\?v=|\\.be\\/)([\\w\\-\\_]*)(&(amp;)?\u200C\u200B[\\w\\?\u200C\u200B=]*)?|.+)",
+			"help": "add current/next/last title <YouTube link or title>",
 			"path": "src/js-modules/voice/addTitle.js"
 		}, {
 			"group": "voice",
@@ -218,12 +224,6 @@
 			"regex": "add playlist http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/playlist\\?list=(\\w+))",
 			"help": "add playlist <YouTube link>",
 			"path": "src/js-modules/voice/addPlaylist.js"
-		}, {
-			"group": "voice",
-			"type": "js",
-			"regex": "skip title",
-			"help": "skip title",
-			"path": "src/js-modules/voice/skip.js"
 		}
 	]
 }

@@ -9,7 +9,7 @@ const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
 // const {DiscordBot} = require("dynobot-framework");
-const {DiscordBot} = require(base + "/../dynoBot-Framework/build/src/DiscordBot.js"); //TODO remove
+const {DiscordBot} = require("C:\\Users\\tkcbl\\IdeaProjects\\dynoBot-Framework\\build\\DiscordBot.js"); //TODO remove
 const Bot = new DiscordBot(security.realToken);
 
 Bot.onEvent("ready", () => {
@@ -52,7 +52,7 @@ Bot.onEvent("ready", () => {
 					let command = commands.commandList[i],
 						pattern = new RegExp(command.regex);
 
-					if (pattern.test(msg.getContent(true).toLowerCase())) {
+					if (pattern.test(msg.getContent(true).toLowerCase().trim())) {
 						if (permissionHandler.hasPermissions(msg, command)) {
 							bAnswered = scriptWrapper.run(msg, Bot.getClient(), command);
 						} else {

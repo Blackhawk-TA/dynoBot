@@ -1,6 +1,10 @@
 const ytDownload = require("ytdl-core");
 const ytPlaylist = require("ytpl");
-const ytSearch = require("ytsr");
+const ytSearch = require("youtube-search");
+
+const base = require("path").resolve(".");
+const security = require(base + "/cfg/security.json");
+const ONE_MEGABYTE = 10485760;
 
 class VoiceConnection {
 	/**
@@ -48,19 +52,24 @@ class VoiceConnection {
 
 	/**
 	 * Removes the first item of the playlist and plays it.
+	 * Buffers the next title
 	 */
 	play() {
 		if (this._aPlaylist.length > 0) {
 			this._sCurrentTitle = this._aPlaylist.shift();
+
 			this._oConnection.play(ytDownload(this._sCurrentTitle, {
 				filter: "audioonly",
-				quality: "highestaudio"
+				quality: "highestaudio",
+				highWaterMark: ONE_MEGABYTE
 			}));
 
 			//Plays the next title when the previous one ended
 			this._oConnection.onEvent("end", () => {
 				this.play();
 			});
+		} else {
+			this._sCurrentTitle = "";
 		}
 	}
 
@@ -77,6 +86,19 @@ class VoiceConnection {
 	 */
 	addTitle(url) {
 		this._aPlaylist.push(url);
+
+		if (!this._sCurrentTitle) {
+			this.play();
+		}
+	}
+
+	/**
+	 * Adds the title as next one in the playlist and plays it directly
+	 * @param {string} url The url to the title
+	 */
+	addCurrentTitle(url) {
+		this._aPlaylist.unshift(url);
+		this.play();
 	}
 
 	/**
@@ -85,6 +107,10 @@ class VoiceConnection {
 	 */
 	addNextTitle(url) {
 		this._aPlaylist.unshift(url);
+
+		if (!this._sCurrentTitle) {
+			this.play();
+		}
 	}
 
 	/**
@@ -109,6 +135,27 @@ class VoiceConnection {
 			}).catch(error => {
 				console.error(`${new Date().toLocaleString()}: ${error}`);
 				reject();
+			});
+		});
+	}
+
+	/**
+	 * Searches the title on YouTube and returns the url
+	 * @param name
+	 */
+	searchTitle(name) {
+		const options = {
+			maxResults: 1,
+			key: security.googleAPI
+		};
+
+		return new Promise((resolve, reject) => {
+			ytSearch(name, options, function(err, results) {
+				if(err) {
+					reject(error);
+				} else {
+					resolve(results[0].link);
+				}
 			});
 		});
 	}
