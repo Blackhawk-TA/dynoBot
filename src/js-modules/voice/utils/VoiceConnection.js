@@ -1,6 +1,7 @@
 const ytDownload = require("ytdl-core");
 const ytPlaylist = require("youtube-playlist-info");
 const ytSearch = require("youtube-search");
+const playlistImporter = require("playlist-importer-lite");
 
 const base = require("path").resolve(".");
 const security = require(base + "/cfg/security.json");
@@ -14,7 +15,8 @@ class VoiceConnection {
 	constructor(connection) {
 		this._aPlaylist = [];
 		this._oConnection = connection;
-		this._sCurrentTitle = "";
+		this._sCurrentTitleUrl = "";
+		this._sCurrentTitleName = "";
 		this._sId = connection.getVoiceChannel().getId();
 	}
 
@@ -35,19 +37,31 @@ class VoiceConnection {
 	}
 
 	/**
-	 * Gets the current playlist.
+	 * Gets the current playlist with the title names only.
 	 * @return {string[]} The playlist
 	 */
 	getPlaylist() {
-		return this._aPlaylist;
+		let aNamePlaylist = [];
+		this._aPlaylist.forEach(oTitle => {
+			aNamePlaylist.push(oTitle.name);
+		});
+		return aNamePlaylist;
 	}
 
 	/**
-	 * Gets the title which is currently playing.
-	 * @return {string} The current title
+	 * Gets the name of the title which is currently playing.
+	 * @return {string} The name of the current title
 	 */
-	getCurrentTitle() {
-		return this._sCurrentTitle;
+	getCurrentTitleName() {
+		return this._sCurrentTitleName;
+	}
+
+	/**
+	 * Gets the url of the title which is currently playing.
+	 * @return {string} The url of the current title
+	 */
+	getCurrentTitleUrl() {
+		return this._sCurrentTitleUrl;
 	}
 
 	/**
@@ -56,9 +70,11 @@ class VoiceConnection {
 	 */
 	play() {
 		if (this._aPlaylist.length > 0) {
-			this._sCurrentTitle = this._aPlaylist.shift();
+			let oCurrentTitle = this._aPlaylist.shift();
+			this._sCurrentTitleUrl = oCurrentTitle.url;
+			this._sCurrentTitleName = oCurrentTitle.name;
 
-			this._oConnection.play(ytDownload(this._sCurrentTitle, {
+			this._oConnection.play(ytDownload(this._sCurrentTitleUrl, {
 				filter: "audioonly",
 				quality: "highestaudio",
 				highWaterMark: ONE_MEGABYTE
@@ -69,7 +85,8 @@ class VoiceConnection {
 				this.play();
 			});
 		} else {
-			this._sCurrentTitle = "";
+			this._sCurrentTitleUrl = "";
+			this._sCurrentTitleName = "";
 		}
 	}
 
@@ -83,34 +100,72 @@ class VoiceConnection {
 	/**
 	 * Adds the given title to the end of the playlist
 	 * @param {string} url The url to the title
+	 * @return {Promise<object>} The title object containing the url and the title
 	 */
 	addTitle(url) {
-		this._aPlaylist.push(url);
+		return new Promise((resolve, reject) => {
+			ytDownload.getBasicInfo(url).then(info => {
+				let oTitle = {
+					name: info.title,
+					url: url
+				};
+				this._aPlaylist.push(oTitle);
 
-		if (!this._sCurrentTitle) {
-			this.play();
-		}
+				if (!this._sCurrentTitleUrl) {
+					this.play();
+				}
+				resolve(oTitle);
+			}).catch(err => {
+				reject(err);
+			});
+		});
 	}
 
 	/**
 	 * Adds the title as next one in the playlist and plays it directly
 	 * @param {string} url The url to the title
+	 * @return {Promise<object>} The title object containing the url and the title
 	 */
 	addCurrentTitle(url) {
-		this._aPlaylist.unshift(url);
-		this.play();
+		return new Promise((resolve, reject) => {
+			ytDownload.getBasicInfo(url).then(info  => {
+				let oTitle = {
+					name: info.title,
+					url: url
+				}
+				this._aPlaylist.unshift(oTitle);
+				this._oConnection.removeEventListener("end");
+				this.play();
+
+				resolve(oTitle);
+			}).catch(err => {
+				reject(err);
+			});
+		});
 	}
 
 	/**
 	 * Adds the given title as next one in the playlist
 	 * @param {string} url The url to the title
+	 * @return {Promise<object>} The title object containing the url and the title
 	 */
 	addNextTitle(url) {
-		this._aPlaylist.unshift(url);
+		return new Promise((resolve, reject) => {
+			ytDownload.getBasicInfo(url).then(info => {
+				let oTitle = {
+					name: info.title,
+					url: url
+				}
+				this._aPlaylist.unshift(oTitle);
 
-		if (!this._sCurrentTitle) {
-			this.play();
-		}
+				if (!this._sCurrentTitleUrl) {
+					this.play();
+				}
+				resolve(oTitle);
+			}).catch(err => {
+				reject(err);
+			});
+		});
 	}
 
 	/**
@@ -124,6 +179,7 @@ class VoiceConnection {
 	/**
 	 * Adds a YouTube playlist to the current playlist
 	 * @param {string} playlistId The id of the playlist
+	 * @return {Promise} The promise stating if it was successful or not
 	 */
 	addPlaylist(playlistId) {
 		return new Promise((resolve, reject) => {
@@ -132,12 +188,18 @@ class VoiceConnection {
 			};
 
 			ytPlaylist(security.googleAPI, playlistId, options).then(items => {
-				items.forEach(title => {
-					this.addTitle("https://www.youtube.com/watch?v=" + title.resourceId.videoId);
+				items.forEach(track => {
+					this._aPlaylist.push({
+						name: track.title,
+						url: "https://www.youtube.com/watch?v=" + track.resourceId.videoId
+					});
+
+					if (!this._sCurrentTitleUrl) {
+						this.play();
+					}
 				});
 				resolve();
 			}).catch(err => {
-				console.error(`${new Date().toLocaleString()}: ${err}`);
 				reject(err);
 			});
 		});
@@ -145,7 +207,8 @@ class VoiceConnection {
 
 	/**
 	 * Searches the title on YouTube and returns the url
-	 * @param name
+	 * @param {string} name
+	 * @return {Promise<string>} The YouTube url of the title
 	 */
 	searchTitle(name) {
 		const options = {
@@ -155,12 +218,31 @@ class VoiceConnection {
 
 		return new Promise((resolve, reject) => {
 			ytSearch(name, options, function(err, results) {
-				if(err) {
+				if (err) {
 					console.error(`${new Date().toLocaleString()}: ${err}`);
 					reject(err);
 				} else {
-					resolve(results[0].link);
+					resolve({
+						name: results[0].title,
+						url: results[0].link
+					});
 				}
+			});
+		});
+	}
+
+	importPlaylist(url) {
+		return new Promise((resolve, reject) => {
+			playlistImporter.getPlaylistData(url).then(data => {
+				let sQuery;
+				data.tracklist.forEach(track => {
+					sQuery = track.title + " " + track.artist;
+					console.log(sQuery);
+				});
+				resolve();
+			}).catch(err => {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
+				reject(err);
 			});
 		});
 	}

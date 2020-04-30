@@ -224,6 +224,12 @@
 			"regex": "add playlist http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/playlist\\?list=(\\w+))",
 			"help": "add playlist <YouTube link>",
 			"path": "src/js-modules/voice/addPlaylist.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "show|list playlist|songs|titles|queue",
+			"help": "show/list playlist",
+			"path": "src/js-modules/voice/showPlaylist.js"
 		}
 	]
 }

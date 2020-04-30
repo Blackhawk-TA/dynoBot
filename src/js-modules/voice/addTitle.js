@@ -9,21 +9,19 @@ module.exports = {
 			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId()),
 				sAddType = regexGroups[1],
 				sQuery = regexGroups[2],
-				sResponse = "",
-				bIsSearch = !regexGroups[3];
+				bIsSearch = !regexGroups[3],
+				oChannel = msg.getTextChannel();
 
 			if (oConnection) {
 				if (bIsSearch) {
-					oConnection.searchTitle(sQuery).then(sUrl => {
-						sResponse = this._handleAddTitle(oConnection, sAddType, sUrl);
-						msg.getTextChannel().send(sResponse);
-					}).catch(error => {
-						console.error(`${new Date().toLocaleString()}: ${error}`);
+					oConnection.searchTitle(sQuery).then(oResult => {
+						this._handleAddTitle(oChannel, oConnection, sAddType, oResult.url);
+					}).catch(err => {
+						console.error(`${new Date().toLocaleString()}: ${err}`);
 						msg.getTextChannel().send("I could not find this title.");
 					});
 				} else {
-					sResponse = this._handleAddTitle(oConnection, sAddType, sQuery);
-					msg.getTextChannel().send(sResponse);
+					this._handleAddTitle(oChannel, oConnection, sAddType, sQuery);
 				}
 			} else {
 				msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
@@ -33,17 +31,32 @@ module.exports = {
 		}
 	},
 
-	_handleAddTitle: function(oConnection, sAddType, sUrl) {
+	_handleAddTitle: function(channel, oConnection, sAddType, sUrl) {
 		switch (sAddType) {
 			case "current":
-				oConnection.addCurrentTitle(sUrl);
-				return "Ok, I will play this title now.";
+				oConnection.addCurrentTitle(sUrl).then(oResult => {
+					channel.send(`Ok, playing '${oResult.name}'`);
+				}).catch(err => {
+					console.error(`${new Date().toLocaleString()}: ${err}`);
+					channel.send("I could not play this title.");
+				});
+				break;
 			case "next":
-				oConnection.addNextTitle(sUrl);
-				return "Ok, this will be the next title.";
+				oConnection.addNextTitle(sUrl).then(oResult => {
+					channel.send(`The next title will be '${oResult.name}'`);
+				}).catch(err => {
+					console.error(`${new Date().toLocaleString()}: ${err}`);
+					channel.send("I could not play this title.");
+				});
+				break;
 			default:
-				oConnection.addTitle(sUrl);
-				return "Ok, the title was added to the end of the playlist";
+				oConnection.addTitle(sUrl).then(oResult => {
+					channel.send(`Added '${oResult.name}' to the playlist.`);
+				}).catch(err => {
+					console.error(`${new Date().toLocaleString()}: ${err}`);
+					channel.send("I could not play this title.");
+				});
+				break;
 		}
 	}
 };

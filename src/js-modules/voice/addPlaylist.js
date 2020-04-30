@@ -4,21 +4,23 @@ const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectio
 module.exports = {
 	run: function(msg, client, regexGroup) {
 		let sPlaylistId = regexGroup[1],
-			oVoiceChannel = msg.getAuthor().getVoiceChannel(),
-			sResponse;
+			oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
 			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId());
 
 			if (oConnection) {
-				oConnection.addPlaylist(sPlaylistId);
-				sResponse = "The YouTube playlist was added to the current playlist.";
+				oConnection.addPlaylist(sPlaylistId).then(() => {
+					msg.getTextChannel().send("The YouTube playlist was added to the current playlist.");
+				}).catch(err => {
+					msg.getTextChannel().send("Could not add the playlist.");
+					console.error(`${new Date().toLocaleString()}: ${err}`);
+				});
 			} else {
-				sResponse = "You can only edit the playlist when we are in the same voice channel.";
+				msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
 			}
 		} else {
-			sResponse = "You can only edit the playlist when we are in the same voice channel.";
+			msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
 		}
-		msg.getTextChannel().send(sResponse);
 	}
 };
