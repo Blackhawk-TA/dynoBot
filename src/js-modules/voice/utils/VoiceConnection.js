@@ -81,9 +81,7 @@ class VoiceConnection {
 			}));
 
 			//Plays the next title when the previous one ended
-			this._oConnection.onEvent("end", () => {
-				this.play();
-			});
+			this._oConnection.onEvent("end", this.play.bind(this));
 		} else {
 			this._sCurrentTitleUrl = "";
 			this._sCurrentTitleName = "";
@@ -134,7 +132,9 @@ class VoiceConnection {
 					url: url
 				}
 				this._aPlaylist.unshift(oTitle);
-				this._oConnection.removeEventListener("end");
+
+				//Prevent play from being triggered twice
+				this._oConnection.removeAllListeners("end");
 				this.play();
 
 				resolve(oTitle);
@@ -193,11 +193,11 @@ class VoiceConnection {
 						name: track.title,
 						url: "https://www.youtube.com/watch?v=" + track.resourceId.videoId
 					});
-
-					if (!this._sCurrentTitleUrl) {
-						this.play();
-					}
 				});
+
+				if (!this._sCurrentTitleUrl) {
+					this.play();
+				}
 				resolve();
 			}).catch(err => {
 				reject(err);

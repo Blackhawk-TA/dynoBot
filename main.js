@@ -9,7 +9,7 @@ const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
 // const {DiscordBot} = require("dynobot-framework");
-const {DiscordBot} = require(base + "/../dynoBot-Framework/build/DiscordBot.js"); //TODO remove
+const {DiscordBot} = require(base + "/../dynoBot-Framework/build/DiscordBot"); //TODO remove
 const Bot = new DiscordBot(security.realToken);
 
 Bot.onEvent("ready", () => {
