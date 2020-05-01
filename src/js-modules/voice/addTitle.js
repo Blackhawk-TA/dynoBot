@@ -15,13 +15,17 @@ module.exports = {
 			if (oConnection) {
 				if (bIsSearch) {
 					oConnection.searchTitle(sQuery).then(oResult => {
-						this._handleAddTitle(oChannel, oConnection, sAddType, oResult.url);
+						this._handleAddTitle(oChannel, oConnection, sAddType, oResult);
 					}).catch(err => {
 						console.error(`${new Date().toLocaleString()}: ${err}`);
 						msg.getTextChannel().send("I could not find this title.");
 					});
 				} else {
-					this._handleAddTitle(oChannel, oConnection, sAddType, sQuery);
+					let oTitle = {
+						name: "",
+						url: sQuery
+					};
+					this._handleAddTitle(oChannel, oConnection, sAddType, oTitle);
 				}
 			} else {
 				msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
@@ -31,31 +35,49 @@ module.exports = {
 		}
 	},
 
-	_handleAddTitle: function(channel, oConnection, sAddType, sUrl) {
+	_handleAddTitle: function(channel, oConnection, sAddType, oTitle) {
 		switch (sAddType) {
 			case "current":
-				oConnection.addCurrentTitle(sUrl).then(oResult => {
-					channel.send(`Ok, playing '${oResult.name}'`);
-				}).catch(err => {
-					console.error(`${new Date().toLocaleString()}: ${err}`);
-					channel.send("I could not play this title.");
-				});
+				if (oTitle.name) {
+					oConnection.addCurrentTitle(oTitle);
+					channel.send(`Ok, playing '${oTitle.name}'`);
+				} else {
+					oConnection.getTitle(oTitle.url).then(oResult => {
+						oConnection.addCurrentTitle(oResult);
+						channel.send(`Ok, playing '${oResult.name}'`);
+					}).catch(err => {
+						console.error(`${new Date().toLocaleString()}: ${err}`);
+						channel.send("I cannot play this title.");
+					});
+				}
 				break;
 			case "next":
-				oConnection.addNextTitle(sUrl).then(oResult => {
-					channel.send(`The next title will be '${oResult.name}'`);
-				}).catch(err => {
-					console.error(`${new Date().toLocaleString()}: ${err}`);
-					channel.send("I could not play this title.");
-				});
+				if (oTitle.name) {
+					oConnection.addNextTitle(oTitle);
+					channel.send(`The next title will be '${oTitle.name}'`);
+				} else {
+					oConnection.getTitle(oTitle.url).then(oResult => {
+						oConnection.addNextTitle(oResult);
+						channel.send(`The next title will be '${oResult.name}'`);
+					}).catch(err => {
+						console.error(`${new Date().toLocaleString()}: ${err}`);
+						channel.send("I cannot play this title.");
+					});
+				}
 				break;
 			default:
-				oConnection.addTitle(sUrl).then(oResult => {
-					channel.send(`Added '${oResult.name}' to the playlist.`);
-				}).catch(err => {
-					console.error(`${new Date().toLocaleString()}: ${err}`);
-					channel.send("I could not play this title.");
-				});
+				if (oTitle.name) {
+					oConnection.addTitle(oTitle);
+					channel.send(`Added '${oTitle.name}' to the playlist.`);
+				} else {
+					oConnection.getTitle(oTitle.url).then(oResult => {
+						oConnection.addTitle(oResult);
+						channel.send(`Added '${oResult.name}' to the playlist.`);
+					}).catch(err => {
+						console.error(`${new Date().toLocaleString()}: ${err}`);
+						channel.send("I cannot play this title.");
+					});
+				}
 				break;
 		}
 	}

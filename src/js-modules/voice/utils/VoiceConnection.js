@@ -17,7 +17,6 @@ class VoiceConnection {
 		this._oConnection = connection;
 		this._sCurrentTitleUrl = "";
 		this._sCurrentTitleName = "";
-		this._sId = connection.getVoiceChannel().getId();
 	}
 
 	/**
@@ -25,7 +24,7 @@ class VoiceConnection {
 	 * @return {number} The id of the voice connection
 	 */
 	getId() {
-		return this._sId;
+		return this._oConnection.getVoiceChannel().getId();
 	}
 
 	/**
@@ -97,70 +96,59 @@ class VoiceConnection {
 
 	/**
 	 * Adds the given title to the end of the playlist
-	 * @param {string} url The url to the title
-	 * @return {Promise<object>} The title object containing the url and the title
+	 * @param {object} oTitle The title object
+	 * @param {string} oTitle.name The name of the title
+	 * @param {string} oTitle.url The url of the title
 	 */
-	addTitle(url) {
-		return new Promise((resolve, reject) => {
-			ytDownload.getBasicInfo(url).then(info => {
-				let oTitle = {
-					name: info.title,
-					url: url
-				};
-				this._aPlaylist.push(oTitle);
+	addTitle(oTitle) {
+		this._aPlaylist.push(oTitle);
 
-				if (!this._sCurrentTitleUrl) {
-					this.play();
-				}
-				resolve(oTitle);
-			}).catch(err => {
-				reject(err);
-			});
-		});
+		if (!this._sCurrentTitleUrl) {
+			this.play();
+		}
 	}
 
 	/**
-	 * Adds the title as next one in the playlist and plays it directly
-	 * @param {string} url The url to the title
-	 * @return {Promise<object>} The title object containing the url and the title
+	 * Adds the given title as next one in the playlist and plays it directly
+	 * @param {object} oTitle The title object
+	 * @param {string} oTitle.name The name of the title
+	 * @param {string} oTitle.url The url of the title
 	 */
-	addCurrentTitle(url) {
-		return new Promise((resolve, reject) => {
-			ytDownload.getBasicInfo(url).then(info  => {
-				let oTitle = {
-					name: info.title,
-					url: url
-				}
-				this._aPlaylist.unshift(oTitle);
+	addCurrentTitle(oTitle) {
+		this._aPlaylist.unshift(oTitle);
 
-				//Prevent play from being triggered twice
-				this._oConnection.removeAllListeners("end");
-				this.play();
-
-				resolve(oTitle);
-			}).catch(err => {
-				reject(err);
-			});
-		});
+		//Prevent play from being triggered twice
+		this._oConnection.removeAllListeners("end");
+		this.play();
 	}
 
 	/**
 	 * Adds the given title as next one in the playlist
-	 * @param {string} url The url to the title
-	 * @return {Promise<object>} The title object containing the url and the title
+	 * @param {object} oTitle The title object
+	 * @param {string} oTitle.name The name of the title
+	 * @param {string} oTitle.url The url of the title
 	 */
-	addNextTitle(url) {
+	addNextTitle(oTitle) {
+		this._aPlaylist.unshift(oTitle);
+
+		if (!this._sCurrentTitleUrl) {
+			this.play();
+		}
+	}
+
+	/**
+	 * Gets the title of the video by its url
+	 * @param {string} url The url of the video
+	 * @return {Promise<object>} The title object containing the name and url
+	 */
+	getTitle(url) {
 		return new Promise((resolve, reject) => {
 			ytDownload.getBasicInfo(url).then(info => {
 				let oTitle = {
 					name: info.title,
 					url: url
 				}
-				this._aPlaylist.unshift(oTitle);
 
-				if (!this._sCurrentTitleUrl) {
-					this.play();
-				}
 				resolve(oTitle);
 			}).catch(err => {
 				reject(err);
