@@ -2,6 +2,7 @@ const ytDownload = require("ytdl-core");
 const ytPlaylist = require("youtube-playlist-info");
 const ytSearch = require("youtube-search");
 const playlistImporter = require("playlist-importer-lite");
+const appleMusicPlaylist = require("../../../../../apple-music-playlist/src/main"); //TODO adjust
 
 const base = require("path").resolve(".");
 const security = require(base + "/cfg/security.json");
@@ -139,7 +140,7 @@ class VoiceConnection {
 	/**
 	 * Gets the title of the video by its url
 	 * @param {string} url The url of the video
-	 * @return {Promise<object>} The title object containing the name and url
+	 * @return {Promise<object|Error>} On resolve the title object containing the name and url, on reject the error
 	 */
 	getTitle(url) {
 		return new Promise((resolve, reject) => {
@@ -147,7 +148,7 @@ class VoiceConnection {
 				let oTitle = {
 					name: info.title,
 					url: url
-				}
+				};
 
 				resolve(oTitle);
 			}).catch(err => {
@@ -167,7 +168,7 @@ class VoiceConnection {
 	/**
 	 * Adds a YouTube playlist to the current playlist
 	 * @param {string} playlistId The id of the playlist
-	 * @return {Promise} The promise stating if it was successful or not
+	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
 	 */
 	addPlaylist(playlistId) {
 		return new Promise((resolve, reject) => {
@@ -196,7 +197,7 @@ class VoiceConnection {
 	/**
 	 * Searches the title on YouTube and returns the url
 	 * @param {string} name
-	 * @return {Promise<string>} The YouTube url of the title
+	 * @return {Promise<string|Error>} On resolve the YouTube url of the title, on reject the error
 	 */
 	searchTitle(name) {
 		const options = {
@@ -219,17 +220,66 @@ class VoiceConnection {
 		});
 	}
 
-	importPlaylist(url) {
+	/**
+	 * Search each track in the list and adds the Youtube links to the playlist
+	 * @param {object[]} tracks The track to be added to the playlist
+	 * @param {object[]} playlist The playlist
+	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
+	 */
+	searchAndAddTracks(tracks, playlist) {
 		return new Promise((resolve, reject) => {
-			playlistImporter.getPlaylistData(url).then(data => {
-				let sQuery;
-				data.tracklist.forEach(track => {
-					sQuery = track.title + " " + track.artist;
-					console.log(sQuery);
+			let sQuery,
+				aPromises = [];
+
+			tracks.forEach(track => {
+				sQuery = track.title + " " + track.artist;
+				aPromises.push(this.searchTitle(sQuery));
+			});
+
+			Promise.all(aPromises).then(aResult => {
+				aResult.forEach(oTitle => {
+					playlist.push(oTitle);
 				});
 				resolve();
 			}).catch(err => {
-				console.error(`${new Date().toLocaleString()}: ${err}`);
+				reject(err);
+			});
+		});
+	}
+
+	/**
+	 * Adds the given spotify playlist to the bots playlist
+	 * @param {string} url The spotify playlist url
+	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
+	 */
+	addSpotifyPlaylist(url) {
+		return new Promise((resolve, reject) => {
+			playlistImporter.getPlaylistData(url).then(data => {
+				this.searchAndAddTracks(data.tracklist, this._aPlaylist).then(() => {
+					resolve();
+				}).catch(err => {
+					reject(err);
+				});
+			}).catch(err => {
+				reject(err);
+			});
+		});
+	}
+
+	/**
+	 * Adds the given apple music playlist to the bots playlist
+	 * @param {string} url The apple music playlist url
+	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
+	 */
+	addAppleMusicPlaylist(url) {
+		return new Promise((resolve, reject) => {
+			appleMusicPlaylist.getPlaylist(url).then(aResults => {
+				this.searchAndAddTracks(aResults, this._aPlaylist).then(() => {
+					resolve();
+				}).catch(err => {
+					reject(err);
+				});
+			}).catch(err => {
 				reject(err);
 			});
 		});

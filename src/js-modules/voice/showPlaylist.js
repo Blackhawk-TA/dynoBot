@@ -15,7 +15,7 @@ module.exports = {
 				sCurrentTitle = oConnection.getCurrentTitleName();
 				if (sCurrentTitle) {
 					aPlaylist = oConnection.getPlaylist();
-					sAnswer = "```"
+					sAnswer = "```";
 					sAnswer += "1. " + sCurrentTitle;
 					for (let i = 0; i < aPlaylist.length; i++) {
 						sAnswer += `\n${i + 2}. ${aPlaylist[i]}`;
@@ -32,4 +32,4 @@ module.exports = {
 			msg.getTextChannel().send("You can only show the playlist when we are in the same voice channel.");
 		}
 	}
-}
+};
