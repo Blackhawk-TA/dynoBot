@@ -208,7 +208,6 @@ class VoiceConnection {
 		return new Promise((resolve, reject) => {
 			ytSearch(name, options, function(err, results) {
 				if (err) {
-					console.error(`${new Date().toLocaleString()}: ${err}`);
 					reject(err);
 				} else {
 					resolve({
@@ -223,25 +222,27 @@ class VoiceConnection {
 	/**
 	 * Search each track in the list and adds the Youtube links to the playlist
 	 * @param {object[]} tracks The track to be added to the playlist
-	 * @param {object[]} playlist The playlist
 	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
 	 */
-	searchAndAddTracks(tracks, playlist) {
+	searchAndAddTracks(tracks) {
 		return new Promise((resolve, reject) => {
 			let sQuery,
 				aPromises = [];
 
-			tracks.forEach(track => {
+			tracks.forEach(function(track) {
 				sQuery = track.title + " " + track.artist;
 				aPromises.push(this.searchTitle(sQuery));
-			});
+			}.bind(this));
 
-			Promise.all(aPromises).then(aResult => {
+			Promise.all(aPromises).then(function(aResult) {
 				aResult.forEach(oTitle => {
-					playlist.push(oTitle);
+					this._aPlaylist.push(oTitle);
 				});
+				if (!this._sCurrentTitleUrl) {
+					this.play();
+				}
 				resolve();
-			}).catch(err => {
+			}.bind(this)).catch(err => {
 				reject(err);
 			});
 		});
@@ -255,7 +256,7 @@ class VoiceConnection {
 	addSpotifyPlaylist(url) {
 		return new Promise((resolve, reject) => {
 			playlistImporter.getPlaylistData(url).then(data => {
-				this.searchAndAddTracks(data.tracklist, this._aPlaylist).then(() => {
+				this.searchAndAddTracks(data.tracklist).then(() => {
 					resolve();
 				}).catch(err => {
 					reject(err);
@@ -274,7 +275,7 @@ class VoiceConnection {
 	addAppleMusicPlaylist(url) {
 		return new Promise((resolve, reject) => {
 			appleMusicPlaylist.getPlaylist(url).then(aResults => {
-				this.searchAndAddTracks(aResults, this._aPlaylist).then(() => {
+				this.searchAndAddTracks(aResults).then(() => {
 					resolve();
 				}).catch(err => {
 					reject(err);

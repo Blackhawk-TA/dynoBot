@@ -6,19 +6,24 @@ module.exports = {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId()),
-				aPlaylist = [],
-				sCurrentTitle = "",
-				sAnswer = "";
+			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId());
 
 			if (oConnection) {
-				sCurrentTitle = oConnection.getCurrentTitleName();
-				if (sCurrentTitle) {
+				let sCurrentTitle = oConnection.getCurrentTitleName(),
+					iOffset = 0,
+					sAnswer = "```",
 					aPlaylist = oConnection.getPlaylist();
-					sAnswer = "```";
-					sAnswer += "1. " + sCurrentTitle;
-					for (let i = 0; i < aPlaylist.length; i++) {
-						sAnswer += `\n${i + 2}. ${aPlaylist[i]}`;
+
+				if (sCurrentTitle || aPlaylist.length > 0) {
+					if (sCurrentTitle) {
+						sAnswer += "1. " + sCurrentTitle;
+						iOffset = 1;
+					}
+
+					if (aPlaylist.length > 0) {
+						for (let i = 0; i < aPlaylist.length; i++) {
+							sAnswer += `\n${i + iOffset + 1}. ${aPlaylist[i]}`;
+						}
 					}
 					sAnswer += "```";
 				} else {
