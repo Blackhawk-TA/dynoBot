@@ -16,7 +16,10 @@
 		"voice",
 		"music",
 		"youtube",
-		"stream"
+		"stream",
+		"apple",
+		"spotify",
+		"playlist"
 	],
 	"version": "1.2.0",
 	"license": "MIT",

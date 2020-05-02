@@ -10,7 +10,8 @@ module.exports = {
 				aPlaylist = oConnection.getPlaylist();
 
 			if (aPlaylist.length > 0) {
-				msg.getTextChannel().send(`Title skipped. Playing '${aPlaylist[0]}'`);
+				msg.getTextChannel().send(`Title skipped. Playing '${aPlaylist[0]}'.`);
+				oConnection.getApiConnection().removeAllListeners("end");
 				oConnection.play();
 			} else {
 				msg.getTextChannel().send("You cannot skip the last song in the playlist.");

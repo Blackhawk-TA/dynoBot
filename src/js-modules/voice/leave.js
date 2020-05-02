@@ -8,6 +8,7 @@ module.exports = {
 		if (oVoiceChannel) {
 			let oConnection = connectionsHandler.unregisterConnection(oVoiceChannel.getId());
 
+			oConnection.getApiConnection().removeAllListeners("end");
 			oConnection.getApiConnection().disconnect();
 			msg.getTextChannel().send("Ok, I will leave the channel.");
 		} else {
