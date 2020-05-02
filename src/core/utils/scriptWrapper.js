@@ -3,7 +3,7 @@ const languageHandler = require(base + "/src/core/utils/languageHandler");
 
 module.exports = {
 	run: function(msg, client, command) {
-		let pattern = new RegExp(command.regex);
+		let pattern = new RegExp(command.regex, "i");
 
 		switch (command.type) {
 			case "js":
