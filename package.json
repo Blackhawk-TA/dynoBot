@@ -35,7 +35,7 @@
 	"dependencies": {
 		"base64-img": "^1.0.4",
 		"dynobot-framework": "~1.1.4",
-		"mkdirp": "^0.5.4",
+		"mkdirp": "^0.5.5",
 		"playlist-importer-lite": "^0.1.0",
 		"request": "^2.88.2",
 		"scrape-yt": "^1.1.0",
