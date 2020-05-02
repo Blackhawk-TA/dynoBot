@@ -1,11 +1,8 @@
 const ytDownload = require("ytdl-core");
-const ytPlaylist = require("youtube-playlist-info");
-const ytSearch = require("youtube-search");
+const scrapeYouTube = require("scrape-yt");
 const playlistImporter = require("playlist-importer-lite");
-const appleMusicPlaylist = require("../../../../../apple-music-playlist/src/main"); //TODO adjust
+const amply = require("../../../../../apple-music-playlist/src/main"); //TODO adjust
 
-const base = require("path").resolve(".");
-const security = require(base + "/cfg/security.json");
 const ONE_MEGABYTE = 10485760;
 
 class VoiceConnection {
@@ -172,15 +169,11 @@ class VoiceConnection {
 	 */
 	addPlaylist(playlistId) {
 		return new Promise((resolve, reject) => {
-			const options = {
-				maxResults: 100
-			};
-
-			ytPlaylist(security.googleAPI, playlistId, options).then(items => {
-				items.forEach(track => {
+			scrapeYouTube.getPlaylist(playlistId).then(oPlaylist => {
+				oPlaylist.videos.forEach(track => {
 					this._aPlaylist.push({
 						name: track.title,
-						url: "https://www.youtube.com/watch?v=" + track.resourceId.videoId
+						url: "https://www.youtube.com/watch?v=" + track.id
 					});
 				});
 
@@ -200,21 +193,24 @@ class VoiceConnection {
 	 * @return {Promise<string|Error>} On resolve the YouTube url of the title, on reject the error
 	 */
 	searchTitle(name) {
-		const options = {
-			maxResults: 1,
-			key: security.googleAPI
+		let options = {
+			type: "video",
+			limit: 1
 		};
 
 		return new Promise((resolve, reject) => {
-			ytSearch(name, options, function(err, results) {
-				if (err) {
-					reject(err);
-				} else {
+			scrapeYouTube.search(name, options).then(aResults => {
+				let oResult = aResults[0];
+				if (oResult && oResult.title && oResult.id) {
 					resolve({
-						name: results[0].title,
-						url: results[0].link
+						name: oResult.title,
+						url: "https://www.youtube.com/watch?v=" + oResult.id
 					});
+				} else {
+					reject(new Error(`Title '${name}' not found on YouTube.`));
 				}
+			}).catch(err => {
+				reject(err);
 			});
 		});
 	}
@@ -274,7 +270,7 @@ class VoiceConnection {
 	 */
 	addAppleMusicPlaylist(url) {
 		return new Promise((resolve, reject) => {
-			appleMusicPlaylist.getPlaylist(url).then(aResults => {
+			amply.getPlaylist(url).then(aResults => {
 				this.searchAndAddTracks(aResults).then(() => {
 					resolve();
 				}).catch(err => {
