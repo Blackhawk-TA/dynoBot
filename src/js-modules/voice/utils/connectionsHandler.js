@@ -25,14 +25,24 @@ module.exports = {
 	},
 
 	/**
-	 * Unregisters the connection.
+	 * Unregisters the connection, removes the event listeners and leaves the voice channel
 	 * @param sId The id of the active voice connection
 	 * @return {array} The connection that was removed
 	 */
 	unregisterConnection: function(sId) {
-		let i = 0;
+		let i = 0,
+			oVoiceConnection,
+			aAvailableEvents;
+
 		while (i < aVoiceConnections.length) {
-			if (aVoiceConnections[i].getId() === sId) {
+			oVoiceConnection = aVoiceConnections[i];
+			if (oVoiceConnection.getId() === sId) {
+				aAvailableEvents = oVoiceConnection.getApiConnection().getAvailableEvents();
+				aAvailableEvents.forEach(sEvent => {
+					oVoiceConnection.getApiConnection().removeAllListeners(sEvent);
+				});
+				oVoiceConnection.getApiConnection().disconnect();
+
 				return aVoiceConnections.splice(i, 1)[0];
 			}
 			i++;

@@ -3,7 +3,10 @@ const scrapeYouTube = require("scrape-yt");
 const playlistImporter = require("playlist-importer-lite");
 const amply = require("apple-music-playlist");
 
+const connectionsHandler = require("./connectionsHandler");
+
 const ONE_MEGABYTE = 10485760;
+const FIVE_MINUTES_IN_MS = 300000;
 
 class VoiceConnection {
 	/**
@@ -15,6 +18,19 @@ class VoiceConnection {
 		this._oConnection = connection;
 		this._sCurrentTitleUrl = "";
 		this._sCurrentTitleName = "";
+
+		setInterval(this._disconnect.bind(this), FIVE_MINUTES_IN_MS);
+	}
+
+	/**
+	 * Disconnects from the voice channel, called by interval
+	 * @private
+	 */
+	_disconnect() {
+		let aChannelMembers = this._oConnection.getVoiceChannel().getMembers();
+		if (aChannelMembers.length === 1) {
+			connectionsHandler.unregisterConnection(this.getId());
+		}
 	}
 
 	/**

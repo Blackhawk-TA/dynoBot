@@ -6,11 +6,8 @@ module.exports = {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.unregisterConnection(oVoiceChannel.getId());
-
-			oConnection.getApiConnection().removeAllListeners("end");
-			oConnection.getApiConnection().disconnect();
-			msg.getTextChannel().send("Ok, I will leave the channel.");
+			connectionsHandler.unregisterConnection(oVoiceChannel.getId());
+			msg.getTextChannel().send("Ok, I've left the channel.");
 		} else {
 			msg.getTextChannel().send("You cannot order me to leave a channel in which you are not in.");
 		}
