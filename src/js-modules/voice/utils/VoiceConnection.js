@@ -1,5 +1,5 @@
 const ytDownload = require("ytdl-core");
-const scrapeYouTube = require("scrape-yt");
+const scrapeYouTube = require("scrape-yt").scrapeYt;
 const playlistImporter = require("playlist-importer-lite");
 const amply = require("apple-music-playlist");
 
@@ -83,13 +83,15 @@ class VoiceConnection {
 	 */
 	play() {
 		if (this._aPlaylist.length > 0) {
+			//Prevent event from being registered twice
+			this._oConnection.removeAllListeners("end");
+
 			let oCurrentTitle = this._aPlaylist.shift();
 			this._sCurrentTitleUrl = oCurrentTitle.url;
 			this._sCurrentTitleName = oCurrentTitle.name;
 
 			this._oConnection.play(ytDownload(this._sCurrentTitleUrl, {
 				filter: "audioonly",
-				quality: "highestaudio",
 				highWaterMark: ONE_MEGABYTE
 			}));
 
@@ -187,10 +189,14 @@ class VoiceConnection {
 		return new Promise((resolve, reject) => {
 			scrapeYouTube.getPlaylist(playlistId).then(oPlaylist => {
 				oPlaylist.videos.forEach(track => {
-					this._aPlaylist.push({
-						name: track.title,
-						url: "https://www.youtube.com/watch?v=" + track.id
-					});
+					if (track.id && track.title) {
+						this._aPlaylist.push({
+							name: track.title,
+							url: "https://www.youtube.com/watch?v=" + track.id
+						});
+					} else {
+						console.error(`${new Date().toLocaleString()}: Could not find title from YouTube playlist.`);
+					}
 				});
 
 				if (!this._sCurrentTitleUrl) {

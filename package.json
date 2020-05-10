@@ -39,11 +39,10 @@
 		"mkdirp": "^0.5.5",
 		"playlist-importer-lite": "^0.1.0",
 		"request": "^2.88.2",
-		"scrape-yt": "^1.1.0",
+		"scrape-yt": "^1.2.0",
 		"srcds-rcon": "^2.2.1",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
-		"youtube-playlist-info": "^1.1.2",
-		"ytdl-core": "^2.1.1"
+		"ytdl-core": "^2.1.2"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",
