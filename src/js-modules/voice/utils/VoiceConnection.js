@@ -18,6 +18,7 @@ class VoiceConnection {
 		this._oConnection = connection;
 		this._sCurrentTitleUrl = "";
 		this._sCurrentTitleName = "";
+		this._bErrorEventAttached = false;
 
 		setInterval(this._disconnect.bind(this), FIVE_MINUTES_IN_MS);
 	}
@@ -30,6 +31,19 @@ class VoiceConnection {
 		let aChannelMembers = this._oConnection.getVoiceChannel().getMembers();
 		if (aChannelMembers.length === 1) {
 			connectionsHandler.unregisterConnection(this.getId());
+		}
+	}
+
+	/**
+	 * Initializes and attaches the error to the voice connection
+	 * @private
+	 */
+	_initErrorEvent() {
+		if (!this._bErrorEventAttached) {
+			this._oConnection.onEvent("error", function(err) {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
+				this._bErrorEventAttached = true;
+			}.bind(this));
 		}
 	}
 
@@ -82,6 +96,7 @@ class VoiceConnection {
 	 * Buffers the next title
 	 */
 	play() {
+		this._initErrorEvent();
 		if (this._aPlaylist.length > 0) {
 			//Prevent event from being registered twice
 			this._oConnection.removeAllListeners("end");

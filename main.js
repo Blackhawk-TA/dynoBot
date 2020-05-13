@@ -34,7 +34,7 @@ Bot.onEvent("ready", () => {
 			part2 = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "part2");
 
 		if (enabled) {
-			member.getServer().getChannels().forEach(channel => {
+			member.getServer().getTextChannels().forEach(channel => {
 				if (channel.getName() === channelName && channel.isTextChannel()) {
 					channel.send(`${part1} <@${member.getId()}> ${part2}`);
 				}
