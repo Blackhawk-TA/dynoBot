@@ -35,16 +35,15 @@ class VoiceConnection {
 	}
 
 	/**
-	 * Initializes and attaches the error to the voice connection
+	 * Attaches the error to the voice connection
 	 * @private
 	 */
-	_initErrorEvent() {
-		if (!this._bErrorEventAttached) {
-			this._oConnection.onEvent("error", function(err) {
-				console.error(`${new Date().toLocaleString()}: ${err}`);
-				this._bErrorEventAttached = true;
-			}.bind(this));
-		}
+	_attachErrorEvent() {
+		this._oConnection.onEvent("error", function(err) {
+			console.error(`${new Date().toLocaleString()}: ${err}`);
+		}.bind(this));
+
+		this._bErrorEventAttached = true;
 	}
 
 	/**
@@ -96,10 +95,10 @@ class VoiceConnection {
 	 * Buffers the next title
 	 */
 	play() {
-		this._initErrorEvent();
 		if (this._aPlaylist.length > 0) {
 			//Prevent event from being registered twice
 			this._oConnection.removeAllListeners("end");
+			this._oConnection.end();
 
 			let oCurrentTitle = this._aPlaylist.shift();
 			this._sCurrentTitleUrl = oCurrentTitle.url;
@@ -109,6 +108,10 @@ class VoiceConnection {
 				filter: "audioonly",
 				highWaterMark: ONE_MEGABYTE
 			}));
+
+			if (!this._bErrorEventAttached) {
+				this._attachErrorEvent();
+			}
 
 			//Plays the next title when the previous one ended
 			this._oConnection.onEvent("end", this.play.bind(this));
@@ -147,9 +150,6 @@ class VoiceConnection {
 	 */
 	addCurrentTitle(oTitle) {
 		this._aPlaylist.unshift(oTitle);
-
-		//Prevent play from being triggered twice
-		this._oConnection.removeAllListeners("end");
 		this.play();
 	}
 

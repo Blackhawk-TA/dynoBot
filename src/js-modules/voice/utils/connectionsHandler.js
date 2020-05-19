@@ -41,6 +41,7 @@ module.exports = {
 				aAvailableEvents.forEach(sEvent => {
 					oVoiceConnection.getApiConnection().removeAllListeners(sEvent);
 				});
+				oVoiceConnection.getApiConnection().end(); //Ends audio stream
 				oVoiceConnection.getApiConnection().disconnect();
 
 				return aVoiceConnections.splice(i, 1)[0];
