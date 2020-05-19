@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const MAX_MESSAGE_LENGTH = 2000;
 
 module.exports = {
 	run: function(msg) {
@@ -12,7 +13,8 @@ module.exports = {
 				let sCurrentTitle = oConnection.getCurrentTitleName(),
 					iOffset = 0,
 					sAnswer = "```",
-					aPlaylist = oConnection.getPlaylist();
+					aPlaylist = oConnection.getPlaylist(),
+					sAnswerLine;
 
 				if (sCurrentTitle || aPlaylist.length > 0) {
 					if (sCurrentTitle) {
@@ -22,7 +24,15 @@ module.exports = {
 
 					if (aPlaylist.length > 0) {
 						for (let i = 0; i < aPlaylist.length; i++) {
-							sAnswer += `\n${i + iOffset + 1}. ${aPlaylist[i]}`;
+							sAnswerLine = `\n${i + iOffset + 1}. ${aPlaylist[i]}`;
+
+							if (sAnswer.length + sAnswerLine.length < MAX_MESSAGE_LENGTH) {
+								sAnswer += sAnswerLine;
+							} else {
+								sAnswer += "```";
+								msg.getTextChannel().send(sAnswer);
+								sAnswer = "```" + sAnswerLine;
+							}
 						}
 					}
 					sAnswer += "```";
