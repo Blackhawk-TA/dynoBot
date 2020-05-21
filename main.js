@@ -8,9 +8,8 @@ const hooks = require(base + "/src/core/utils/hooks");
 const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 const permissionHandler = require(base + "/src/core/utils/permissionHandler");
 
-// const {DiscordBot} = require("dynobot-framework");
-const {DiscordBot} = require(base + "/../dynoBot-Framework/build/DiscordBot"); //TODO remove
-const Bot = new DiscordBot(security.realToken);
+const {DiscordBot} = require("dynobot-framework");
+const Bot = new DiscordBot(security.token);
 
 Bot.onEvent("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
