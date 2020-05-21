@@ -10,7 +10,7 @@ module.exports = {
 		let pathConfig = base + "/cfg/config.json";
 		let amount = configHandler.readJSON(pathConfig, msg.getServer().getId(), "message_cleaner", "amount");
 
-		msg.getChannel().getMessages(amount)
+		msg.getTextChannel().getMessages(amount)
 			.then(messages => {
 				let msgToDelete = [];
 				let date = new Date();
@@ -22,8 +22,8 @@ module.exports = {
 					}
 				});
 
-				msg.getChannel().deleteMessages(msgToDelete);
-				msg.getChannel().send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
+				msg.getTextChannel().deleteMessages(msgToDelete);
+				msg.getTextChannel().send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
 			.catch((e) => {
 				console.error(`${new Date().toLocaleString()}: ${e}`);

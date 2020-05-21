@@ -8,6 +8,6 @@ module.exports = {
 			stateName = contentArray[contentArray.length - 2],
 			state = stateName === "enable";
 
-		hooks.changeEntry(name, msg.getChannel(), "running", state);
+		hooks.changeEntry(name, msg.getTextChannel(), "running", state);
 	}
 };

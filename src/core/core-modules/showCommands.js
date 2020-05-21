@@ -55,6 +55,6 @@ module.exports = {
 			answer = "No commands found.";
 		}
 
-		msg.getChannel().send("Command list:```" + answer + "```");
+		msg.getTextChannel().send("Command list:```" + answer + "```");
 	}
 };

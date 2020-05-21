@@ -12,9 +12,16 @@
 		"lua",
 		"chatbot",
 		"modular",
-		"bot"
+		"bot",
+		"voice",
+		"music",
+		"youtube",
+		"stream",
+		"apple",
+		"spotify",
+		"playlist"
 	],
-	"version": "1.1.3",
+	"version": "1.2.0",
 	"license": "MIT",
 	"main": "main.js",
 	"scripts": {
@@ -26,13 +33,16 @@
 		"url": "https://github.com/Blackhawk-TA/dynoBot.git"
 	},
 	"dependencies": {
+		"apple-music-playlist": "^1.0.1",
 		"base64-img": "^1.0.4",
-		"discord.js": "^11.6.4",
-		"dynobot-framework": "~1.1.4",
+		"dynobot-framework": "~1.2.0",
 		"mkdirp": "^0.5.5",
+		"playlist-importer-lite": "^0.1.0",
 		"request": "^2.88.2",
+		"scrape-yt": "^1.2.4",
 		"srcds-rcon": "^2.2.1",
-		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
+		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
+		"ytdl-core": "^2.1.4"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",

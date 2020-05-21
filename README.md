@@ -6,9 +6,10 @@
 
 ### Overview
 1. [What is dynoBot](#what-is-dynobot)
-2. [Chat commands](#what-commands-does-the-bot-have)
-3. [How to use](#how-can-i-use-the-bot-for-my-own-discord-server)
-4. [Creating new modules](#how-can-i-create-new-modules)
+2. [Features](#features)
+3. [Chat commands](#what-commands-does-the-bot-have)
+4. [How to use](#how-can-i-use-the-bot-for-my-own-discord-server)
+5. [Creating new modules](#how-can-i-create-new-modules)
 	1. [Chat modules](#chat-module)
 		1. [JavaScript](#javascript-chat-module)
 		2. [Python](#python-chat-module)
@@ -17,23 +18,27 @@
 		1. [JavaScript](#javascript-hook-module)
 		2. [Python](#python-hook-module)
 		3. [Lua](#lua-hook-module)
-5. [Contribute](#can-i-create-pull-request-with-new-modules)
+6. [Contribute](#can-i-create-pull-request-with-new-modules)
 
 ### What is dynoBot?
 dynoBot is a modular Discord bot using JavaScript and optionally also Python and Lua.
 It is built in a way that creating new modules can be done with ease in a scripting language you prefer.
 
 The idea behind the bot is to create the modules you need by yourself with a minimum amount of effort.
-Therefore dynoBot can be considered as a framework which handles everything related to the discord api, so you can immediately start developing your own modules.
+Therefore, dynoBot can be considered as a framework which handles everything related to the discord api, so you can immediately start developing your own modules.
 
-Nevertheless dynoBot can be used without writing a single line of code as long as the included modules are all you need.
+Nevertheless, dynoBot can be used without writing a single line of code as long as the included modules are all you need.
 
+###Features
+The bot has currently following modules:
+- music bot with Spotify, Apple Music and YouTube playlist support
+- remote control rcon game servers
+- currency conversion
+- WolframAlpha calculations
 
 ### What commands does the bot have?
 You can see all available commands by typing "@BotName help" in the discord chat.
 Alternatively you can take a look at the [commands.json](https://github.com/Blackhawk-TA/dynoBot/blob/master/cfg/commands.json) file.
-
-The currently included modules of the bot focus on currency conversion, remote control of rcon enabled game servers, WolframAlpha requests and link shortening.
 
 ### How can I use the bot for my own discord server?
 It's quite simple, first of all you need nodejs and optionally python3 for python modules and lua for lua modules.
@@ -95,7 +100,7 @@ The base structure of a module looks like this:
 ```js
 module.exports = {
 	run: function(msg, client) {
-		msg.getChannel().send("I received these parameters: " + msg.getContentArray());
+		msg.getTextChannel().send("I received these parameters: " + msg.getContentArray());
 	}
 };
 ```

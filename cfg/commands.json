@@ -80,25 +80,25 @@
 			"type": "js",
 			"regex": "(convert) (\\d+ )?(.{3}) (to) (.{3})$",
 			"help": "convert <currency (EUR)> to <currency (USD)>",
-			"path": "src/js-modules/currencyModule/currencyConverter.js"
+			"path": "src/js-modules/currency/currencyConverter.js"
 		}, {
 			"group": "currency",
 			"type": "js",
 			"regex": "add currency .{3}$",
 			"help": "add currency <currency (EUR)>",
-			"path": "src/js-modules/currencyModule/addCurrency.js"
+			"path": "src/js-modules/currency/addCurrency.js"
 		}, {
 			"group": "currency",
 			"type": "js",
 			"regex": "remove currency .{3}$",
 			"help": "remove currency <currency (EUR)>",
-			"path": "src/js-modules/currencyModule/removeCurrency.js"
+			"path": "src/js-modules/currency/removeCurrency.js"
 		}, {
 			"group": "currency",
 			"type": "js",
 			"regex": "(currency|crypto|market) (update|stats)",
 			"help": "currency update/stats",
-			"path": "src/js-modules/currencyModule/priceUpdates.js"
+			"path": "src/js-modules/currency/priceUpdates.js"
 		}, {
 			"group": "rcon",
 			"type": "js",
@@ -182,6 +182,60 @@
 			"regex": "list schedule[s]?\\s?(.*)$",
 			"help": "list schedules / list schedule <name>",
 			"path": "src/js-modules/scheduler/listSchedules.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "join(\\svoice)?",
+			"help": "join",
+			"path": "src/js-modules/voice/join.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "leave(\\svoice)?",
+			"help": "leave",
+			"path": "src/js-modules/voice/leave.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "pause(\\stitle|music)?",
+			"help": "pause",
+			"path": "src/js-modules/voice/pause.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "resume(\\stitle|music)?",
+			"help": "resume",
+			"path": "src/js-modules/voice/resume.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "skip(\\stitle|song)?",
+			"help": "skip",
+			"path": "src/js-modules/voice/skip.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "add (current|next|last)?\\s?title (http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/watch\\?v=|\\.be\\/)([\\w\\-\\_]*)(&(amp;)?\u200C\u200B[\\w\\?\u200C\u200B=]*)?|.+)",
+			"help": "add current/next/last title <YouTube link or title>",
+			"path": "src/js-modules/voice/addTitle.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "add playlist (https:\\/\\/music.(apple).com\\/[\\w]{2}\\/playlist\\/[a-zA-Z0-9]+.*)|(https:\\/\\/open.(spotify).com\\/playlist\\/[a-zA-Z0-9]+.*)|(http(?:s?):\\/\\/(?:www\\.)?youtu(?:be\\.com\\/playlist\\?list=(\\w+)))",
+			"help": "add playlist <YouTube link>",
+			"path": "src/js-modules/voice/addPlaylist.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "show|list playlist|songs|titles|queue",
+			"help": "show/list playlist",
+			"path": "src/js-modules/voice/showPlaylist.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "current song|title|track|music",
+			"help": "current song/title/track/music",
+			"path": "src/js-modules/voice/currentTitle.js"
 		}
 	]
 }

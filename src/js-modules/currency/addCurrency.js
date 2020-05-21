@@ -2,7 +2,7 @@ const request = require("request");
 
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
-const cfgPath = base + "/cfg/moduleConfigs/currencies.json";
+const cfgPath = base + "/cfg/modules/currencies.json";
 
 module.exports = {
 	run: function (msg) {
@@ -14,7 +14,7 @@ module.exports = {
 			if (!error && response.statusCode === 200) {
 				let data = JSON.parse(body);
 				if (data.EUR === undefined) {
-					msg.getChannel().send(currency + " does not exist.");
+					msg.getTextChannel().send(currency + " does not exist.");
 				} else {
 					//Currency exists and can be added
 					let alreadyExists = false;
@@ -25,14 +25,14 @@ module.exports = {
 					}
 
 					if (alreadyExists) {
-						msg.getChannel().send(currency + " already exists in the currency list.");
+						msg.getTextChannel().send(currency + " already exists in the currency list.");
 					} else {
 						config.currencies.push(currency);
-						configHandler.overrideJSON(msg.getChannel(), cfgPath, config);
+						configHandler.overrideJSON(msg.getTextChannel(), cfgPath, config);
 					}
 				}
 			} else {
-				msg.getChannel().send("There was an timeout at the API request, please try again later.");
+				msg.getTextChannel().send("There was an timeout at the API request, please try again later.");
 			}
 		});
 	}

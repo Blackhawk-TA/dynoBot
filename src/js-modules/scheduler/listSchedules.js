@@ -3,7 +3,7 @@ const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
 	run: function(msg, client, regexGroups) {
-		let configPath = base + "/cfg/moduleConfigs/scheduler.json",
+		let configPath = base + "/cfg/modules/scheduler.json",
 			scheduleCfg = configHandler.readJSON(configPath, msg.getServer().getId()),
 			scheduleName = regexGroups[1],
 			formattedSchedule = "";
@@ -19,11 +19,11 @@ module.exports = {
 		}
 
 		if (formattedSchedule) {
-			msg.getChannel().send(formattedSchedule);
+			msg.getTextChannel().send(formattedSchedule);
 		} else if (scheduleName) {
-			msg.getChannel().send("There was a problem fetching the schedule. Check if the requested schedule name is correct.");
+			msg.getTextChannel().send("There was a problem fetching the schedule. Check if the requested schedule name is correct.");
 		} else {
-			msg.getChannel().send("There are no schedules.");
+			msg.getTextChannel().send("There are no schedules.");
 		}
 	},
 

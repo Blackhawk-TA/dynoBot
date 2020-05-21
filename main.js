@@ -33,7 +33,7 @@ Bot.onEvent("ready", () => {
 			part2 = configHandler.readJSON(pathConfig, member.getServer().getId(), "welcome_message", "part2");
 
 		if (enabled) {
-			member.getServer().getChannels().forEach(channel => {
+			member.getServer().getTextChannels().forEach(channel => {
 				if (channel.getName() === channelName && channel.isTextChannel()) {
 					channel.send(`${part1} <@${member.getId()}> ${part2}`);
 				}
@@ -51,19 +51,19 @@ Bot.onEvent("ready", () => {
 					let command = commands.commandList[i],
 						pattern = new RegExp(command.regex);
 
-					if (pattern.test(msg.getContent(true).toLowerCase())) {
+					if (pattern.test(msg.getContent(true).toLowerCase().trim())) {
 						if (permissionHandler.hasPermissions(msg, command)) {
 							bAnswered = scriptWrapper.run(msg, Bot.getClient(), command);
 						} else {
 							bAnswered = true;
-							msg.getChannel().send("You don't have access to this command.");
+							msg.getTextChannel().send("You don't have access to this command.");
 						}
 					}
 					i++;
 				}
 
 				if (!bAnswered) {
-					msg.getChannel().send("Sorry, I can't help you with that.");
+					msg.getTextChannel().send("Sorry, I can't help you with that.");
 				}
 			}
 		} catch (e) {

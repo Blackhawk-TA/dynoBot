@@ -4,7 +4,7 @@ const configHandler = require(base + "/src/utils/configHandler");
 module.exports = {
 	run: function (msg) {
 		let serverName = msg.getContentArray(true)[1],
-			serverCfgPath = base + "/cfg/moduleConfigs/rconServer.json",
+			serverCfgPath = base + "/cfg/modules/rconServer.json",
 			serverCfg = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
 		if (serverCfg[serverName] !== undefined) {
@@ -15,10 +15,10 @@ module.exports = {
 			let connectLink = `steam://connect/${address}:${port}/${password}`,
 				connectCmd = `connect ${address}:${port}; password ${password};`;
 
-			msg.getChannel().send("You can connect to the server using this link: " + connectLink +
+			msg.getTextChannel().send("You can connect to the server using this link: " + connectLink +
 				"\nAlternatively you can using following console command:```" + connectCmd + "```");
 		} else {
-			msg.getChannel().send(`There is no server called ${serverName}.`);
+			msg.getTextChannel().send(`There is no server called ${serverName}.`);
 		}
 	}
 };

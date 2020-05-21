@@ -24,10 +24,10 @@ module.exports = {
 			fs.writeFile(serverCfgPath, jsonString, "utf-8", function (err) {
 				if (err) throw err;
 				let censoredJson = jsonString.replace(/"rcon_password": "(.+)"/g, `"rcon_password": "********"`);
-				msg.getChannel().send(`The server '${oldName}' has been renamed to '${newName}':` + "\n```json\n" + censoredJson + "```");
+				msg.getTextChannel().send(`The server '${oldName}' has been renamed to '${newName}':` + "\n```json\n" + censoredJson + "```");
 			});
 		} else {
-			msg.getChannel().send(`Sorry, but the config entry ${oldName}.${newName} does not exist.`);
+			msg.getTextChannel().send(`Sorry, but the config entry ${oldName}.${newName} does not exist.`);
 		}
 	}
 };

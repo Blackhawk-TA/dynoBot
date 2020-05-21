@@ -3,7 +3,7 @@ const fs = require("fs");
 const base = require("path").resolve(".");
 
 const configHandler = require(base + "/src/utils/configHandler");
-const pathCfg = base + "/cfg/moduleConfigs/rconServer.json";
+const pathCfg = base + "/cfg/modules/rconServer.json";
 
 module.exports = {
 	run: function(msg) {
@@ -15,7 +15,7 @@ module.exports = {
 			let rconConfig = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
 			if (serverCfg !== rconConfig) {
-				msg.getChannel().send("I've sent you a private message with further instructions.");
+				msg.getTextChannel().send("I've sent you a private message with further instructions.");
 
 				let user = msg.getAuthor();
 
@@ -31,20 +31,20 @@ module.exports = {
 								configHandler.editJSON(msg.getChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
 							} else {
 								resolved.send("The password could not be changed. Please try again.");
-								msg.getChannel().send("The password could not be changed. Please try again.");
+								msg.getTextChannel().send("The password could not be changed. Please try again.");
 							}
 						})
 						.catch((reason) => {
 							console.error(reason);
 							resolved.send("The time for entering the password has passed. Please request a new rcon password change.");
-							msg.getChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
+							msg.getTextChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
 						});
 				}).catch(console.error);
 			} else {
-				msg.getChannel().send(`There is no rcon server called '${rconServer}'.`);
+				msg.getTextChannel().send(`There is no rcon server called '${rconServer}'.`);
 			}
 		} else {
-			msg.getChannel().send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
+			msg.getTextChannel().send("This server has no rcon server config yet, please add one using the 'rcon add' command.");
 		}
 	}
 };
