@@ -29,7 +29,7 @@ Therefore, dynoBot can be considered as a framework which handles everything rel
 
 Nevertheless, dynoBot can be used without writing a single line of code as long as the included modules are all you need.
 
-###Features
+### Features
 The bot has currently following modules:
 - music bot with Spotify, Apple Music and YouTube playlist support
 - remote control rcon game servers
