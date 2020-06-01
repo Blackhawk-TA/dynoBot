@@ -15,7 +15,7 @@ Bot.onEvent("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
 
 	Bot.onEvent("error", (error) => {
-		console.error(error);
+		console.error(`${new Date().toLocaleString()}: ${error}`);
 	});
 
 	//Init hooks
