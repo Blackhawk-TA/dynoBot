@@ -7,5 +7,9 @@
 		"channel": "general",
 		"part1": "Hello",
 		"part2": ", welcome to our discord server."
+	},
+	"voice_join_message": {
+		"enabled": false,
+		"path": ""
 	}
 }

@@ -15,7 +15,7 @@ module.exports = {
 			oVoiceChannel.join().then(connection => {
 				let oVoiceConnection = new VoiceConnection(connection),
 					aPlaylist = oVoiceConnection.getPlaylist(),
-					oVoiceConfig = configHandler.readJSON(base + "/cfg/modules/voice.json", msg.getServer().getId()),
+					oVoiceConfig = configHandler.readJSON(base + "/cfg/config.json", msg.getServer().getId()),
 					bJoinMessageEnabled = oVoiceConfig.voice_join_message.enabled,
 					sJoinMessagePath = oVoiceConfig.voice_join_message.path;
 
