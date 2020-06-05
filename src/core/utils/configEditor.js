@@ -24,7 +24,7 @@ module.exports = {
 			console.error(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);
 		}
 
-		if (config[id] && config[id][entry]) {
+		if (config[id] !== undefined && config[id][entry] !== undefined) {
 			configHandler.editJSON(msg.getTextChannel(), pathCfg, id, entry, value);
 		} else {
 			msg.getTextChannel().send(`Sorry, but the config entry ${id}.${entry} does not exist.`);
