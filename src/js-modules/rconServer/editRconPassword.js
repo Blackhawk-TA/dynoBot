@@ -34,8 +34,8 @@ module.exports = {
 								msg.getTextChannel().send("The password could not be changed. Please try again.");
 							}
 						})
-						.catch((reason) => {
-							console.error(reason);
+						.catch(err => {
+							console.error(`${new Date().toLocaleString()}: ${err}`);
 							resolved.send("The time for entering the password has passed. Please request a new rcon password change.");
 							msg.getTextChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
 						});

@@ -31,8 +31,8 @@ module.exports = {
 				} else {
 					msg.getTextChannel().send("I've joined you, but the playlist is empty so I can't play anything.");
 				}
-			}).catch(error => {
-				console.error(`${new Date().toLocaleString()}: ${error}`);
+			}).catch(err => {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
 				msg.getTextChannel().send("Sorry, I could not join you.");
 			});
 		}

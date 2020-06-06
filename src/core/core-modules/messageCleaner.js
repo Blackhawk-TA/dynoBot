@@ -25,8 +25,8 @@ module.exports = {
 				msg.getTextChannel().deleteMessages(msgToDelete);
 				msg.getTextChannel().send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 			})
-			.catch((e) => {
-				console.error(`${new Date().toLocaleString()}: ${e}`);
+			.catch(err => {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
 			});
 	}
 };
