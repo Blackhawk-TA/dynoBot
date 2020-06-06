@@ -57,7 +57,7 @@ class VoiceConnection {
 	 * @return {number} The id of the voice connection
 	 */
 	getId() {
-		return this._oConnection.getVoiceChannel().getId();
+		return this._oConnection.getVoiceChannel().getServer().getId();
 	}
 
 	/**

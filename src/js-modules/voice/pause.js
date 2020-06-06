@@ -6,7 +6,7 @@ module.exports = {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId());
+			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
 			oConnection.getApiConnection().pause();
 			msg.getTextChannel().send("Ok, I will pause. Enter resume to continue listening.");

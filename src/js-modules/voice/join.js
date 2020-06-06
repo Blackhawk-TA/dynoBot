@@ -9,7 +9,7 @@ module.exports = {
 
 		if (!oVoiceChannel) {
 			msg.getTextChannel().send("I can only join you, if you're in a voice channel.");
-		} else if (connectionsHandler.getConnection(oVoiceChannel.getId())) {
+		} else if (connectionsHandler.getConnection(oVoiceChannel.getServer().getId())) {
 			msg.getTextChannel().send("There is already an active voice connection in this channel.");
 		} else {
 			oVoiceChannel.join().then(connection => {
