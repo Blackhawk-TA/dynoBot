@@ -7,7 +7,7 @@ module.exports = {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getId());
+			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
 			if (oConnection) {
 				let sCurrentTitle = oConnection.getCurrentTitleName(),

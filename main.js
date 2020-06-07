@@ -14,8 +14,8 @@ const Bot = new DiscordBot(security.token);
 Bot.onEvent("ready", () => {
 	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
 
-	Bot.onEvent("error", (error) => {
-		console.error(error);
+	Bot.onEvent("error", err => {
+		console.error(`${new Date().toLocaleString()}: ${err}`);
 	});
 
 	//Init hooks
@@ -66,8 +66,8 @@ Bot.onEvent("ready", () => {
 					msg.getTextChannel().send("Sorry, I can't help you with that.");
 				}
 			}
-		} catch (e) {
-			console.error(e);
+		} catch (err) {
+			console.error(`${new Date().toLocaleString()}: ${err}`);
 		}
 	});
 });

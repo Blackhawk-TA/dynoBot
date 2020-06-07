@@ -40,7 +40,13 @@ class VoiceConnection {
 	 */
 	_attachErrorEvent() {
 		this._oConnection.onEvent("error", function(err) {
-			console.error(`${new Date().toLocaleString()}: ${err}`);
+			console.error(`${new Date().toLocaleString()}: VoiceConnection Error: ${err}`);
+			this.play(); //Try to play the next song on error
+		}.bind(this));
+
+		this._oConnection.onEvent("failed", function(err) {
+			console.error(`${new Date().toLocaleString()}: VoiceConnection Failed: ${err}`);
+			this.play(); //Try to play the next song on error
 		}.bind(this));
 
 		this._bErrorEventAttached = true;
@@ -51,7 +57,7 @@ class VoiceConnection {
 	 * @return {number} The id of the voice connection
 	 */
 	getId() {
-		return this._oConnection.getVoiceChannel().getId();
+		return this._oConnection.getVoiceChannel().getServer().getId();
 	}
 
 	/**
@@ -106,6 +112,7 @@ class VoiceConnection {
 
 			this._oConnection.play(ytDownload(this._sCurrentTitleUrl, {
 				filter: "audioonly",
+				quality: "highestaudio",
 				highWaterMark: ONE_MEGABYTE
 			}));
 

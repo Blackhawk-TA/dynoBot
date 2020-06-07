@@ -28,14 +28,14 @@ module.exports = {
 							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
 								let answer = collected[1].getContent(true);
 								resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
-								configHandler.editJSON(msg.getChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
+								configHandler.editJSON(msg.getTextChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
 							} else {
 								resolved.send("The password could not be changed. Please try again.");
 								msg.getTextChannel().send("The password could not be changed. Please try again.");
 							}
 						})
-						.catch((reason) => {
-							console.error(reason);
+						.catch(err => {
+							console.error(`${new Date().toLocaleString()}: ${err}`);
 							resolved.send("The time for entering the password has passed. Please request a new rcon password change.");
 							msg.getTextChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
 						});
