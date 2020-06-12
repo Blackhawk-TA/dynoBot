@@ -5,7 +5,7 @@
 	"welcome_message": {
 		"enabled": true,
 		"channel": "general",
-		"part1": "Hello",
+		"part1": "Hello ",
 		"part2": ", welcome to our discord server."
 	},
 	"voice_join_message": {
