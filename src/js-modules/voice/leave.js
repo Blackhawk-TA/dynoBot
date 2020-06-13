@@ -2,7 +2,7 @@ const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
 
 module.exports = {
-	run: function(msg) {
+	run: function(msg, client) {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (!oVoiceChannel) {
@@ -11,6 +11,7 @@ module.exports = {
 			msg.getTextChannel().send("I've already left this channel.");
 		} else {
 			connectionsHandler.unregisterConnection(oVoiceChannel.getServer().getId());
+			client.setPresence("");
 			msg.getTextChannel().send("Ok, I've left the channel.");
 		}
 	}

@@ -4,7 +4,7 @@ const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectio
 const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnection");
 
 module.exports = {
-	run: function(msg) {
+	run: function(msg, client) {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (!oVoiceChannel) {
@@ -13,11 +13,11 @@ module.exports = {
 			msg.getTextChannel().send("There is already an active voice connection in this channel.");
 		} else {
 			oVoiceChannel.join().then(connection => {
-				let oVoiceConnection = new VoiceConnection(connection),
+				let oVoiceConnection = new VoiceConnection(connection, client),
 					aPlaylist = oVoiceConnection.getPlaylist(),
-					oVoiceConfig = configHandler.readJSON(base + "/cfg/config.json", msg.getServer().getId()),
-					bJoinMessageEnabled = oVoiceConfig.voice_join_message.enabled,
-					sJoinMessagePath = oVoiceConfig.voice_join_message.path;
+					oConfig = configHandler.readJSON(base + "/cfg/config.json", msg.getServer().getId()),
+					bJoinMessageEnabled = oConfig.voice_join_message.enabled,
+					sJoinMessagePath = oConfig.voice_join_message.path;
 
 				connectionsHandler.registerConnection(oVoiceConnection);
 

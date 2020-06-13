@@ -12,10 +12,12 @@ class VoiceConnection {
 	/**
 	 * The constructor.
 	 * @param connection The connection object from the dynoBot-Framework
+	 * @param client The bot client object from the dynoBot-Framework
 	 */
-	constructor(connection) {
+	constructor(connection, client) {
 		this._aPlaylist = [];
 		this._oConnection = connection;
+		this._oClient = client;
 		this._sCurrentTitleUrl = "";
 		this._sCurrentTitleName = "";
 		this._bErrorEventAttached = false;
@@ -31,7 +33,8 @@ class VoiceConnection {
 	_disconnect() {
 		let aChannelMembers = this._oConnection.getVoiceChannel().getMembers();
 		if (aChannelMembers.length === 1) {
-			connectionsHandler.unregisterConnection(this.getId());
+			this._oClient.setPresence("");
+			connectionsHandler.unregisterConnection(this.getId().toString());
 		}
 	}
 
@@ -135,6 +138,7 @@ class VoiceConnection {
 
 			this._sCurrentTitleUrl = oCurrentTitle.url;
 			this._sCurrentTitleName = oCurrentTitle.name;
+			this._oClient.setPresence(oCurrentTitle.name);
 
 			this._oConnection.play(ytDownload(this._sCurrentTitleUrl, {
 				filter: "audioonly",
@@ -151,6 +155,7 @@ class VoiceConnection {
 		} else {
 			this._sCurrentTitleUrl = "";
 			this._sCurrentTitleName = "";
+			this._oClient.setPresence("");
 		}
 	}
 

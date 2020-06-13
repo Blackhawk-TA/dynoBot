@@ -3,7 +3,7 @@ let aVoiceConnections = [];
 module.exports = {
 	/**
 	 * Gets a connection object by its channel id.
-	 * @param sServerId The id of the server on which the voice connection is active
+	 * @param {string} sServerId The id of the server on which the voice connection is active
 	 * @return {object} The connection object
 	 */
 	getConnection: function(sServerId) {
@@ -18,7 +18,7 @@ module.exports = {
 
 	/**
 	 * Registers the connection which is an instance of the VoiceConnection class.
-	 * @param oVoiceConnection The voice connection object
+	 * @param {object} oVoiceConnection The voice connection object
 	 */
 	registerConnection: function(oVoiceConnection) {
 		aVoiceConnections.push(oVoiceConnection);
@@ -26,7 +26,7 @@ module.exports = {
 
 	/**
 	 * Unregisters the connection, removes the event listeners and leaves the voice channel
-	 * @param sServerId The id of the server on which the voice connection is active
+	 * @param {string} sServerId The id of the server on which the voice connection is active
 	 * @return {array} The connection that was removed
 	 */
 	unregisterConnection: function(sServerId) {
