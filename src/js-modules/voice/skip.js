@@ -6,12 +6,11 @@ module.exports = {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId()),
-				aPlaylist = oConnection.getPlaylist();
+			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
-			if (aPlaylist.length > 0) {
-				msg.getTextChannel().send(`Title skipped. Playing '${aPlaylist[0]}'.`);
+			if (oConnection.getPlaylist().length > 0) {
 				oConnection.play();
+				msg.getTextChannel().send(`Title skipped. Playing '${oConnection.getCurrentTitleName()}'.`);
 			} else {
 				msg.getTextChannel().send("You cannot skip the last song in the playlist.");
 			}

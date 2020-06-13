@@ -12,7 +12,8 @@ module.exports = {
 			if (oConnection) {
 				let sCurrentTitle = oConnection.getCurrentTitleName(),
 					iOffset = 0,
-					sAnswer = "```",
+					sShuffleMode = oConnection.getShuffleMode() ? "Enabled" : "Disabled",
+					sAnswer = "Shuffle mode: " + sShuffleMode + "```",
 					aPlaylist = oConnection.getPlaylist(),
 					sAnswerLine;
 

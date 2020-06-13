@@ -19,6 +19,7 @@ class VoiceConnection {
 		this._sCurrentTitleUrl = "";
 		this._sCurrentTitleName = "";
 		this._bErrorEventAttached = false;
+		this._bShuffleMode = false;
 
 		setInterval(this._disconnect.bind(this), FIVE_MINUTES_IN_MS);
 	}
@@ -97,16 +98,41 @@ class VoiceConnection {
 	}
 
 	/**
+	 * Gets the shuffle mode state
+	 * @return {boolean} True if shuffle mode is enabled, else false
+	 */
+	getShuffleMode() {
+		return this._bShuffleMode;
+	}
+
+	/**
+	 * Sets the shuffle mode for the voice connection.
+	 * @param {boolean} bEnable True if shuffle mode should be turned on, else false
+	 */
+	setShuffleMode(bEnable) {
+		this._bShuffleMode = bEnable;
+	}
+
+	/**
 	 * Removes the first item of the playlist and plays it.
 	 * Buffers the next title
 	 */
 	play() {
+		let oCurrentTitle = {},
+			iRandomTitleIndex = 0;
+
 		if (this._aPlaylist.length > 0) {
 			//Prevent event from being registered twice
 			this._oConnection.removeAllListeners("end");
 			this._oConnection.end();
 
-			let oCurrentTitle = this._aPlaylist.shift();
+			if (this._bShuffleMode) {
+				iRandomTitleIndex = Math.floor(Math.random() * this._aPlaylist.length);
+				oCurrentTitle = this.removeTitle(iRandomTitleIndex);
+			} else {
+				oCurrentTitle = this._aPlaylist.shift();
+			}
+
 			this._sCurrentTitleUrl = oCurrentTitle.url;
 			this._sCurrentTitleName = oCurrentTitle.name;
 
@@ -197,9 +223,10 @@ class VoiceConnection {
 	/**
 	 * Removes the title from the playlist at the given index
 	 * @param {number} index The index of the title in the playlist
+	 * @return {object} The deleted title
 	 */
 	removeTitle(index) {
-		this._aPlaylist.splice(index, 1);
+		return this._aPlaylist.splice(index, 1)[0];
 	}
 
 	/**
