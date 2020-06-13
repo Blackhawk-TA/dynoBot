@@ -3,13 +3,14 @@ const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
 const cmdPath = base + "/cfg/commands.json";
 const permissionsPath = base + "/cfg/permissions.json";
+const MAX_MESSAGE_LENGTH = 2000;
 
 module.exports = {
 	run: function (msg, client, regexGroups) {
 		let serverId = msg.hasServer() ? msg.getServer().getId() : 0,
 			commands = configHandler.readJSON(cmdPath, serverId, "commandList"),
 			cmdPermissions = configHandler.readJSON(permissionsPath, serverId),
-			answer = "";
+			answer = "Command list:```";
 
 		commands.forEach(function (command) {
 			if (!command.hidden) {
@@ -41,13 +42,22 @@ module.exports = {
 					fileName = pathArray[pathArray.length - 1],
 					name = fileName.split(".")[0],
 					commandHelp = command.help ? command.help : command.regex,
-					groupIdentifier = "[no group] ";
+					groupIdentifier = "[no group] ",
+					answerLine;
 
 				if (command.group) {
 					groupIdentifier = "[" + command.group + "] ";
 				}
 
-				answer += `\n${groupIdentifier}${name}${roles}: ${commandHelp}`;
+				answerLine = `\n${groupIdentifier}${name}${roles}: ${commandHelp}`;
+
+				if (answer.length + answerLine.length < MAX_MESSAGE_LENGTH) {
+					answer += answerLine;
+				} else {
+					answer += "```";
+					msg.getTextChannel().send(answer);
+					answer = "```" + answerLine;
+				}
 			}
 		});
 
@@ -55,6 +65,6 @@ module.exports = {
 			answer = "No commands found.";
 		}
 
-		msg.getTextChannel().send("Command list:```" + answer + "```");
+		msg.getTextChannel().send(answer + "```");
 	}
 };
