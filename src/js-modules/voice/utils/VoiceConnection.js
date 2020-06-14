@@ -1,5 +1,5 @@
 const ytDownload = require("ytdl-core");
-const scrapeYouTube = require("scrape-yt").scrapeYt;
+const scrapeYouTube = require("scrape-yt");
 const playlistImporter = require("playlist-importer-lite");
 const amply = require("apple-music-playlist");
 
