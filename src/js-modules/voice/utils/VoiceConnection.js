@@ -22,6 +22,7 @@ class VoiceConnection {
 		this._sCurrentTitleName = "";
 		this._bErrorEventAttached = false;
 		this._bShuffleMode = false;
+		this._bOverrideShuffleMode = false;
 
 		setInterval(this._disconnect.bind(this), FIVE_MINUTES_IN_MS);
 	}
@@ -129,11 +130,12 @@ class VoiceConnection {
 			this._oConnection.removeAllListeners("end");
 			this._oConnection.end();
 
-			if (this._bShuffleMode) {
+			if (this._bShuffleMode && !this._bOverrideShuffleMode) {
 				iRandomTitleIndex = Math.floor(Math.random() * this._aPlaylist.length);
 				oCurrentTitle = this.removeTitle(iRandomTitleIndex);
 			} else {
 				oCurrentTitle = this._aPlaylist.shift();
+				this._bOverrideShuffleMode = false;
 			}
 
 			this._sCurrentTitleUrl = oCurrentTitle.url;
@@ -199,6 +201,7 @@ class VoiceConnection {
 	 */
 	addNextTitle(oTitle) {
 		this._aPlaylist.unshift(oTitle);
+		this._bOverrideShuffleMode = true;
 
 		if (!this._sCurrentTitleUrl) {
 			this.play();
