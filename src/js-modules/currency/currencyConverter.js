@@ -21,7 +21,7 @@ module.exports = {
 				if (data[coin2] === undefined) {
 					answer = "Hmm one of those currencies does not exist. Are you sure you aren't stupid?";
 				} else {
-					answer = "```js\n" + amount + " " + coin1 + " equals " + (Math.round(parseFloat(amount * data[coin2]) * 100) / 100) + " " + coin2 + ".```";
+					answer = "```js\n" + amount + " " + coin1 + " equals " + (Math.round((amount * data[coin2]) * 100) / 100) + " " + coin2 + ".```";
 				}
 			} else {
 				answer = "Sorry I just can't handle the pressure... \nhttps://giphy.com/gifs/high-quality-relationship-programmer-UNZ3HQH0Enzos";
