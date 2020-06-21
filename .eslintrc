@@ -15,6 +15,9 @@
 		"indent": ["error", "tab", {
 			"SwitchCase": 1
 		}],
+		"keyword-spacing": ["error", {
+			"after": true
+		}],
 		"key-spacing": ["error", {
 			"mode": "strict",
 			"beforeColon": false,

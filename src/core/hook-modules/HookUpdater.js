@@ -46,7 +46,7 @@ class HookUpdater {
 					}
 					console.log(`${new Date().toLocaleString()}: Executed hook job.`);
 				}
-			} catch(err) {
+			} catch (err) {
 				console.error(`${new Date().toLocaleString()}: ${err}`);
 			}
 			setTimeout(() => {
