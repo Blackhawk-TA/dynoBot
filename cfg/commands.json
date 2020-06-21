@@ -78,8 +78,8 @@
 		}, {
 			"group": "currency",
 			"type": "js",
-			"regex": "(convert) (\\d+ )?(.{3}) (to) (.{3})$",
-			"help": "convert <currency (EUR)> to <currency (USD)>",
+			"regex": "(convert) (\\d+(.\\d+)? )?(.{3}) (to) (.{3})$",
+			"help": "convert <amount> <currency (EUR)> to <currency (USD)>",
 			"path": "src/js-modules/currency/currencyConverter.js"
 		}, {
 			"group": "currency",
