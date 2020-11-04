@@ -42,7 +42,7 @@
 		"scrape-yt": "^1.4.3",
 		"srcds-rcon": "^2.2.1",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
-		"ytdl-core": "^2.1.7"
+		"ytdl-core": "^4.0.3"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",
