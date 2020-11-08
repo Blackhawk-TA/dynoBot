@@ -143,8 +143,7 @@ class VoiceConnection {
 			this._oClient.setPresence(oCurrentTitle.name);
 
 			this._oConnection.play(ytDownload(this._sCurrentTitleUrl, {
-				filter: "audioonly",
-				quality: "highestaudio",
+				quality: "highest",
 				highWaterMark: ONE_MEGABYTE
 			}));
 
