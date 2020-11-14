@@ -277,7 +277,7 @@ class VoiceConnection {
 		};
 
 		return new Promise((resolve, reject) => {
-			scrapeYouTube.search(name, options).then(aResults => {
+			scrapeYouTube.search(name + " official", options).then(aResults => {
 				let oResult = aResults[0];
 				if (oResult && oResult.title && oResult.id) {
 					resolve({
