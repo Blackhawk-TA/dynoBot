@@ -296,7 +296,7 @@ class VoiceConnection {
 	/**
 	 * Search each track in the list and adds the Youtube links to the playlist
 	 * @param {object[]} tracks The track to be added to the playlist
-	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
+	 * @return {Promise<object[]|Error>} On resolve it returns an array of the titles which could not be added.
 	 */
 	searchAndAddTracks(tracks) {
 		return new Promise((resolve, reject) => {
@@ -308,14 +308,22 @@ class VoiceConnection {
 				aPromises.push(this.searchTitle(sQuery));
 			}.bind(this));
 
-			Promise.all(aPromises).then(function(aResult) {
-				aResult.forEach(oTitle => {
-					this._aPlaylist.push(oTitle);
+			Promise.allSettled(aPromises).then(function(aResult) {
+				var aFailedTitles = [];
+				var oTitle;
+
+				aResult.forEach(oPromise => {
+					oTitle = oPromise.value;
+					if (oPromise.status === "fulfilled") {
+						this._aPlaylist.push(oTitle);
+					} else {
+						aFailedTitles.push(oTitle);
+					}
 				});
 				if (!this._sCurrentTitleUrl) {
 					this.play();
 				}
-				resolve();
+				resolve(aFailedTitles);
 			}.bind(this)).catch(err => {
 				reject(err);
 			});
@@ -325,13 +333,13 @@ class VoiceConnection {
 	/**
 	 * Adds the given spotify playlist to the bots playlist
 	 * @param {string} url The spotify playlist url
-	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
+	 * @return {Promise<object[]|Error>} On resolve it returns an array of the titles which could not be added.
 	 */
 	addSpotifyPlaylist(url) {
 		return new Promise((resolve, reject) => {
 			playlistImporter.getPlaylistData(url).then(data => {
-				this.searchAndAddTracks(data.tracklist).then(() => {
-					resolve();
+				this.searchAndAddTracks(data.tracklist).then(aFailedTitles => {
+					resolve(aFailedTitles);
 				}).catch(err => {
 					reject(err);
 				});
@@ -344,13 +352,13 @@ class VoiceConnection {
 	/**
 	 * Adds the given apple music playlist to the bots playlist
 	 * @param {string} url The apple music playlist url
-	 * @return {Promise<void|Error>} On resolve it returns nothing, on reject the error
+	 * @return {Promise<object[]|Error>} On resolve it returns an array of the titles which could not be added.
 	 */
 	addAppleMusicPlaylist(url) {
 		return new Promise((resolve, reject) => {
 			amply.getPlaylist(url).then(aResults => {
-				this.searchAndAddTracks(aResults).then(() => {
-					resolve();
+				this.searchAndAddTracks(aResults).then(aFailedTitles => {
+					resolve(aFailedTitles);
 				}).catch(err => {
 					reject(err);
 				});
