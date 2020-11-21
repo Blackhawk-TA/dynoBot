@@ -8,7 +8,7 @@ module.exports = {
 		if (oVoiceChannel) {
 			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
-			if (oConnection.getPlaylist().length > 0) {
+			if (oConnection.getPlaylist().length > 0 || oConnection.getAutoplay()) {
 				oConnection.play();
 				msg.getTextChannel().send(`Title skipped. Playing '${oConnection.getCurrentTitleName()}'.`);
 			} else {

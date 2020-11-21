@@ -23,6 +23,7 @@ class VoiceConnection {
 		this._bErrorEventAttached = false;
 		this._bShuffleMode = false;
 		this._bOverrideShuffleMode = false;
+		this._bAutoplay = false;
 
 		setInterval(this._disconnect.bind(this), FIVE_MINUTES_IN_MS);
 	}
@@ -118,6 +119,22 @@ class VoiceConnection {
 	}
 
 	/**
+	 * Gets the autoplay state
+	 * @return {boolean} True if autoplay is enabled, else false
+	 */
+	getAutoplay() {
+		return this._bAutoplay;
+	}
+
+	/**
+	 * Sets the autoplay for the voice connection.
+	 * @param {boolean} bEnable True if autoplay should be turned on, else false
+	 */
+	setAutoplay(bEnable) {
+		this._bAutoplay = bEnable;
+	}
+
+	/**
 	 * Removes the first item of the playlist and plays it.
 	 * Buffers the next title
 	 */
@@ -157,6 +174,21 @@ class VoiceConnection {
 			this._sCurrentTitleUrl = "";
 			this._sCurrentTitleName = "";
 			this._oClient.setPresence("");
+		}
+
+		//Add new title from YouTube suggestions when the playlist is empty
+		if (this._bAutoplay && this._aPlaylist.length === 0) {
+			ytDownload.getBasicInfo(oCurrentTitle.url).then(oInfo => {
+				var iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
+				var oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
+
+				this._aPlaylist.push({
+					name: oSuggestion.title ? oSuggestion.title : "track",
+					url: "https://www.youtube.com/watch?v=" + oSuggestion.id
+				});
+			}).catch(err => {
+				console.error("Could not add suggested title: " + err);
+			});
 		}
 	}
 
