@@ -216,7 +216,7 @@ class VoiceConnection {
 		return new Promise((resolve, reject) => {
 			ytDownload.getBasicInfo(url).then(info => {
 				let oTitle = {
-					name: info.title,
+					name: info.title ? info.title : "track",
 					url: url
 				};
 
