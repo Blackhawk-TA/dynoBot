@@ -1,6 +1,6 @@
 module.exports = {
 	/**
-	 * Will be remove in version 1.3.1
+	 * Will be removed in version 1.3.1
 	 * @deprecated
 	 */
 	run: function(msg) {

@@ -18,7 +18,7 @@
 		}, {
 			"group": "basic",
 			"type": "js",
-			"regex": "(.*)\\s?help|commands",
+			"regex": "^(\\w*)\\s?help$|commands$",
 			"help": "help / <command-group (rcon, schedule, basic, etc.)> help",
 			"path": "src/core/core-modules/showCommands.js"
 		}, {
