@@ -61,6 +61,24 @@ class VoiceConnection {
 	}
 
 	/**
+	 * Adds a random YouTube suggestion of the current title to the playlist.
+	 * @private
+	 */
+	_autoplayAddTitle() {
+		ytDownload.getBasicInfo(this._sCurrentTitleUrl).then(oInfo => {
+			let iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
+			let oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
+
+			this._aPlaylist.push({
+				name: oSuggestion.title ? oSuggestion.title : "track",
+				url: "https://www.youtube.com/watch?v=" + oSuggestion.id
+			});
+		}).catch(err => {
+			console.error("Could not add suggested title: " + err);
+		});
+	}
+
+	/**
 	 * Gets the id of the voice connection.
 	 * @return {number} The id of the voice connection
 	 */
@@ -129,7 +147,7 @@ class VoiceConnection {
 	}
 
 	/**
-	 * Gets the autoplay state
+	 * Gets the autoplay state.
 	 * @return {boolean} True if autoplay is enabled, else false
 	 */
 	getAutoplay() {
@@ -137,11 +155,15 @@ class VoiceConnection {
 	}
 
 	/**
-	 * Sets the autoplay for the voice connection.
+	 * Sets the autoplay for the voice connection and adds a suggested title to the playlist.
 	 * @param {boolean} bEnable True if autoplay should be turned on, else false
 	 */
 	setAutoplay(bEnable) {
 		this._bAutoplay = bEnable;
+
+		if (bEnable) {
+			this._autoplayAddTitle();
+		}
 	}
 
 	/**
@@ -186,19 +208,8 @@ class VoiceConnection {
 			this._oClient.setPresence("");
 		}
 
-		//Add new title from YouTube suggestions when the playlist is empty
 		if (this._bAutoplay && this._aPlaylist.length === 0) {
-			ytDownload.getBasicInfo(oCurrentTitle.url).then(oInfo => {
-				let iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
-				let oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
-
-				this._aPlaylist.push({
-					name: oSuggestion.title ? oSuggestion.title : "track",
-					url: "https://www.youtube.com/watch?v=" + oSuggestion.id
-				});
-			}).catch(err => {
-				console.error("Could not add suggested title: " + err);
-			});
+			this._autoplayAddTitle();
 		}
 	}
 

@@ -10,7 +10,7 @@ module.exports = {
 			let oVoiceConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
 			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
-				if (oVoiceConnection.getPlaylist().length > 0 || oVoiceConnection.getAutoplay()) {
+				if (oVoiceConnection.getPlaylist().length > 0) {
 					oVoiceConnection.play();
 					oTextChannel.send(`Title skipped. Playing '${oVoiceConnection.getCurrentTitleName()}'.`);
 				} else {
