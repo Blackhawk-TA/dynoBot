@@ -242,6 +242,12 @@
 			"regex": "shuffle( mode)? (on|off)",
 			"help": "shuffle on/off",
 			"path": "src/js-modules/voice/shuffle.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "autoplay (on|off)",
+			"help": "autoplay on/off",
+			"path": "src/js-modules/voice/autoplay.js"
 		}
 	]
 }
