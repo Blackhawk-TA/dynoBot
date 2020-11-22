@@ -26,6 +26,8 @@ class VoiceConnection {
 		this._bAutoplay = false;
 
 		setInterval(this._disconnect.bind(this), FIVE_MINUTES_IN_MS);
+
+		connectionsHandler.registerConnection(this);
 	}
 
 	/**
@@ -64,6 +66,14 @@ class VoiceConnection {
 	 */
 	getId() {
 		return this._oConnection.getVoiceChannel().getServer().getId();
+	}
+
+	/**
+	 * Gets the id of the voice channel.
+	 * @return {number} The id of the voice channel
+	 */
+	getChannelId() {
+		return this._oConnection.getVoiceChannel().getId();
 	}
 
 	/**
@@ -179,8 +189,8 @@ class VoiceConnection {
 		//Add new title from YouTube suggestions when the playlist is empty
 		if (this._bAutoplay && this._aPlaylist.length === 0) {
 			ytDownload.getBasicInfo(oCurrentTitle.url).then(oInfo => {
-				var iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
-				var oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
+				let iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
+				let oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
 
 				this._aPlaylist.push({
 					name: oSuggestion.title ? oSuggestion.title : "track",
@@ -341,8 +351,8 @@ class VoiceConnection {
 			}.bind(this));
 
 			Promise.allSettled(aPromises).then(function(aResult) {
-				var aFailedTitles = [];
-				var oTitle;
+				let aFailedTitles = [];
+				let oTitle;
 
 				aResult.forEach(oPromise => {
 					oTitle = oPromise.value;
