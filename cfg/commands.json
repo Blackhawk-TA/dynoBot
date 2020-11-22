@@ -248,6 +248,12 @@
 			"regex": "autoplay (on|off)",
 			"help": "autoplay on/off",
 			"path": "src/js-modules/voice/autoplay.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "^(clear|empty|delete) playlist$",
+			"help": "clear playlist",
+			"path": "src/js-modules/voice/clearPlaylist.js"
 		}
 	]
 }
