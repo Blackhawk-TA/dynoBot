@@ -6,11 +6,11 @@ module.exports = {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId()),
+			let oVoiceConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId()),
 				bShuffleMode = aRegexGroups[2] === "on";
 
-			if (oConnection) {
-				oConnection.setShuffleMode(bShuffleMode);
+			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
+				oVoiceConnection.setShuffleMode(bShuffleMode);
 				msg.getTextChannel().send(`The shuffle mode was set to '${aRegexGroups[2]}'.`);
 			} else {
 				msg.getTextChannel().send("You can only set shuffle mode when we are in the same voice channel.");

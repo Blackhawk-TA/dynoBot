@@ -6,29 +6,29 @@ const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnect
 module.exports = {
 	run: function(msg, client, regexGroups) {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
-			oChannel = msg.getTextChannel();
+			oTextChannel = msg.getTextChannel();
 
 		if (oVoiceChannel) {
 			let sServerId = oVoiceChannel.getServer().getId(),
 				oVoiceConnection = connectionsHandler.getConnection(sServerId);
 
 			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
-				this._searchAndAddTitle(regexGroups, oChannel, oVoiceConnection);
+				this._searchAndAddTitle(regexGroups, oTextChannel, oVoiceConnection);
 			} else if (!oVoiceConnection) {
 				oVoiceChannel.join().then(connection => {
 					oVoiceConnection = new VoiceConnection(connection, client);
 
 					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
-					this._searchAndAddTitle(regexGroups, oChannel, oVoiceConnection);
+					this._searchAndAddTitle(regexGroups, oTextChannel, oVoiceConnection);
 				}).catch(err => {
 					console.error(`${new Date().toLocaleString()}: addTitle.js ${err}`);
-					oChannel.send("Sorry, I could not join you.");
+					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {
-				oChannel.send("You can only edit the playlist when we are in the same voice channel.");
+				oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
 			}
 		} else {
-			oChannel.send("You can only edit the playlist when we are in the same voice channel.");
+			oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
 		}
 	},
 

@@ -3,25 +3,26 @@ const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectio
 
 module.exports = {
 	run: function(msg) {
-		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
+		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
+			oTextChannel = msg.getTextChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
+			let oVoiceConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
-			if (oConnection) {
-				let sCurrentTitleName = oConnection.getCurrentTitleName(),
-					sCurrentTitleUrl = oConnection.getCurrentTitleUrl();
+			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
+				let sCurrentTitleName = oVoiceConnection.getCurrentTitleName(),
+					sCurrentTitleUrl = oVoiceConnection.getCurrentTitleUrl();
 
 				if (sCurrentTitleName && sCurrentTitleUrl) {
-					msg.getTextChannel().send(`Currently playing: '${sCurrentTitleName}'\nSource: ${sCurrentTitleUrl}`);
+					oTextChannel.send(`Currently playing: '${sCurrentTitleName}'\nSource: ${sCurrentTitleUrl}`);
 				} else {
-					msg.getTextChannel().send("I'm not playing music at the moment.");
+					oTextChannel.send("I'm not playing music at the moment.");
 				}
 			} else {
-				msg.getTextChannel().send("You can only get the current song when we are in the same voice channel.");
+				oTextChannel.send("You can only get the current song when we are in the same voice channel.");
 			}
 		} else {
-			msg.getTextChannel().send("You cannot order me to leave a channel in which you are not in.");
+			oTextChannel.send("You cannot order me to leave a channel in which you are not in.");
 		}
 	}
 };

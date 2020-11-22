@@ -6,7 +6,7 @@ const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnect
 module.exports = {
 	run: function(msg, client, regexGroups) {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
-			oChannel = msg.getTextChannel();
+			oTextChannel = msg.getTextChannel();
 
 		if (oVoiceChannel) {
 			let sServerId = oVoiceChannel.getServer().getId(),
@@ -19,16 +19,16 @@ module.exports = {
 					oVoiceConnection = new VoiceConnection(connection, client);
 
 					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
-					this._addPlaylist(regexGroups, oChannel, oVoiceConnection);
+					this._addPlaylist(regexGroups, oTextChannel, oVoiceConnection);
 				}).catch(err => {
 					console.error(`${new Date().toLocaleString()}: addPlaylist.js: ${err}`);
-					oChannel.send("Sorry, I could not join you.");
+					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {
-				oChannel.send("You can only edit the playlist when we are in the same voice channel.");
+				oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
 			}
 		} else {
-			oChannel.send("You can only edit the playlist when we are in the same voice channel.");
+			oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
 		}
 	},
 
