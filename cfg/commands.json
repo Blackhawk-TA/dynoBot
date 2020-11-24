@@ -18,7 +18,7 @@
 		}, {
 			"group": "basic",
 			"type": "js",
-			"regex": "(.*)\\s?help|commands",
+			"regex": "^(\\w*)\\s?help$|commands$",
 			"help": "help / <command-group (rcon, schedule, basic, etc.)> help",
 			"path": "src/core/core-modules/showCommands.js"
 		}, {
@@ -242,6 +242,18 @@
 			"regex": "shuffle( mode)? (on|off)",
 			"help": "shuffle on/off",
 			"path": "src/js-modules/voice/shuffle.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "autoplay (on|off)",
+			"help": "autoplay on/off",
+			"path": "src/js-modules/voice/autoplay.js"
+		}, {
+			"group": "voice",
+			"type": "js",
+			"regex": "^(clear|empty|delete) playlist$",
+			"help": "clear playlist",
+			"path": "src/js-modules/voice/clearPlaylist.js"
 		}
 	]
 }

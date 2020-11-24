@@ -3,15 +3,20 @@ const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectio
 
 module.exports = {
 	run: function(msg) {
-		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
+		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
+			oTextChannel = msg.getTextChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
+			let oVoiceConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
-			oConnection.getApiConnection().resume();
-			msg.getTextChannel().send("Ok, I will resume.");
+			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
+				oVoiceConnection.getApiConnection().resume();
+				oTextChannel.send("Ok, I will resume.");
+			} else {
+				oTextChannel.send("You can only resume when you're in the same voice channel.");
+			}
 		} else {
-			msg.getTextChannel().send("You can only resume when you're in the same voice channel.");
+			oTextChannel.send("You can only resume when you're in the same voice channel.");
 		}
 	}
 };

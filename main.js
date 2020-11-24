@@ -67,7 +67,7 @@ Bot.onEvent("ready", () => {
 				}
 			}
 		} catch (err) {
-			console.error(`${new Date().toLocaleString()}: ${err}`);
+			console.error(`${new Date().toLocaleString()}: main.js: ${err}`);
 		}
 	});
 });

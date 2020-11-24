@@ -1,6 +1,7 @@
 # dynoBot
 [![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Blackhawk-TA/dynoBot/blob/master/LICENSE.md)
-[![Build Status](https://travis-ci.com/Blackhawk-TA/dynoBot.svg?branch=master)](https://travis-ci.com/Blackhawk-TA/dynoBot)
+[![Node Version](https://img.shields.io/github/package-json/node/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/tree/master)
+![build](https://github.com/Blackhawk-TA/dynoBot/workflows/build/badge.svg)
 [![github](https://img.shields.io/github/release/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/releases)
 [![github](https://img.shields.io/github/package-json/v/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/tree/master)
 
@@ -42,10 +43,10 @@ Alternatively you can take a look at the [commands.json](https://github.com/Blac
 
 ### How can I use the bot for my own discord server?
 It's quite simple, first of all you need nodejs and optionally python3 for python modules and lua for lua modules.
-After the installation, clone this repository and run `npm install` within the `dynoBot` folder. It should install all required dependencies. 
+After the installation, clone this repository and run `npm install` within the `dynoBot` folder. It should install all required dependencies.
 
 Once that's done, you'll have to add the `security.json` file within the directory `dynoBot/cfg`.
-It should look like this: 
+It should look like this:
 ```json
 {
 	"token": "your discord bot token"
@@ -54,7 +55,7 @@ It should look like this:
 
 **IMPORTANT: When you fork this project, don't upload the security.json to your repository. This would allow others to steal your discord token.**
 
- 
+
 If you want to use the Wolfram|Alpha module, you'll need their API key in the security.json as well.
 You can request a free Wolfram|Alpha API key [here](https://products.wolframalpha.com/api/).
 

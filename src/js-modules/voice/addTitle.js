@@ -1,37 +1,55 @@
 const base = require("path").resolve(".");
+const joinHelper = require(base + "/src/js-modules/voice/utils/joinHelper");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnection");
 
 module.exports = {
 	run: function(msg, client, regexGroups) {
-		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
+		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
+			oTextChannel = msg.getTextChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId()),
-				sAddType = regexGroups[1],
-				sQuery = regexGroups[2],
-				bIsSearch = !regexGroups[3],
-				oChannel = msg.getTextChannel();
+			let sServerId = oVoiceChannel.getServer().getId(),
+				oVoiceConnection = connectionsHandler.getConnection(sServerId);
 
-			if (oConnection) {
-				if (bIsSearch) {
-					oConnection.searchTitle(sQuery).then(oResult => {
-						this._handleAddTitle(oChannel, oConnection, sAddType, oResult);
-					}).catch(err => {
-						console.error(`${new Date().toLocaleString()}: ${err}`);
-						msg.getTextChannel().send("I could not find this title.");
-					});
-				} else {
-					let oTitle = {
-						name: "",
-						url: sQuery
-					};
-					this._handleAddTitle(oChannel, oConnection, sAddType, oTitle);
-				}
+			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
+				this._searchAndAddTitle(regexGroups, oTextChannel, oVoiceConnection);
+			} else if (!oVoiceConnection) {
+				oVoiceChannel.join().then(connection => {
+					oVoiceConnection = new VoiceConnection(connection, client);
+
+					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
+					this._searchAndAddTitle(regexGroups, oTextChannel, oVoiceConnection);
+				}).catch(err => {
+					console.error(`${new Date().toLocaleString()}: addTitle.js ${err}`);
+					oTextChannel.send("Sorry, I could not join you.");
+				});
 			} else {
-				msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
+				oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
 			}
 		} else {
-			msg.getTextChannel().send("You can only edit the playlist when we are in the same voice channel.");
+			oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
+		}
+	},
+
+	_searchAndAddTitle: function(regexGroups, oChannel, oVoiceConnection) {
+		let sAddType = regexGroups[1],
+			sQuery = regexGroups[2],
+			bIsSearch = !regexGroups[3];
+
+		if (bIsSearch) {
+			oVoiceConnection.searchTitle(sQuery).then(oResult => {
+				this._handleAddTitle(oChannel, oVoiceConnection, sAddType, oResult);
+			}).catch(err => {
+				console.error(`${new Date().toLocaleString()}: ${err}`);
+				oChannel.send("I could not find this title.");
+			});
+		} else {
+			let oTitle = {
+				name: "",
+				url: sQuery
+			};
+			this._handleAddTitle(oChannel, oVoiceConnection, sAddType, oTitle);
 		}
 	},
 

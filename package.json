@@ -21,9 +21,12 @@
 		"spotify",
 		"playlist"
 	],
-	"version": "1.2.4",
+	"version": "1.3.0",
 	"license": "MIT",
 	"main": "main.js",
+	"engines": {
+		"node": ">= 12.16.0"
+	},
 	"scripts": {
 		"start": "node main.js",
 		"validate": "eslint --ext .js src"
@@ -35,14 +38,14 @@
 	"dependencies": {
 		"apple-music-playlist": "^1.0.1",
 		"base64-img": "^1.0.4",
-		"dynobot-framework": "^1.3.1",
+		"dynobot-framework": "^1.3.2",
 		"mkdirp": "^0.5.5",
 		"playlist-importer-lite": "^0.1.0",
 		"request": "^2.88.2",
-		"scrape-yt": "^1.4.3",
+		"scrape-yt": "^1.4.6",
 		"srcds-rcon": "^2.2.1",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
-		"ytdl-core": "^4.0.3"
+		"ytdl-core": "^4.0.6"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",

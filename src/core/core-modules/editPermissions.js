@@ -17,7 +17,7 @@ module.exports = {
 			requestedRole = contentArray[4];
 
 		let bRoleExists = false,
-			bRequestedCmdExists = false,
+			sRequestedCmdPath,
 			bRequestedCmdInPermissions = false,
 			bPermissionAlreadyInList = false;
 
@@ -31,35 +31,33 @@ module.exports = {
 		}
 
 		let k = 0;
-		while (!bRequestedCmdExists && k < commands.length) {
+		while (!sRequestedCmdPath && k < commands.length) {
 			let pathArray = commands[k].path.split("/");
 			let fileName = pathArray[pathArray.length - 1];
 			let cmdName = fileName.split(".")[0];
 
 			if (cmdName === requestedCmd) {
-				bRequestedCmdExists = true;
+				sRequestedCmdPath = commands[k].path;
 			} else {
 				k++;
 			}
 		}
 
 		let j = 0;
-		while (bRoleExists && bRequestedCmdExists && !bRequestedCmdInPermissions && j < cmdPermissions.length) {
-			commands.forEach(function(command) {
-				if (command.path === cmdPermissions[j].path) {
-					bRequestedCmdInPermissions = true;
-					if (cmdPermissions[j].permissions.includes(requestedRole)) {
-						bPermissionAlreadyInList = true;
-					}
+		while (bRoleExists && sRequestedCmdPath && !bRequestedCmdInPermissions && j < cmdPermissions.length) {
+			if (sRequestedCmdPath === cmdPermissions[j].path) {
+				bRequestedCmdInPermissions = true;
+				if (cmdPermissions[j].permissions.includes(requestedRole)) {
+					bPermissionAlreadyInList = true;
 				}
-			});
+			}
 
-			if (!bRequestedCmdExists) {
+			if (!bRequestedCmdInPermissions) {
 				j++;
 			}
 		}
 
-		if (bRoleExists && bRequestedCmdExists) {
+		if (bRoleExists && sRequestedCmdPath) {
 			let aAllowedRoles;
 			let sAllowedRoles;
 
@@ -74,7 +72,7 @@ module.exports = {
 				}
 
 				aAllowedRoles = cmdPermissions[j].permissions;
-				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
+				sAllowedRoles = aAllowedRoles.length === 0 ? "any" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
 				configHandler.overrideJSON(msg.getTextChannel(), permissionsPath, cmdPermissions, false);
 				msg.getTextChannel().send(`The role '${requestedRole}' has been added to the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (!bAddPermission && bRequestedCmdInPermissions && bPermissionAlreadyInList) {
@@ -82,7 +80,7 @@ module.exports = {
 				cmdPermissions[j].permissions.splice(index, 1);
 
 				aAllowedRoles = cmdPermissions[j].permissions;
-				sAllowedRoles = aAllowedRoles.length === 0 ? "none" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
+				sAllowedRoles = aAllowedRoles.length === 0 ? "any" : "`" + stringFormatter.arrayToString(aAllowedRoles, ", ") + "`";
 				configHandler.overrideJSON(msg.getTextChannel(), permissionsPath, cmdPermissions, false);
 				msg.getTextChannel().send(`The role '${requestedRole}' has been removed from the permissions list.\nAllowed roles: ${sAllowedRoles}`);
 			} else if (bAddPermission && bPermissionAlreadyInList) {
@@ -90,11 +88,11 @@ module.exports = {
 			} else if (!bAddPermission && !bRequestedCmdInPermissions || !bPermissionAlreadyInList) {
 				msg.getTextChannel().send(`The role '${requestedRole}' does not exist in the permissions list.`);
 			}
-		} else if (!bRoleExists && !bRequestedCmdExists) {
+		} else if (!bRoleExists && !sRequestedCmdPath) {
 			msg.getTextChannel().send(`The role '${requestedRole}' and the command '${requestedCmd}' both don't exist.`);
-		} else if (!bRoleExists && bRequestedCmdExists) {
+		} else if (!bRoleExists && sRequestedCmdPath) {
 			msg.getTextChannel().send(`The role '${requestedRole}' doesn't exist.`);
-		} else if (bRoleExists && !bRequestedCmdExists) {
+		} else if (bRoleExists && !sRequestedCmdPath) {
 			msg.getTextChannel().send(`The command '${requestedCmd}' doesn't exist.`);
 		}
 	}

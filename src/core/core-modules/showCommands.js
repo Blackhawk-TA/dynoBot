@@ -7,12 +7,14 @@ const MAX_MESSAGE_LENGTH = 2000;
 
 module.exports = {
 	run: function (msg, client, regexGroups) {
-		let serverId = msg.hasServer() ? msg.getServer().getId() : 0,
-			commands = configHandler.readJSON(cmdPath, serverId, "commandList"),
-			cmdPermissions = configHandler.readJSON(permissionsPath, serverId),
-			answer = "Command list:```";
+		let sServerId = msg.hasServer() ? msg.getServer().getId() : 0,
+			aCommands = configHandler.readJSON(cmdPath, sServerId, "commandList"),
+			aCmdPermissions = configHandler.readJSON(permissionsPath, sServerId),
+			sAnswerPrefix = "Command list:```",
+			sAnswerSuffix = "```",
+			sAnswer = sAnswerPrefix;
 
-		commands.forEach(function (command) {
+		aCommands.forEach(function (command) {
 			if (!command.hidden) {
 				let roles = "";
 
@@ -25,7 +27,7 @@ module.exports = {
 					}
 				}
 
-				cmdPermissions.forEach(function(permission) {
+				aCmdPermissions.forEach(function(permission) {
 					if (command.path === permission.path) {
 						permission.permissions.forEach(function(role) {
 							roles += role + ", ";
@@ -51,20 +53,22 @@ module.exports = {
 
 				answerLine = `\n${groupIdentifier}${name}${roles}: ${commandHelp}`;
 
-				if (answer.length + answerLine.length < MAX_MESSAGE_LENGTH) {
-					answer += answerLine;
+				if (sAnswer.length + answerLine.length < MAX_MESSAGE_LENGTH) {
+					sAnswer += answerLine;
 				} else {
-					answer += "```";
-					msg.getTextChannel().send(answer);
-					answer = "```" + answerLine;
+					sAnswer += "```";
+					msg.getTextChannel().send(sAnswer);
+					sAnswer = "```" + answerLine;
 				}
 			}
 		});
 
-		if (answer === "") {
-			answer = "No commands found.";
+		if (sAnswer === sAnswerPrefix) {
+			sAnswer = "No commands found.";
+		} else {
+			sAnswer += sAnswerSuffix;
 		}
 
-		msg.getTextChannel().send(answer + "```");
+		msg.getTextChannel().send(sAnswer);
 	}
 };

@@ -4,17 +4,19 @@ const MAX_MESSAGE_LENGTH = 2000;
 
 module.exports = {
 	run: function(msg) {
-		let oVoiceChannel = msg.getAuthor().getVoiceChannel();
+		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
+			oTextChannel = msg.getTextChannel();
 
 		if (oVoiceChannel) {
-			let oConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
+			let oVoiceConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
-			if (oConnection) {
-				let sCurrentTitle = oConnection.getCurrentTitleName(),
+			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
+				let sCurrentTitle = oVoiceConnection.getCurrentTitleName(),
 					iOffset = 0,
-					sShuffleMode = oConnection.getShuffleMode() ? "Enabled" : "Disabled",
-					sAnswer = "Shuffle mode: " + sShuffleMode + "```",
-					aPlaylist = oConnection.getPlaylist(),
+					sShuffleMode = oVoiceConnection.getShuffleMode() ? "Enabled" : "Disabled",
+					sAutoplay = oVoiceConnection.getAutoplay() ? "Enabled" : "Disabled",
+					sAnswer = "Autoplay: " + sAutoplay + "\nShuffle mode: " + sShuffleMode + "```",
+					aPlaylist = oVoiceConnection.getPlaylist(),
 					sAnswerLine;
 
 				if (sCurrentTitle || aPlaylist.length > 0) {
@@ -31,7 +33,7 @@ module.exports = {
 								sAnswer += sAnswerLine;
 							} else {
 								sAnswer += "```";
-								msg.getTextChannel().send(sAnswer);
+								oTextChannel.send(sAnswer);
 								sAnswer = "```" + sAnswerLine;
 							}
 						}
@@ -40,12 +42,12 @@ module.exports = {
 				} else {
 					sAnswer = "The playlist is empty.";
 				}
-				msg.getTextChannel().send(sAnswer);
+				oTextChannel.send(sAnswer);
 			} else {
-				msg.getTextChannel().send("You can only show the playlist when we are in the same voice channel.");
+				oTextChannel.send("You can only show the playlist when we are in the same voice channel.");
 			}
 		} else {
-			msg.getTextChannel().send("You can only show the playlist when we are in the same voice channel.");
+			oTextChannel.send("You can only show the playlist when we are in the same voice channel.");
 		}
 	}
 };

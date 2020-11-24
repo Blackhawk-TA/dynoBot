@@ -2,7 +2,7 @@ const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
 
 module.exports = {
-	run: function(msg, client) {
+	run: function(msg) {
 		let oVoiceChannel = msg.getAuthor().getVoiceChannel(),
 			oTextChannel = msg.getTextChannel();
 
@@ -10,16 +10,13 @@ module.exports = {
 			let oVoiceConnection = connectionsHandler.getConnection(oVoiceChannel.getServer().getId());
 
 			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
-				connectionsHandler.unregisterConnection(oVoiceChannel.getServer().getId());
-				client.setPresence("");
-				oTextChannel.send("Ok, I've left the channel.");
-			} else if (!oVoiceConnection) {
-				oTextChannel.send("I've already left this channel.");
+				oVoiceConnection.clearPlaylist();
+				oTextChannel.send("The playlist was cleared.");
 			} else {
-				oTextChannel.send("You cannot order me to leave a channel in which you are not in.");
+				oTextChannel.send("You have to be in the same voice channel to access this command");
 			}
 		} else {
-			oTextChannel.send("You cannot order me to leave a channel in which you are not in.");
+			oTextChannel.send("You have to be in the same voice channel to access this command");
 		}
 	}
 };
