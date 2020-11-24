@@ -1,9 +1,9 @@
 # dynoBot
 [![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Blackhawk-TA/dynoBot/blob/master/LICENSE.md)
-[![Node Version](https://img.shields.io/github/package-json/node/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/tree/master)
-![build](https://github.com/Blackhawk-TA/dynoBot/workflows/build/badge.svg)
+[![build](https://github.com/Blackhawk-TA/dynoBot/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/Blackhawk-TA/dynoBot/actions)
 [![github](https://img.shields.io/github/release/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/releases)
 [![github](https://img.shields.io/github/package-json/v/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/tree/master)
+
 
 ### Overview
 1. [What is dynoBot](#what-is-dynobot)
