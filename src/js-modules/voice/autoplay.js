@@ -11,8 +11,12 @@ module.exports = {
 				bAutoplay = aRegexGroups[1] === "on";
 
 			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
-				oVoiceConnection.setAutoplay(bAutoplay);
-				oTextChannel.send(`Autoplay was set to '${aRegexGroups[1]}'.`);
+				if (oVoiceConnection.getPlaylist().length > 0) {
+					oVoiceConnection.setAutoplay(bAutoplay);
+					oTextChannel.send(`Autoplay was set to '${aRegexGroups[1]}'.`);
+				} else {
+					oTextChannel.send("At least one title in the playlist is required.");
+				}
 			} else {
 				oTextChannel.send("You can only set autoplay when we are in the same voice channel.");
 			}
