@@ -40,9 +40,9 @@
 		"base64-img": "^1.0.4",
 		"dynobot-framework": "^1.3.2",
 		"mkdirp": "^0.5.5",
-		"playlist-importer-lite": "^0.1.0",
 		"request": "^2.88.2",
 		"scrape-yt": "^1.4.6",
+		"spotify-url-info": "^2.2.0",
 		"srcds-rcon": "^2.2.1",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
 		"ytdl-core": "^4.0.6"

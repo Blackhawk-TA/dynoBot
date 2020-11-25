@@ -1,6 +1,6 @@
 const ytDownload = require("ytdl-core");
 const scrapeYouTube = require("scrape-yt");
-const playlistImporter = require("playlist-importer-lite");
+const spotifyUrlInfo = require("spotify-url-info");
 const amply = require("apple-music-playlist");
 
 const connectionsHandler = require("./connectionsHandler");
@@ -390,8 +390,19 @@ class VoiceConnection {
 	 */
 	addSpotifyPlaylist(url) {
 		return new Promise((resolve, reject) => {
-			playlistImporter.getPlaylistData(url).then(data => {
-				this.searchAndAddTracks(data.tracklist).then(aFailedTitles => {
+			spotifyUrlInfo.getTracks(url).then(aResults => {
+				let aTracks = [];
+
+				aResults.forEach(oTrack => {
+					if (oTrack && oTrack.artists[0]) {
+						aTracks.push({
+							title: oTrack.name,
+							artist: oTrack.artists[0].name
+						});
+					}
+				});
+
+				this.searchAndAddTracks(aTracks).then(aFailedTitles => {
 					resolve(aFailedTitles);
 				}).catch(err => {
 					reject(err);
