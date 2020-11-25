@@ -65,17 +65,21 @@ class VoiceConnection {
 	 * @private
 	 */
 	_autoplayAddTitle() {
-		ytDownload.getBasicInfo(this._sCurrentTitleUrl).then(oInfo => {
-			let iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
-			let oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
+		if (this._sCurrentTitleUrl) {
+			ytDownload.getBasicInfo(this._sCurrentTitleUrl).then(oInfo => {
+				let iRandomRelatedVideo = Math.floor(Math.random() * oInfo.related_videos.length);
+				let oSuggestion = oInfo.related_videos[iRandomRelatedVideo];
 
-			this._aPlaylist.push({
-				name: oSuggestion.title ? oSuggestion.title : "track",
-				url: "https://www.youtube.com/watch?v=" + oSuggestion.id
+				this._aPlaylist.push({
+					name: oSuggestion.title ? oSuggestion.title : "track",
+					url: "https://www.youtube.com/watch?v=" + oSuggestion.id
+				});
+			}).catch(err => {
+				console.log(`${new Date().toLocaleString()}: Could not add suggested title: ${err}`);
 			});
-		}).catch(err => {
-			console.error("Could not add suggested title: " + err);
-		});
+		} else {
+			console.log(`${new Date().toLocaleString()}: Could not add suggested title, due to missing current title.`);
+		}
 	}
 
 	/**
