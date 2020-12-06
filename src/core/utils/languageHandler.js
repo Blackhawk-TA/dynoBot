@@ -1,4 +1,6 @@
 const spawn = require("child_process").spawn;
+
+const base = require("path").resolve(".");
 const logger = require(base + "/src/utils/logger");
 
 module.exports = {

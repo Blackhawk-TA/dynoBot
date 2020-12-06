@@ -4,6 +4,8 @@ const spotifyUrlInfo = require("spotify-url-info");
 const amply = require("apple-music-playlist");
 
 const connectionsHandler = require("./connectionsHandler");
+
+const base = require("path").resolve(".");
 const logger = require(base + "/src/utils/logger");
 
 const ONE_MEGABYTE = 10485760;
