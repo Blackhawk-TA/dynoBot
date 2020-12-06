@@ -2,6 +2,7 @@ const base = require("path").resolve(".");
 
 const configHandler = require(base + "/src/utils/configHandler");
 const config = require(base + "/cfg/config.json");
+const logger = require(base + "/src/utils/logger");
 
 module.exports = {
 	run: function(msg) {
@@ -20,8 +21,8 @@ module.exports = {
 
 		try {
 			value = JSON.parse(value);
-		} catch (e) {
-			console.error(`${new Date().toLocaleString()}: Tried to parse string => ${e}`);
+		} catch (err) {
+			logger.error("Failed to parse string: ", err);
 		}
 
 		if (config[id] !== undefined && config[id][entry] !== undefined) {

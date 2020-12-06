@@ -2,6 +2,7 @@ const fs = require("fs");
 const Rcon = require("srcds-rcon");
 
 const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
 
 module.exports = {
 	run: function (msg) {
@@ -34,11 +35,11 @@ module.exports = {
 			});
 
 			server.connect().then(() => {
-				console.log(`${new Date().toLocaleString()}: Logged into ${address}:${port} and executed '${cmd}'`);
+				logger.info(`Logged into ${address}:${port} and executed '${cmd}'`);
 				msg.getTextChannel().send("Executing following command:\n```" + cmd + "```");
 
 				return server.command(cmd, 2500).then(response => {
-					console.log(`${new Date().toLocaleString()}: Server response: '${response}'`);
+					logger.info(`Server response: '${response}'`);
 
 					if (response !== "") {
 						msg.getTextChannel().send("Server response:\n```json\n" + response + "```");
@@ -47,7 +48,7 @@ module.exports = {
 			}).then(() => {
 				server.disconnect();
 			}).catch((err) => {
-				console.error(`${new Date().toLocaleString()}: ${err}`);
+				logger.warn("Could not connect to rcon server: ", err);
 				msg.getTextChannel().send("Following error occurred while making the server request:\n```" + err + "```");
 			});
 		} else {

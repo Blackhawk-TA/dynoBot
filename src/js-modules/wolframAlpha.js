@@ -4,6 +4,7 @@ const security = require(base + "/cfg/security.json");
 const WolframAlphaAPI = require("wolfram-alpha-api");
 const base64Img = require("base64-img");
 const fs = require("fs");
+const logger = require(base + "/src/utils/logger");
 
 module.exports = {
 	run: function (msg, client, regexGroups) {
@@ -42,8 +43,8 @@ module.exports = {
 					});
 				});
 
-			}).catch((error) => {
-				console.log(`${new Date().toLocaleString()}: ${error}`);
+			}).catch(error => {
+				logger.warn("WolframAlpha request failed: ", error);
 				msg.getTextChannel().send("Following problem occurred:\n```" + error + "```");
 			});
 		} else {

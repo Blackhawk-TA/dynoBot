@@ -3,6 +3,7 @@ const fs = require("fs");
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
 const cfgPath = base + "/cfg/modules/rconServer.json";
+const logger = require(base + "/src/utils/logger");
 
 module.exports = {
 	run: function (msg, client, regexGroups) {
@@ -24,7 +25,7 @@ module.exports = {
 			};
 			configHandler.overrideJSON(msg.getTextChannel(), cfgPath, serverCfg);
 
-			console.log(`${new Date().toLocaleString()}: Added rcon server '${serverName}' on ${msg.getServer().getId()}.`);
+			logger.info(`Added rcon server '${serverName}' on ${msg.getServer().getId()}.`);
 			msg.getTextChannel().send(`Added the server '${serverName}'. Please set the address, port, password and rcon password using the 'set rcon config' command.`);
 		} else {
 			msg.getTextChannel().send(`A server with the name ${serverName} already exists.`);

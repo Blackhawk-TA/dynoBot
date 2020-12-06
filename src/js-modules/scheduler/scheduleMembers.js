@@ -1,4 +1,5 @@
 const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
 const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
 				if (!scheduleMembers.includes(authorId)) {
 					scheduleMembers.push(authorId);
 
-					console.log(`${new Date().toLocaleString()}: Added member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
+					logger.info(`Added member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
 					configHandler.editJSON(msg.getTextChannel(), configPath, scheduleName, "members", scheduleMembers, false);
 				} else {
 					msg.getTextChannel().send(`<@${authorId}> is already a member of this schedule.`);
@@ -25,7 +26,7 @@ module.exports = {
 				if (scheduleMembers.includes(authorId)) {
 					scheduleMembers.splice(scheduleMembers.indexOf(authorId), 1);
 
-					console.log(`${new Date().toLocaleString()}: Removed member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
+					logger.info(`Removed member '${authorId}' to '${scheduleName}' on '${msg.getServer().getId()}'.`);
 					configHandler.editJSON(msg.getTextChannel(), configPath, scheduleName, "members", scheduleMembers, false);
 				} else {
 					msg.getTextChannel().send(`<@${authorId}> is not a member of this schedule.`);
