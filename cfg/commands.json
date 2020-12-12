@@ -185,12 +185,6 @@
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "join(\\svoice)?",
-			"help": "join",
-			"path": "src/js-modules/voice/join.js"
-		}, {
-			"group": "voice",
-			"type": "js",
 			"regex": "leave(\\svoice)?",
 			"help": "leave",
 			"path": "src/js-modules/voice/leave.js"

@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
+const logger = require(base + "/src/utils/logger");
 
 const twoWeeks = 14; //in days
 const oneDay = 86400000; //in ms
@@ -23,7 +24,7 @@ module.exports = {
 			msg.getTextChannel().deleteMessages(msgToDelete);
 			msg.getTextChannel().send(`I've deleted ${msgToDelete.length} messages related to requests regarding me.`);
 		}).catch(err => {
-			console.error(`${new Date().toLocaleString()}: ${err}`);
+			logger.error("Could not fetch messages: ", err);
 		});
 	}
 };

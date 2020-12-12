@@ -1,4 +1,5 @@
 const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
 const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
@@ -28,7 +29,7 @@ module.exports = {
 
 			if (configModified) {
 				configHandler.overrideJSON(msg.getTextChannel(), configPath, scheduleCfg, false);
-				console.log(`${new Date().toLocaleString()}: Changed schedule '${changeType}' on ${msg.getServer().getId()}.`);
+				logger.info(`Changed schedule '${changeType}' on ${msg.getServer().getId()}.`);
 				msg.getTextChannel().send(`Changed ${changeType} of ${scheduleName} to ${newValue}.`);
 			}
 		} else {

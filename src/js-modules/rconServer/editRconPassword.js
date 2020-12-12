@@ -2,6 +2,7 @@ const fs = require("fs");
 
 const base = require("path").resolve(".");
 
+const logger = require(base + "/src/utils/logger");
 const configHandler = require(base + "/src/utils/configHandler");
 const pathCfg = base + "/cfg/modules/rconServer.json";
 
@@ -35,11 +36,13 @@ module.exports = {
 							}
 						})
 						.catch(err => {
-							console.error(`${new Date().toLocaleString()}: ${err}`);
+							logger.warn("Could not fetch messages: ", err);
 							resolved.send("The time for entering the password has passed. Please request a new rcon password change.");
 							msg.getTextChannel().send("The time for entering the password has passed. Please request a new rcon password change.");
 						});
-				}).catch(console.error);
+				}).catch(err => {
+					logger.error("Could not create direct message: ", err);
+				});
 			} else {
 				msg.getTextChannel().send(`There is no rcon server called '${rconServer}'.`);
 			}
