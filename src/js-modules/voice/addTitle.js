@@ -2,6 +2,7 @@ const base = require("path").resolve(".");
 const joinHelper = require(base + "/src/js-modules/voice/utils/joinHelper");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
 const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnection");
+const logger = require(base + "/src/utils/logger");
 
 module.exports = {
 	run: function(msg, client, regexGroups) {
@@ -21,7 +22,7 @@ module.exports = {
 					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
 					this._searchAndAddTitle(regexGroups, oTextChannel, oVoiceConnection);
 				}).catch(err => {
-					console.error(`${new Date().toLocaleString()}: addTitle.js ${err}`);
+					logger.error("Could not add title: ", err);
 					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {
@@ -41,7 +42,7 @@ module.exports = {
 			oVoiceConnection.searchTitle(sQuery).then(oResult => {
 				this._handleAddTitle(oChannel, oVoiceConnection, sAddType, oResult);
 			}).catch(err => {
-				console.error(`${new Date().toLocaleString()}: ${err}`);
+				logger.warn("Could not find title: ", err);
 				oChannel.send("I could not find this title.");
 			});
 		} else {
@@ -64,7 +65,7 @@ module.exports = {
 						oConnection.addCurrentTitle(oResult);
 						channel.send(`Ok, playing '${oResult.name}'`);
 					}).catch(err => {
-						console.error(`${new Date().toLocaleString()}: ${err}`);
+						logger.warn("Could not add current title: ", err);
 						channel.send("I cannot play this title.");
 					});
 				}
@@ -78,7 +79,7 @@ module.exports = {
 						oConnection.addNextTitle(oResult);
 						channel.send(`The next title will be '${oResult.name}'`);
 					}).catch(err => {
-						console.error(`${new Date().toLocaleString()}: ${err}`);
+						logger.warn("Could not add next title: ", err);
 						channel.send("I cannot play this title.");
 					});
 				}
@@ -92,7 +93,7 @@ module.exports = {
 						oConnection.addTitle(oResult);
 						channel.send(`Added '${oResult.name}' to the playlist.`);
 					}).catch(err => {
-						console.error(`${new Date().toLocaleString()}: ${err}`);
+						logger.warn("Could not add title: ", err);
 						channel.send("I cannot play this title.");
 					});
 				}

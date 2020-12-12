@@ -1,4 +1,5 @@
 const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
 const configHandler = require(base + "/src/utils/configHandler");
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
 				};
 
 				configHandler.overrideJSON(msg.getTextChannel(), configPath, scheduleCfg, false);
-				console.log(`${new Date().toLocaleString()}: Added schedule '${scheduleName}' on ${msg.getServer().getId()}.`);
+				logger.info(`Added schedule '${scheduleName}' on ${msg.getServer().getId()}.`);
 				msg.getTextChannel().send(`Added ${scheduleName} to the schedule.`);
 			} else {
 				msg.getTextChannel().send("Invalid date format. Try hh:mm UTC-X, yyyy-mm-dd.");

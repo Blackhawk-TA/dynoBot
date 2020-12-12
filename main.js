@@ -1,4 +1,5 @@
 const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
 
 const security = require(base + "/cfg/security.json");
 const commands = require(base + "/cfg/commands.json");
@@ -7,15 +8,14 @@ const configHandler = require(base + "/src/utils/configHandler");
 const hooks = require(base + "/src/core/utils/hooks");
 const scriptWrapper = require(base + "/src/core/utils/scriptWrapper");
 const permissionHandler = require(base + "/src/core/utils/permissionHandler");
-
 const {DiscordBot} = require("dynobot-framework");
 const Bot = new DiscordBot(security.token);
 
 Bot.onEvent("ready", () => {
-	console.log(`${new Date().toLocaleString()}: Bot successfully started.`);
+	logger.info("Bot successfully started.");
 
 	Bot.onEvent("error", err => {
-		console.error(`${new Date().toLocaleString()}: ${err}`);
+		logger.error("Discord API error: ", err);
 	});
 
 	//Init hooks
@@ -67,7 +67,7 @@ Bot.onEvent("ready", () => {
 				}
 			}
 		} catch (err) {
-			console.error(`${new Date().toLocaleString()}: main.js: ${err}`);
+			logger.error("There was a problem while executing a command: ", err);
 		}
 	});
 });

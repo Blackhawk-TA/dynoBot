@@ -2,6 +2,7 @@ const base = require("path").resolve(".");
 
 const languageHandler = require(base + "/src/core/utils/languageHandler");
 const hooks = require(base + "/cfg/hooks.json");
+const logger = require(base + "/src/utils/logger");
 
 class HookUpdater {
 	constructor(id, interval, server) {
@@ -44,10 +45,10 @@ class HookUpdater {
 						default:
 							break;
 					}
-					console.log(`${new Date().toLocaleString()}: Executed hook job.`);
+					logger.info("Executed hook job.");
 				}
 			} catch (err) {
-				console.error(`${new Date().toLocaleString()}: ${err}`);
+				logger.error("Could not run hook: " + err);
 			}
 			setTimeout(() => {
 				this.nextCall();

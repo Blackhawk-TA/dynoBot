@@ -5,6 +5,9 @@ const amply = require("apple-music-playlist");
 
 const connectionsHandler = require("./connectionsHandler");
 
+const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
+
 const ONE_MEGABYTE = 10485760;
 const FIVE_MINUTES_IN_MS = 300000;
 
@@ -48,12 +51,12 @@ class VoiceConnection {
 	 */
 	_attachErrorEvent() {
 		this._oConnection.onEvent("error", function(err) {
-			console.error(`${new Date().toLocaleString()}: VoiceConnection Error: ${err}`);
+			logger.error("VoiceConnection error: ", err);
 			this.play(); //Try to play the next song on error
 		}.bind(this));
 
 		this._oConnection.onEvent("failed", function(err) {
-			console.error(`${new Date().toLocaleString()}: VoiceConnection Failed: ${err}`);
+			logger.error("VoiceConnection failed: ", err);
 			this.play(); //Try to play the next song on error
 		}.bind(this));
 
@@ -75,10 +78,10 @@ class VoiceConnection {
 					url: "https://www.youtube.com/watch?v=" + oSuggestion.id
 				});
 			}).catch(err => {
-				console.log(`${new Date().toLocaleString()}: Could not add suggested title: ${err}`);
+				logger.warn("Could not add suggested title: ", err);
 			});
 		} else {
-			console.log(`${new Date().toLocaleString()}: Could not add suggested title, due to missing current title.`);
+			logger.warn("Could not add suggested title, due to missing current title.");
 		}
 	}
 
@@ -308,7 +311,7 @@ class VoiceConnection {
 							url: "https://www.youtube.com/watch?v=" + track.id
 						});
 					} else {
-						console.error(`${new Date().toLocaleString()}: Could not find title from YouTube playlist.`);
+						logger.warn("Could not find title from YouTube playlist.");
 					}
 				});
 

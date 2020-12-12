@@ -2,6 +2,7 @@ const base = require("path").resolve(".");
 const joinHelper = require(base + "/src/js-modules/voice/utils/joinHelper");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
 const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnection");
+const logger = require(base + "/src/utils/logger");
 
 module.exports = {
 	run: function(msg, client, regexGroups) {
@@ -21,7 +22,7 @@ module.exports = {
 					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
 					this._addPlaylist(regexGroups, oTextChannel, oVoiceConnection);
 				}).catch(err => {
-					console.error(`${new Date().toLocaleString()}: addPlaylist.js: ${err}`);
+					logger.error("Could not add playlist: ", err);
 					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {
@@ -44,7 +45,7 @@ module.exports = {
 					oChannel.send(sAnswer);
 				}).catch(err => {
 					oChannel.send("Could not add the playlist.");
-					console.error(`${new Date().toLocaleString()}: ${err}`);
+					logger.warn("Could not add Apple Music playlist: ", err);
 				});
 				break;
 			case "spotify":
@@ -53,7 +54,7 @@ module.exports = {
 					oChannel.send(sAnswer);
 				}).catch(err => {
 					oChannel.send("Could not add the playlist.");
-					console.error(`${new Date().toLocaleString()}: ${err}`);
+					logger.warn("Could not add Spotify playlist: ", err);
 				});
 				break;
 			default:
@@ -61,7 +62,7 @@ module.exports = {
 					oChannel.send("The YouTube playlist was added to the current playlist.");
 				}).catch(err => {
 					oChannel.send("Could not add the playlist.");
-					console.error(`${new Date().toLocaleString()}: ${err}`);
+					logger.warn("Could not add YouTube playlist: ", err);
 				});
 				break;
 		}
