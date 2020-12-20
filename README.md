@@ -10,6 +10,9 @@
 2. [Features](#features)
 3. [Chat commands](#what-commands-does-the-bot-have)
 4. [How to use](#how-can-i-use-the-bot-for-my-own-discord-server)
+	1. [Set up Discord token](#set-up-discord-token)
+	2. [Set up 3rd party api keys](#set-up-3rd-party-api-keys)
+	3. [Enable logging](#enable-logging)
 5. [Creating new modules](#how-can-i-create-new-modules)
 	1. [Chat modules](#chat-module)
 		1. [JavaScript](#javascript-chat-module)
@@ -42,10 +45,11 @@ You can see all available commands by typing "@BotName help" in the discord chat
 Alternatively you can take a look at the [commands.json](https://github.com/Blackhawk-TA/dynoBot/blob/master/cfg/commands.json) file.
 
 ### How can I use the bot for my own discord server?
-It's quite simple, first of all you need nodejs and optionally python3 for python modules and lua for lua modules.
+First you need nodejs and optionally python3 for python modules and lua for lua modules.
 After the installation, clone this repository and run `npm install` within the `dynoBot` folder. It should install all required dependencies.
 
-Once that's done, you'll have to add the `security.json` file within the directory `dynoBot/cfg`.
+#### Set up Discord token
+To run the discord bot, you'll have to add the `security.json` file within the directory `dynoBot/cfg`.
 It should look like this:
 ```json
 {
@@ -53,10 +57,10 @@ It should look like this:
 }
 ```
 
-**IMPORTANT: When you fork this project, don't upload the security.json to your repository. This would allow others to steal your discord token.**
+<span style="color:red">**IMPORTANT: When you fork this project, don't upload the security.json to your repository. This would allow others to steal your discord token.**</span>
 
-
-If you want to use the Wolfram|Alpha module, you'll need their API key in the security.json as well.
+#### Set up 3rd party api keys
+If you want to use the Wolfram|Alpha module, you'll need their API key in the `security.json` as well.
 You can request a free Wolfram|Alpha API key [here](https://products.wolframalpha.com/api/).
 
 With the API key, your security.json should look like this:
@@ -64,6 +68,16 @@ With the API key, your security.json should look like this:
 {
 	"token": "your discord bot token",
 	"wolframAlphaAPI": "your api key"
+}
+```
+
+#### Enable logging
+As a default, all logs are written to the console.
+If you want the logs to be written to log files, you have to enable logging in the `security.json` like this:
+```json
+{
+	"token": "your discord bot token",
+	"logging": true
 }
 ```
 

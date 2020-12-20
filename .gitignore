@@ -9,4 +9,9 @@ venv
 #Instance-specific files
 cfg/servers
 cfg/security.json
+.env
 resources
+
+#Log files
+error.log
+combined.log
