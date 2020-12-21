@@ -11,7 +11,7 @@ module.exports = {
 				bAutoplay = aRegexGroups[1] === "on";
 
 			if (oVoiceConnection && oVoiceChannel.getId() === oVoiceConnection.getChannelId()) {
-				if (oVoiceChannel.getCurrentTitleUrl()) {
+				if (oVoiceConnection.getCurrentTitleUrl()) {
 					oVoiceConnection.setAutoplay(bAutoplay);
 					oTextChannel.send(`Autoplay was set to '${aRegexGroups[1]}'.`);
 				} else {
