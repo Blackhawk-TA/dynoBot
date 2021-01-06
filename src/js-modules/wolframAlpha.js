@@ -18,7 +18,7 @@ module.exports = {
 				background: "323232",
 				foreground: "white",
 			}).then(result => {
-				let regex = /^data:image\/[\w+]+;base64,([\s\S]+)/;
+				let regex = /^data:image\/\w+;base64,(.+)/;
 				let match = result.match(regex);
 
 				if (!match) {
