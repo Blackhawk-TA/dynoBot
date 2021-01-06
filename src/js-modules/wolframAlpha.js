@@ -2,47 +2,37 @@ const base = require("path").resolve(".");
 const security = require(base + "/cfg/security.json");
 
 const WolframAlphaAPI = require("wolfram-alpha-api");
-const base64Img = require("base64-img");
-const fs = require("fs");
 const logger = require(base + "/src/utils/logger");
 
 module.exports = {
-	run: function (msg, client, regexGroups) {
+	run: function(msg, client, regexGroups) {
 		if (security.wolframAlphaAPI) {
 			msg.getTextChannel().send("I'm processing your request, please wait...");
 
 			let waApi = WolframAlphaAPI(security.wolframAlphaAPI);
 			let question = regexGroups[2];
-			let serverId = msg.getTextChannel().getServer().getId();
 
 			waApi.getSimple({
 				i: question,
 				width: 1024,
 				background: "323232",
 				foreground: "white",
-			}).then((result) => {
-				let resourceDirectory = base + "/resources";
-				let resultDirectory = resourceDirectory + "/servers/" + serverId;
+			}).then(result => {
+				let regex = /^data:image\/[\w+]+;base64,([\s\S]+)/;
+				let match = result.match(regex);
 
-				if (!fs.existsSync(resourceDirectory))
-					fs.mkdirSync(resourceDirectory);
+				if (!match) {
+					msg.getTextChannel().send("Could not resolve your request.");
+					logger.error("The wolframAlpha request image has a base64 data error");
+					return;
+				}
 
-				if (!fs.existsSync(resourceDirectory + "/servers"))
-					fs.mkdirSync(resourceDirectory + "/servers");
-
-				if (!fs.existsSync(resultDirectory))
-					fs.mkdirSync(resultDirectory);
-
-				base64Img.img(result, resultDirectory, "lastWolframAlphaRequest", function (err, filePath) {
-					let fileName = filePath.split("/").pop();
-					msg.getTextChannel().send("This is the result of your request:\n", {
-						files: [{
-							attachment: filePath,
-							name: fileName
-						}]
-					});
+				let image = Buffer.from(match[1], "base64");
+				msg.getTextChannel().send("This is the result of your request:\n", {
+					files: [{
+						attachment: image
+					}]
 				});
-
 			}).catch(error => {
 				logger.warn("WolframAlpha request failed: ", error);
 				msg.getTextChannel().send("Following problem occurred:\n```" + error + "```");
