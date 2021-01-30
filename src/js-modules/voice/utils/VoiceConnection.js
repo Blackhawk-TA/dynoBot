@@ -1,5 +1,5 @@
 const ytDownload = require("ytdl-core");
-const scrapeYouTube = require("scrape-yt");
+const ytSearch = require("youtube-sr").YouTube;
 const spotifyUrlInfo = require("spotify-url-info");
 const amply = require("apple-music-playlist");
 
@@ -303,7 +303,7 @@ class VoiceConnection {
 	 */
 	addPlaylist(playlistId) {
 		return new Promise((resolve, reject) => {
-			scrapeYouTube.getPlaylist(playlistId).then(oPlaylist => {
+			ytSearch.getPlaylist(playlistId).then(oPlaylist => {
 				oPlaylist.videos.forEach(track => {
 					if (track.id && track.title) {
 						this._aPlaylist.push({
@@ -331,14 +331,8 @@ class VoiceConnection {
 	 * @return {Promise<string|Error>} On resolve the YouTube url of the title, on reject the error
 	 */
 	searchTitle(name) {
-		let options = {
-			type: "video",
-			limit: 1
-		};
-
 		return new Promise((resolve, reject) => {
-			scrapeYouTube.search(name + " official", options).then(aResults => {
-				let oResult = aResults[0];
+			ytSearch.searchOne(name).then(oResult => {
 				if (oResult && oResult.title && oResult.id) {
 					resolve({
 						name: oResult.title,
