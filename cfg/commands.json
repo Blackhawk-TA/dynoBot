@@ -197,7 +197,7 @@
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "resume(\\stitle|music)?",
+			"regex": "^r$|resume(\\stitle|music)?",
 			"help": "resume",
 			"path": "src/js-modules/voice/resume.js"
 		}, {
