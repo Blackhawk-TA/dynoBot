@@ -191,7 +191,7 @@
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "pause(\\stitle|music)?",
+			"regex": "^p$|pause(\\stitle|music)?",
 			"help": "pause",
 			"path": "src/js-modules/voice/pause.js"
 		}, {
