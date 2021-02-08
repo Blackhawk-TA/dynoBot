@@ -221,13 +221,13 @@
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "show|list playlist|songs|titles|queue",
+			"regex": "(show|list) (playlist|songs|titles|queue)",
 			"help": "show/list playlist",
 			"path": "src/js-modules/voice/showPlaylist.js"
 		}, {
 			"group": "voice",
 			"type": "js",
-			"regex": "current song|title|track|music",
+			"regex": "current (song|title|track|music)",
 			"help": "current song/title/track/music",
 			"path": "src/js-modules/voice/currentTitle.js"
 		}, {
