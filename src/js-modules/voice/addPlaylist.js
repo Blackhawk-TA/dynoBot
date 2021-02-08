@@ -1,6 +1,7 @@
 const base = require("path").resolve(".");
 const joinHelper = require(base + "/src/js-modules/voice/utils/joinHelper");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 const VoiceConnection = require(base + "/src/js-modules/voice/utils/VoiceConnection");
 const logger = require(base + "/src/utils/logger");
 
@@ -26,10 +27,10 @@ module.exports = {
 					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {
-				oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You can only edit the playlist when we are in the same voice channel.");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	},
 

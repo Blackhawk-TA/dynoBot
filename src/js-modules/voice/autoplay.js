@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 
 module.exports = {
 	run: function(msg, client, aRegexGroups) {
@@ -18,10 +19,10 @@ module.exports = {
 					oTextChannel.send("At least one title in the playlist is required.");
 				}
 			} else {
-				oTextChannel.send("You can only set autoplay when we are in the same voice channel.");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You have to be in the same voice channel to toggle autoplay.");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	}
 };

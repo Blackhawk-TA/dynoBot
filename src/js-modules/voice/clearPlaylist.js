@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 
 module.exports = {
 	run: function(msg) {
@@ -13,10 +14,10 @@ module.exports = {
 				oVoiceConnection.clearPlaylist();
 				oTextChannel.send("The playlist was cleared.");
 			} else {
-				oTextChannel.send("You have to be in the same voice channel to access this command");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You have to be in the same voice channel to access this command");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	}
 };

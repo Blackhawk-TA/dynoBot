@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 
 module.exports = {
 	run: function(msg) {
@@ -13,10 +14,10 @@ module.exports = {
 				oVoiceConnection.getApiConnection().resume();
 				oTextChannel.send("Ok, I will resume.");
 			} else {
-				oTextChannel.send("You can only resume when you're in the same voice channel.");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You can only resume when you're in the same voice channel.");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	}
 };

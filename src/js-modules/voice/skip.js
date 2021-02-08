@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 
 module.exports = {
 	run: function(msg) {
@@ -17,10 +18,10 @@ module.exports = {
 					oTextChannel.send("You cannot skip the last song in the playlist.");
 				}
 			} else {
-				oTextChannel.send("You can only skip a title when we are in the same voice channel.");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You can only skip a title when we are in the same voice channel.");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	}
 };

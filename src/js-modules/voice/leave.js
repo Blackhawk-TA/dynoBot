@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 
 module.exports = {
 	run: function(msg, client) {
@@ -16,10 +17,10 @@ module.exports = {
 			} else if (!oVoiceConnection) {
 				oTextChannel.send("I've already left this channel.");
 			} else {
-				oTextChannel.send("You cannot order me to leave a channel in which you are not in.");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You cannot order me to leave a channel in which you are not in.");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	}
 };

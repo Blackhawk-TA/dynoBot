@@ -1,5 +1,6 @@
 const base = require("path").resolve(".");
 const connectionsHandler = require(base + "/src/js-modules/voice/utils/connectionsHandler");
+const commonMessages = require(base + "/src/js-modules/voice/utils/commonMessages");
 const MAX_MESSAGE_LENGTH = 2000;
 
 module.exports = {
@@ -44,10 +45,10 @@ module.exports = {
 				}
 				oTextChannel.send(sAnswer);
 			} else {
-				oTextChannel.send("You can only show the playlist when we are in the same voice channel.");
+				oTextChannel.send(commonMessages.Access.WrongVoiceChannel);
 			}
 		} else {
-			oTextChannel.send("You can only show the playlist when we are in the same voice channel.");
+			oTextChannel.send(commonMessages.Access.NoVoiceChannel);
 		}
 	}
 };
