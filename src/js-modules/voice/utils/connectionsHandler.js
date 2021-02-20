@@ -24,11 +24,11 @@ module.exports = {
 	 * @param {object} oVoiceConnection The voice connection object.
 	 */
 	registerConnection: function(oVoiceConnection) {
-		oVoiceConnection.onEvent("failed", err => {
+		oVoiceConnection.getApiConnection().onEvent("failed", err => {
 			logger.error(`VoiceConnection '${oVoiceConnection.getId()}' failed: ${err}`);
 		});
 
-		oVoiceConnection.onEvent("error", err => {
+		oVoiceConnection.getApiConnection().onEvent("error", err => {
 			logger.error(`Discord API error on VoiceConnection '${oVoiceConnection.getId()}': ${err}`);
 		});
 
