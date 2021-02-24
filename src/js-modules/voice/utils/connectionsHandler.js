@@ -1,6 +1,3 @@
-const base = require("path").resolve(".");
-const logger = require(base + "/src/utils/logger");
-
 let aVoiceConnections = [];
 
 module.exports = {
@@ -24,14 +21,6 @@ module.exports = {
 	 * @param {object} oVoiceConnection The voice connection object.
 	 */
 	registerConnection: function(oVoiceConnection) {
-		oVoiceConnection.getApiConnection().onEvent("failed", err => {
-			logger.error(`VoiceConnection '${oVoiceConnection.getId()}' failed: ${err}`);
-		});
-
-		oVoiceConnection.getApiConnection().onEvent("error", err => {
-			logger.error(`Discord API error on VoiceConnection '${oVoiceConnection.getId()}': ${err}`);
-		});
-
 		aVoiceConnections.push(oVoiceConnection);
 	},
 
