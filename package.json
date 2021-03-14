@@ -44,7 +44,7 @@
 		"srcds-rcon": "^2.2.1",
 		"winston": "^3.3.3",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
-		"youtube-sr": "^3.0.5",
+		"youtube-sr": "^4.0.3",
 		"ytdl-core": "^4.5.0"
 	},
 	"devDependencies": {
