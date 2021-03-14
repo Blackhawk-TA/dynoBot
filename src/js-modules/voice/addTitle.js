@@ -23,7 +23,7 @@ module.exports = {
 					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
 					this._searchAndAddTitle(regexGroups, oTextChannel, oVoiceConnection);
 				}).catch(err => {
-					logger.error("Could not add title: ", err);
+					logger.error("Could not join channel: ", err);
 					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {

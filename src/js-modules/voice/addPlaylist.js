@@ -23,7 +23,7 @@ module.exports = {
 					joinHelper.playJoinMessage(oVoiceConnection, sServerId);
 					this._addPlaylist(regexGroups, oTextChannel, oVoiceConnection);
 				}).catch(err => {
-					logger.error("Could not add playlist: ", err);
+					logger.error("Could not join channel: ", err);
 					oTextChannel.send("Sorry, I could not join you.");
 				});
 			} else {
