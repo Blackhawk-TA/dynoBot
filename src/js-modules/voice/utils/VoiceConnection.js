@@ -249,6 +249,7 @@ class VoiceConnection {
 	 */
 	addCurrentTitle(oTitle) {
 		this._aPlaylist.unshift(oTitle);
+		this._bOverrideShuffleMode = true;
 		this.play();
 	}
 
