@@ -36,7 +36,7 @@
 		"url": "https://github.com/Blackhawk-TA/dynoBot.git"
 	},
 	"dependencies": {
-		"apple-music-playlist": "^1.0.1",
+		"apple-music-playlist": "^1.1.1",
 		"dynobot-framework": "^1.3.3",
 		"mkdirp": "^0.5.5",
 		"request": "^2.88.2",
@@ -44,7 +44,7 @@
 		"srcds-rcon": "^2.2.1",
 		"winston": "^3.3.3",
 		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz",
-		"youtube-sr": "^4.0.3",
+		"youtube-sr": "^4.0.5",
 		"ytdl-core": "^4.5.0"
 	},
 	"devDependencies": {
