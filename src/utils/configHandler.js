@@ -28,17 +28,25 @@ module.exports = {
 			let serverConfig = require(configPath);
 
 			if (id && entry && defaultFile[id] && defaultFile[id][entry] != null) {
-				if (serverConfig[id] && entry) {
+				if (serverConfig[id]) {
 					return serverConfig[id][entry] != null ? serverConfig[id][entry] : defaultFile[id][entry];
 				} else {
 					return defaultFile[id][entry];
 				}
 			} else if (id && !entry && defaultFile[id]) {
-				if (serverConfig[id] && entry) {
+				if (serverConfig[id]) {
 					return serverConfig[id] ? serverConfig[id] : defaultFile[id];
 				} else {
 					return defaultFile[id];
 				}
+			} else if (id && entry && !defaultFile[id]) { //No default config for this id and entry is given
+				if (serverConfig[id]) {
+					return serverConfig[id][entry] ? serverConfig[id][entry] : serverConfig[id];
+				} else {
+					return serverConfig; //If no matching entry is found, return entire config
+				}
+			} else if (id && !entry && !defaultFile[id]) { //No default config for this id is given
+				return serverConfig[id] ? serverConfig[id] : serverConfig;
 			} else {
 				return serverConfig;
 			}
@@ -66,14 +74,15 @@ module.exports = {
 		let serverId = channel.getServer().getId();
 		let pathServer = pathCfg + serverId + "/";
 		let pathJSON = pathServer + configName;
-		let jsonString = "";
+		let jsonString;
 
-		//Create directory
-		if (!fs.existsSync(pathCfg))
+		//Create directories
+		if (!fs.existsSync(pathCfg)) {
 			fs.mkdirSync(pathCfg);
-
-		if (!fs.existsSync(pathServer))
+		}
+		if (!fs.existsSync(pathServer)) {
 			fs.mkdirSync(pathServer);
+		}
 
 		if (!fs.existsSync(pathJSON)) { //config does not exist, create new
 			let newJSON;
