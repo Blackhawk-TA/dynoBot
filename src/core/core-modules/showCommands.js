@@ -53,7 +53,7 @@ module.exports = {
 
 				answerLine = `\n${groupIdentifier}${name}${roles}: ${commandHelp}`;
 
-				if (sAnswer.length + answerLine.length < MAX_MESSAGE_LENGTH) {
+				if (sAnswer.length + answerLine.length + sAnswerSuffix.length < MAX_MESSAGE_LENGTH) {
 					sAnswer += answerLine;
 				} else {
 					sAnswer += "```";
