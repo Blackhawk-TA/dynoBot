@@ -32,8 +32,8 @@ module.exports = {
 						permission.permissions.forEach(function(role) {
 							roles += role + ", ";
 						});
+						roles = roles.slice(0, -2);
 					}
-					roles = roles.slice(0, -2);
 				});
 
 				if (roles !== "") {
