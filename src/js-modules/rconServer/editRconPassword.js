@@ -13,9 +13,8 @@ module.exports = {
 
 		if (fs.existsSync(serverCfgPath)) {
 			let serverCfg = configHandler.readJSON(serverCfgPath, msg.getServer().getId(), rconServer);
-			let rconConfig = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
-			if (serverCfg !== rconConfig) {
+			if (serverCfg.rcon_password) {
 				msg.getTextChannel().send("I've sent you a private message with further instructions.");
 
 				let user = msg.getAuthor();
