@@ -5,7 +5,7 @@ const cfgPath = base + "/cfg/modules/wakeOnLan.json";
 
 module.exports = {
 	run: function(msg, client, aRegexGroups) {
-		const sName = aRegexGroups[1];
+		const sName = aRegexGroups[1].toLowerCase();
 		const sIP = aRegexGroups[2];
 		const sMAC = aRegexGroups[6];
 		const sAdmin = msg.getAuthor().getId();
