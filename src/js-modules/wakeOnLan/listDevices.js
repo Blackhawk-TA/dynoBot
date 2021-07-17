@@ -13,7 +13,7 @@ module.exports = {
 
 		for (let sKey in oDeviceConfig) {
 			if (oDeviceConfig.hasOwnProperty(sKey)) {
-				sAnswerLine = `\n${sKey} - IP: '${oDeviceConfig[sKey].ip}'`;
+				sAnswerLine = `\n${sKey} - Notify admin: '${oDeviceConfig[sKey].notifyAdmin}', IP: '${oDeviceConfig[sKey].ip}'`;
 			}
 
 			if (sAnswer.length + sAnswerLine.length + sAnswerSuffix.length < MAX_MESSAGE_LENGTH) {
