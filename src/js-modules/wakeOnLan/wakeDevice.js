@@ -24,10 +24,10 @@ module.exports = {
 								oDM.send(`A wake signal to your device '${sDeviceName}' with IP '${oDeviceConfig.ip}' and MAC '${oDeviceConfig.mac}' was sent.`);
 								logger.info(`Notified admin '${oDeviceConfig.admin}' that a wake signal was sent to ${sDeviceName}.`);
 							}).catch(error => {
-								logger.error(`Could not notify admin '${oDeviceConfig.admin}' that a wake signal was sent to ${sDeviceName}: ${error}`);
+								logger.error(`Could not notify admin '${oDeviceConfig.admin}' that a wake signal was sent to ${sDeviceName}:\n${error}`);
 							});
 						}).catch(error => {
-							logger.info(`Invalid admin id. Could not notify admin '${oDeviceConfig.admin}' that a wake signal was sent to ${sDeviceName}: ${error}`);
+							logger.info(`Invalid admin id. Could not notify admin '${oDeviceConfig.admin}' that a wake signal was sent to ${sDeviceName}:\n${error}`);
 						});
 					}
 				}
