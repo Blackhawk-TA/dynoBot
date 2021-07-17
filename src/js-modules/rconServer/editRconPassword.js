@@ -26,7 +26,7 @@ module.exports = {
 					resolved.awaitMessages({max: 2, time: 60000, errors: ["time"]})
 						.then((collected) => {
 							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
-								let answer = collected[1].getContent(true);
+								let answer = collected[1].getContent();
 								resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
 								configHandler.editJSON(msg.getTextChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
 							} else {
