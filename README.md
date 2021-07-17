@@ -39,7 +39,7 @@ The bot has currently following modules:
 - remote control rcon game servers
 - currency conversion
 - WolframAlpha calculations
-- send wake-on-lan signals to start servers or other devices
+- send wake-on-lan signals to start servers or other devices in your local network
 
 ### What commands does the bot have?
 You can see all available commands by typing "@BotName help" in the discord chat.
