@@ -8,7 +8,7 @@ module.exports = {
 		const sName = aRegexGroups[1];
 		const sIP = aRegexGroups[2];
 		const sMAC = aRegexGroups[6];
-		const sAdmin = msg.getAuthor().getTag();
+		const sAdmin = msg.getAuthor().getId();
 
 		let wakeOnLanCfgPath = base + "/cfg/servers/" + msg.getServer().getId() + "/wakeOnLan.json";
 		let wakeOnLanCfg = {};
@@ -26,9 +26,9 @@ module.exports = {
 			};
 
 			configHandler.overrideJSON(msg.getTextChannel(), cfgPath, wakeOnLanCfg, false);
-			msg.getTextChannel().send(`Added wake-on-lan device '${sName}' with admin '${sAdmin}'.\nA notification to the admin will be sent when a wake signal is sent. This can be disabled optionally.`);
+			msg.getTextChannel().send(`Added wake-on-lan device '${sName}' with admin id '${sAdmin}'.\nA notification to the admin will be sent when a wake signal is sent. This can be disabled optionally.`);
 		} else {
-			msg.getTextChannel().send(`A wake-on-lan device with the name ${sName} already exists.`);
+			msg.getTextChannel().send(`A wake-on-lan device with the name '${sName}' already exists.`);
 		}
 	}
 };
