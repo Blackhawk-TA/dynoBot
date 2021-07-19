@@ -60,8 +60,8 @@
 		}, {
 			"group": "hook",
 			"type": "js",
-			"regex": "(enable|disable) (.+)$",
-			"help": "enable/disable <hook-name>",
+			"regex": "hook (enable|disable) (.+)$",
+			"help": "hook enable/disable <hook-name>",
 			"path": "src/core/hook-modules/hookToggle.js"
 		}, {
 			"group": "hook",
@@ -248,6 +248,36 @@
 			"regex": "^(clear|empty|delete) playlist$",
 			"help": "clear playlist",
 			"path": "src/js-modules/voice/clearPlaylist.js"
+		}, {
+			"group": "wakeOnLan",
+			"type": "js",
+			"regex": "wake add (\\w+) ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})",
+			"help": "wake add <name> <IP>",
+			"path": "src/js-modules/wakeOnLan/addDevice.js"
+		}, {
+			"group": "wakeOnLan",
+			"type": "js",
+			"regex": "wake list",
+			"help": "wake list",
+			"path": "src/js-modules/wakeOnLan/listDevices.js"
+		}, {
+			"group": "wakeOnLan",
+			"type": "js",
+			"regex": "wake (remove|delete) (\\w+)",
+			"help": "wake remove/delete <name>",
+			"path": "src/js-modules/wakeOnLan/removeDevice.js"
+		}, {
+			"group": "wakeOnLan",
+			"type": "js",
+			"regex": "wake device (\\w+)",
+			"help": "wake device <device name>",
+			"path": "src/js-modules/wakeOnLan/wakeDevice.js"
+		}, {
+			"group": "wakeOnLan",
+			"type": "js",
+			"regex": "wake (enable|disable) notification for (\\w+)",
+			"help": "wake enable|disable notification for <device name>",
+			"path": "src/js-modules/wakeOnLan/toggleNotification.js"
 		}
 	]
 }

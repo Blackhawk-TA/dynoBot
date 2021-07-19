@@ -13,9 +13,8 @@ module.exports = {
 
 		if (fs.existsSync(serverCfgPath)) {
 			let serverCfg = configHandler.readJSON(serverCfgPath, msg.getServer().getId(), rconServer);
-			let rconConfig = configHandler.readJSON(serverCfgPath, msg.getServer().getId());
 
-			if (serverCfg !== rconConfig) {
+			if (serverCfg.rcon_password) {
 				msg.getTextChannel().send("I've sent you a private message with further instructions.");
 
 				let user = msg.getAuthor();
@@ -27,7 +26,7 @@ module.exports = {
 					resolved.awaitMessages({max: 2, time: 60000, errors: ["time"]})
 						.then((collected) => {
 							if (collected[1].getContent() && collected[1].getAuthor().getId() === msg.getAuthor().getId()) {
-								let answer = collected[1].getContent(true);
+								let answer = collected[1].getContent();
 								resolved.send(`The rcon password of '${rconServer}' has been changed to '${answer}'.`);
 								configHandler.editJSON(msg.getTextChannel(true), pathCfg, rconServer, "rcon_password", answer, false);
 							} else {
