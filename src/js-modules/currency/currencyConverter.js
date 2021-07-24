@@ -1,4 +1,6 @@
-const request = require("request");
+const base = require("path").resolve(".");
+const logger = require(base + "/src/utils/logger");
+const fetch = require("node-fetch");
 
 module.exports = {
 	run: function(msg) {
@@ -15,18 +17,19 @@ module.exports = {
 		let coin2 = contentArray.pop().toUpperCase();
 
 		let requestLink = "https://min-api.cryptocompare.com/data/price?fsym=" + coin1 + "&tsyms=" + coin2;
-		request(requestLink, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				let data = JSON.parse(body);
+		fetch(requestLink)
+			.then(response => response.json())
+			.then(data => {
 				if (data[coin2] === undefined) {
-					answer = "Hmm one of those currencies does not exist. Are you sure you aren't stupid?";
+					answer = "One of those currencies does not exist.";
 				} else {
 					answer = "```js\n" + amount + " " + coin1 + " equals " + (Math.round((amount * data[coin2]) * 100) / 100) + " " + coin2 + ".```";
 				}
-			} else {
-				answer = "Sorry I just can't handle the pressure... \nhttps://giphy.com/gifs/high-quality-relationship-programmer-UNZ3HQH0Enzos";
-			}
-			msg.getTextChannel().send(answer);
-		});
+				msg.getTextChannel().send(answer);
+			})
+			.catch(error => {
+				msg.getTextChannel().send("Could not request currency prices.");
+				logger.error(`Could not request currency prices:\n${error}`);
+			});
 	}
 };

@@ -1,8 +1,8 @@
-const request = require("request");
-
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
 const cfgPath = base + "/cfg/modules/currencies.json";
+const logger = require(base + "/src/utils/logger");
+const fetch = require("node-fetch");
 
 module.exports = {
 	run: function (msg) {
@@ -10,9 +10,9 @@ module.exports = {
 			config = configHandler.readJSON(cfgPath, msg.getServer().getId()),
 			currency = contentArray[contentArray.length - 1].toUpperCase();
 
-		request("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD", function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				let data = JSON.parse(body);
+		fetch("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD")
+			.then(response => response.json())
+			.then(data => {
 				if (data.EUR === undefined) {
 					msg.getTextChannel().send(currency + " does not exist.");
 				} else {
@@ -31,9 +31,10 @@ module.exports = {
 						configHandler.overrideJSON(msg.getTextChannel(), cfgPath, config);
 					}
 				}
-			} else {
-				msg.getTextChannel().send("There was an timeout at the API request, please try again later.");
-			}
-		});
+			})
+			.catch(error => {
+				msg.getTextChannel().send("Could not request currencies, please try again later");
+				logger.error(`Could not request currencies:\n${error}`);
+			});
 	}
 };
