@@ -1,7 +1,7 @@
-const request = require("request");
-
 const base = require("path").resolve(".");
 const configHandler = require(base + "/src/utils/configHandler");
+const logger = require(base + "/src/utils/logger");
+const fetch = require("node-fetch");
 
 let loopIndex = 0;
 let answerDefault = "Current market situation:```js\n";
@@ -11,9 +11,9 @@ module.exports = {
 	pushUpdate: function(channel, currency, config) {
 		let self = this;
 
-		request("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD", function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				let data = JSON.parse(body);
+		fetch("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=EUR,USD")
+			.then(response => response.json())
+			.then(data => {
 				answer += "\n1 " + currency + " equals " + data.EUR + "€ or " + data.USD + "$.";
 
 				loopIndex++;
@@ -24,8 +24,10 @@ module.exports = {
 					channel.send(answer + "```");
 					answer = answerDefault;
 				}
-			}
-		});
+			})
+			.catch(error => {
+				logger.error(`Could not request currency prices:\n${error}`);
+			});
 	},
 
 	run: function(msg) {
