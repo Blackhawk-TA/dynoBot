@@ -4,6 +4,16 @@
 [![github](https://img.shields.io/github/release/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/releases)
 [![github](https://img.shields.io/github/package-json/v/Blackhawk-TA/dynoBot.svg?color=brightgreen)](https://github.com/Blackhawk-TA/dynoBot/tree/master)
 
+## End of life
+Due to discord's decision to enforce [slash commands](#https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ) for bots,
+I will stop developing this project. This means that I won't fix any issues or bugs nor add new features.
+The project will remain on GitHub but it will be achieved.
+
+The main reason I took this decision is that converting the bot to use slash commands would require me to rewrite the entire command logic.
+I neither have the time nor the motivation to rewrite major parts of the code base.
+On top of that dynoBot is quite maintenance heavy, especially in regard of the music streaming module which depends on a lot of other npm packages that tend to break.
+
+Therefore, I will sadly put this project to rest.
 
 ### Overview
 1. [What is dynoBot](#what-is-dynobot)
