@@ -39,7 +39,7 @@
 		"apple-music-playlist": "^1.1.2",
 		"dynobot-framework": "^1.4.1",
 		"mkdirp": "^1.0.4",
-		"node-fetch": "^2.6.1",
+		"node-fetch": "^3.1.1",
 		"spotify-url-info": "^2.2.0",
 		"srcds-rcon": "^2.2.1",
 		"wake_on_lan": "^1.0.0",
